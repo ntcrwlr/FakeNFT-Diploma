@@ -36,6 +36,18 @@ extension UIColor {
     // Background Colors
     static let background = UIColor.white
 
+    static let profileBackground = UIColor { traits in
+        traits.userInterfaceStyle == .dark ? UIColor(hexString: "1A1B22") : .white
+    }
+
+    static let profileForeground = UIColor { traits in
+        traits.userInterfaceStyle == .dark ? .white : UIColor(hexString: "1A1B22")
+    }
+
+    static let profileLink = UIColor { traits in
+        traits.userInterfaceStyle == .dark ? UIColor(hexString: "007AFF") : .systemBlue
+    }
+
     // Text Colors
     static let textPrimary = UIColor.black
     static let textSecondary = UIColor.gray
