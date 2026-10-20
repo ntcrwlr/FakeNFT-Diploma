@@ -8,7 +8,7 @@
 import Foundation
 
 struct CartItem: Identifiable {
-    let id = UUID()
+    let id: String
     let image: String
     let name: String
     let rating: Int
