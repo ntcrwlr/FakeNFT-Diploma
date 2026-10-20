@@ -18,6 +18,21 @@ struct CartView: View {
                 }
             }
             .listStyle(.plain)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        
+                    } label: {
+                        Image("sort")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 42, height: 42)
+                            .foregroundStyle(.primary)
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
         }
     }
 }
