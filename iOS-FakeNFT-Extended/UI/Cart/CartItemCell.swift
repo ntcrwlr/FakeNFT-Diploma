@@ -12,6 +12,7 @@ struct CartItemCell: View {
     let name: String
     let rating: Int
     let price: String
+    let onDelete: () -> Void
     
     var body: some View {
         HStack(spacing: 20) {
@@ -43,6 +44,16 @@ struct CartItemCell: View {
                     .padding(.top, 2)
             }
             Spacer(minLength: 0)
+
+            Button(action: onDelete) {
+                Image("cart")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 40, height: 40)
+                    .frame(width: 44, height: 44)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
         }
         .frame(height: 140)
     }
@@ -53,7 +64,8 @@ struct CartItemCell: View {
         image: "april",
         name: "April",
         rating: 1,
-        price: "1,78 ETH"
+        price: "1,78 ETH",
+        onDelete: {}
     )
     .padding()
 }
