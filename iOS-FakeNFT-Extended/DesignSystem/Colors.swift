@@ -44,6 +44,10 @@ extension UIColor {
         traits.userInterfaceStyle == .dark ? .white : UIColor(hexString: "1A1B22")
     }
 
+    static let profileFieldBackground = UIColor { traits in
+        traits.userInterfaceStyle == .dark ? UIColor(hexString: "2C2C2E") : UIColor(hexString: "F7F7F8")
+    }
+
     static let profileLink = UIColor { traits in
         traits.userInterfaceStyle == .dark ? UIColor(hexString: "007AFF") : .systemBlue
     }

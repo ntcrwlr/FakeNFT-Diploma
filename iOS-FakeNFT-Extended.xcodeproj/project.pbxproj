@@ -48,6 +48,8 @@
 		F0192026000000000000000C /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0192026000000000000000B /* ProfileViewModel.swift */; };
 		F01920260000000000000010 /* ProfileMenuRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0192026000000000000000F /* ProfileMenuRow.swift */; };
 		F01920260000000000000012 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01920260000000000000011 /* ProfileView.swift */; };
+		F02120260000000000000002 /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02120260000000000000001 /* EditProfileViewModel.swift */; };
+		F02120260000000000000004 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02120260000000000000003 /* EditProfileView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,6 +112,8 @@
 		F0192026000000000000000B /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		F0192026000000000000000F /* ProfileMenuRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileMenuRow.swift; sourceTree = "<group>"; };
 		F01920260000000000000011 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		F02120260000000000000001 /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
+		F02120260000000000000003 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -349,6 +353,7 @@
 		F0192026000000000000000A /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				F02120260000000000000001 /* EditProfileViewModel.swift */,
 				F0192026000000000000000B /* ProfileViewModel.swift */,
 			);
 			path = ViewModels;
@@ -358,6 +363,7 @@
 			isa = PBXGroup;
 			children = (
 				F0192026000000000000000E /* Components */,
+				F02120260000000000000003 /* EditProfileView.swift */,
 				F01920260000000000000011 /* ProfileView.swift */,
 			);
 			path = Views;
@@ -511,6 +517,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F02120260000000000000002 /* EditProfileViewModel.swift in Sources */,
+				F02120260000000000000004 /* EditProfileView.swift in Sources */,
 				F01920260000000000000004 /* ProfileFixtures.swift in Sources */,
 				F01920260000000000000006 /* UserProfile.swift in Sources */,
 				F0192026000000000000000C /* ProfileViewModel.swift in Sources */,
