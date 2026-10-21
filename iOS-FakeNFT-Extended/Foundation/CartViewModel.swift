@@ -14,7 +14,7 @@ final class CartViewModel {
     private let cartService: CartService
     private let nftService: NftService
 
-    private(set) var nfts: [Nft] = []
+    private(set) var items: [CartItem] = []
     private(set) var isLoading = false
     private(set) var errorMessage: String?
 
@@ -27,6 +27,8 @@ final class CartViewModel {
     }
 
     func loadCart() async {
+        guard !isLoading else { return }
+
         isLoading = true
         errorMessage = nil
 
@@ -37,13 +39,24 @@ final class CartViewModel {
         do {
             let order = try await cartService.loadOrder(id: "1")
 
-            var loadedNfts: [Nft] = []
+            var loadedItems: [CartItem] = []
 
             for nftID in order.nfts {
                 let nft = try await nftService.loadNft(id: nftID)
-                loadedNfts.append(nft)
+
+                let item = CartItem(
+                    id: nft.id,
+                    image: nft.images.first?.absoluteString ?? "",
+                    name: nft.name,
+                    rating: nft.rating,
+                    price: nft.price
+                )
+
+                loadedItems.append(item)
             }
-            nfts = loadedNfts
+
+            items = loadedItems
+
         } catch {
             errorMessage = "Не удалось загрузить корзину"
         }
