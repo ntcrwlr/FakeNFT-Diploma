@@ -8,16 +8,20 @@
 import SwiftUI
 
 struct CartView: View {
-    @State private var items = [
-        CartItem(id: "93", image: "april", name: "April", rating: 1, price: 1.78),
-        CartItem(id: "94", image: "greena", name: "Greena", rating: 3, price: 1.78),
-        CartItem(id: "95", image: "spring", name: "Spring", rating: 5, price: 1.78)
-    ]
-    
+    @State private var viewModel: CartViewModel
+
+    init(viewModel: CartViewModel) {
+        _viewModel = State(initialValue: viewModel)
+    }
+
+    private var items: [CartItem] {
+        viewModel.items
+    }
+
     private var totalPrice: String {
         "\(String(format: "%.2f", items.reduce(0) { $0 + $1.price }).replacingOccurrences(of: ".", with: ",")) ETH"
     }
-    
+
     var body: some View {
         NavigationStack {
             List {
@@ -61,11 +65,18 @@ struct CartView: View {
                     onPay: {}
                 )
             }
+            .task {
+                await viewModel.loadCart()
+            }
         }
     }
 }
 
 #Preview {
-    CartView()
+    CartView(
+        viewModel: CartViewModel(
+            cartService: PreviewCartService(),
+            nftService: PreviewNftService()
+        )
+    )
 }
-

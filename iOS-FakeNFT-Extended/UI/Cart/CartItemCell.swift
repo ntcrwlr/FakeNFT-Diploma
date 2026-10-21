@@ -16,11 +16,29 @@ struct CartItemCell: View {
     
     var body: some View {
         HStack(spacing: 20) {
-            Image(image)
-                .resizable()
-                .scaledToFill()
-                .frame(width: 108, height: 108)
-                .clipShape(RoundedRectangle(cornerRadius: 16))
+            Group {
+                if image.hasPrefix("http://") || image.hasPrefix("https://") {
+                    AsyncImage(url: URL(string: image)) { phase in
+                        if let loadedImage = phase.image {
+                            loadedImage
+                                .resizable()
+                                .scaledToFill()
+                        } else {
+                            RoundedRectangle(cornerRadius: 16)
+                                .fill(Color.gray.opacity(0.15))
+                        }
+                    }
+                } else if !image.isEmpty {
+                    Image(image)
+                        .resizable()
+                        .scaledToFill()
+                } else {
+                    RoundedRectangle(cornerRadius: 16)
+                        .fill(Color.gray.opacity(0.15))
+                }
+            }
+            .frame(width: 108, height: 108)
+            .clipShape(RoundedRectangle(cornerRadius: 16))
             
             VStack(alignment: .leading, spacing: 0) {
                 Text(name)

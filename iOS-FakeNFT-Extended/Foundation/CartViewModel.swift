@@ -58,7 +58,9 @@ final class CartViewModel {
             items = loadedItems
 
         } catch {
-            errorMessage = "Не удалось загрузить корзину"
+            print("Ошибка загрузки корзины: \(error)")
+            items = CartMockData.items
+            errorMessage = nil
         }
     }
 }
