@@ -1,9 +1,11 @@
 import SwiftUI
 
 struct TabBarView: View {
+    @Environment(ServicesAssembly.self) private var servicesAssembly
+
     var body: some View {
         TabView {
-            TestCatalogView()
+            CatalogView(collectionService: servicesAssembly.collectionService)
                 .tabItem {
                     Label(
                         NSLocalizedString("Tab.catalog", comment: ""),
