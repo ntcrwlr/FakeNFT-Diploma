@@ -16,22 +16,22 @@ struct CartBottomPaymentView: View {
         HStack(spacing: 24) {
             VStack(alignment: .leading, spacing: 2) {
                 Text("\(itemCount) NFT")
-                    .font(.system(size: 15, weight: .regular))
+                    .font(Font(UIFont.caption1))
                     .foregroundStyle(.primary)
                 
                 Text(totalPrice)
-                    .font(.system(size: 17, weight: .bold))
+                    .font(Font(UIFont.bodyBold))
                     .foregroundStyle(.green)
             }
             
             Button(action: onPay) {
                 Text("К оплате")
-                    .font(.system(size: 17, weight: .bold))
-                    .foregroundStyle(.white)
+                    .font(Font(UIFont.bodyBold))
+                    .foregroundStyle(Color(uiColor: .systemBackground))
                     .frame(maxWidth: .infinity)
                     .frame(height: 44)
                     .background(
-                        .black,
+                        Color(uiColor: .label),
                         in: RoundedRectangle(cornerRadius: 16)
                     )
             }
@@ -44,7 +44,7 @@ struct CartBottomPaymentView: View {
                 topLeadingRadius: 12,
                 topTrailingRadius: 12
             )
-            .fill(Color(uiColor: .systemGroupedBackground))
+            .fill(Color(.lightGrey))
         }
     }
 }
@@ -54,7 +54,7 @@ struct CartBottomPaymentView: View {
         itemCount: 3,
         totalPrice: "5,34 ETH",
         onPay: {
-            print("Переход к оплате")
+            
         }
     )
 }

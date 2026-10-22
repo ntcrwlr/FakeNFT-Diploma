@@ -11,25 +11,26 @@ import ProgressHUD
 struct CartView: View {
     @State private var viewModel: CartViewModel
     @State private var showErrorAlert = false
-
+    
     init(viewModel: CartViewModel) {
         _viewModel = State(initialValue: viewModel)
     }
-
+    
     private var items: [CartItem] {
         viewModel.items
     }
-
+    
     private var totalPrice: String {
-        "\(String(format: "%.2f", items.reduce(0) { $0 + $1.price }).replacingOccurrences(of: ".", with: ",")) ETH"
+        formatPrice(items.reduce(0) { $0 + $1.price })
     }
-
+    
+    private func formatPrice(_ price: Double) -> String {
+        "\(String(format: "%.2f", price).replacingOccurrences(of: ".", with: ",")) ETH"
+    }
+    
     @ViewBuilder
     private var content: some View {
-        if viewModel.isLoading && items.isEmpty {
-            ProgressView()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-        } else if items.isEmpty {
+        if items.isEmpty && !viewModel.isLoading {
             EmptyCartView()
         } else {
             List {
@@ -38,7 +39,7 @@ struct CartView: View {
                         image: item.image,
                         name: item.name,
                         rating: item.rating,
-                        price: "\(String(format: "%.2f", item.price).replacingOccurrences(of: ".", with: ",")) ETH",
+                        price: formatPrice(item.price),
                         onDelete: {}
                     )
                     .listRowSeparator(.hidden)
@@ -56,7 +57,7 @@ struct CartView: View {
             .padding(.top, 20)
         }
     }
-
+    
     var body: some View {
         NavigationStack {
             content
@@ -65,9 +66,11 @@ struct CartView: View {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {} label: {
                             Image("sort")
+                                .renderingMode(.template)
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 42, height: 42)
+                                .foregroundStyle(.primary)
                         }
                         .buttonStyle(.plain)
                     }
@@ -95,12 +98,12 @@ struct CartView: View {
                             await viewModel.loadCart()
                         }
                     }
-
+                    
                     Button("Отмена", role: .cancel) {}
                 } message: {
                     Text(
                         viewModel.errorMessage
-                            ?? "Не удалось загрузить корзину"
+                        ?? "Не удалось загрузить корзину"
                     )
                 }
                 .onChange(of: viewModel.errorMessage) { _, errorMessage in

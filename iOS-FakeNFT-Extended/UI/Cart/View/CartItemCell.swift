@@ -62,13 +62,15 @@ struct CartItemCell: View {
                     .padding(.top, 2)
             }
             Spacer(minLength: 0)
-
+            
             Button(action: onDelete) {
                 Image("cart")
+                    .renderingMode(.template)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 40, height: 40)
                     .frame(width: 44, height: 44)
+                    .foregroundStyle(.primary)
                     .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
