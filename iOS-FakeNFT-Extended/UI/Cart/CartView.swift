@@ -24,8 +24,14 @@ struct CartView: View {
         "\(String(format: "%.2f", items.reduce(0) { $0 + $1.price }).replacingOccurrences(of: ".", with: ",")) ETH"
     }
 
-    var body: some View {
-        NavigationStack {
+    @ViewBuilder
+    private var content: some View {
+        if viewModel.isLoading && items.isEmpty {
+            ProgressView()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+        } else if items.isEmpty {
+            EmptyCartView()
+        } else {
             List {
                 ForEach(items) { item in
                     CartItemCell(
@@ -48,49 +54,58 @@ struct CartView: View {
             }
             .listStyle(.plain)
             .padding(.top, 20)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {} label: {
-                        Image("sort")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 42, height: 42)
-                    }
-                    .buttonStyle(.plain)
-                }
-            }
-            .safeAreaInset(edge: .bottom, spacing: 0) {
-                CartBottomPaymentView(
-                    itemCount: items.count,
-                    totalPrice: totalPrice,
-                    onPay: {}
-                )
-            }
-            .task {
-                await viewModel.loadCart()
-            }
-            .onChange(of: viewModel.isLoading) { _, isLoading in
-                if isLoading {
-                    ProgressHUD.animate(interaction: false)
-                } else {
-                    ProgressHUD.dismiss()
-                }
-            }
-            .alert("Ошибка", isPresented: $showErrorAlert) {
-                Button("Повторить") {
-                    Task {
-                        await viewModel.loadCart()
-                    }
-                }
+        }
+    }
 
-                Button("Отмена", role: .cancel) {}
-            } message: {
-                Text(viewModel.errorMessage ?? "Не удалось загрузить корзину")
-            }
-            .onChange(of: viewModel.errorMessage) { _, errorMessage in
-                showErrorAlert = errorMessage != nil
-            }
+    var body: some View {
+        NavigationStack {
+            content
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {} label: {
+                            Image("sort")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 42, height: 42)
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+                .safeAreaInset(edge: .bottom, spacing: 0) {
+                    CartBottomPaymentView(
+                        itemCount: items.count,
+                        totalPrice: totalPrice,
+                        onPay: {}
+                    )
+                }
+                .task {
+                    await viewModel.loadCart()
+                }
+                .onChange(of: viewModel.isLoading) { _, isLoading in
+                    if isLoading {
+                        ProgressHUD.animate(interaction: false)
+                    } else {
+                        ProgressHUD.dismiss()
+                    }
+                }
+                .alert("Ошибка", isPresented: $showErrorAlert) {
+                    Button("Повторить") {
+                        Task {
+                            await viewModel.loadCart()
+                        }
+                    }
+
+                    Button("Отмена", role: .cancel) {}
+                } message: {
+                    Text(
+                        viewModel.errorMessage
+                            ?? "Не удалось загрузить корзину"
+                    )
+                }
+                .onChange(of: viewModel.errorMessage) { _, errorMessage in
+                    showErrorAlert = errorMessage != nil
+                }
         }
     }
 }
