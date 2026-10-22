@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import ProgressHUD
 
 struct CartView: View {
     @State private var viewModel: CartViewModel
+    @State private var showErrorAlert = false
 
     init(viewModel: CartViewModel) {
         _viewModel = State(initialValue: viewModel)
@@ -67,6 +69,27 @@ struct CartView: View {
             }
             .task {
                 await viewModel.loadCart()
+            }
+            .onChange(of: viewModel.isLoading) { _, isLoading in
+                if isLoading {
+                    ProgressHUD.animate(interaction: false)
+                } else {
+                    ProgressHUD.dismiss()
+                }
+            }
+            .alert("Ошибка", isPresented: $showErrorAlert) {
+                Button("Повторить") {
+                    Task {
+                        await viewModel.loadCart()
+                    }
+                }
+
+                Button("Отмена", role: .cancel) {}
+            } message: {
+                Text(viewModel.errorMessage ?? "Не удалось загрузить корзину")
+            }
+            .onChange(of: viewModel.errorMessage) { _, errorMessage in
+                showErrorAlert = errorMessage != nil
             }
         }
     }
