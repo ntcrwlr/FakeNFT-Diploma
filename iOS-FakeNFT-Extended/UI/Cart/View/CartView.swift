@@ -36,7 +36,7 @@ struct CartView: View {
             List {
                 ForEach(items) { item in
                     CartItemCell(
-                        image: item.image,
+                        image: item.imageName,
                         name: item.name,
                         rating: item.rating,
                         price: formatPrice(item.price),

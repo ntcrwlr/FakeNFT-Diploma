@@ -24,7 +24,7 @@ struct PreviewNftService: NftService {
             return Nft(
                 id: "1",
                 name: "April",
-                images: [],
+                imagesURLs: [],
                 rating: 3,
                 price: 1.78
             )
@@ -32,7 +32,7 @@ struct PreviewNftService: NftService {
             return Nft(
                 id: "2",
                 name: "Greena",
-                images: [],
+                imagesURLs: [],
                 rating: 4,
                 price: 1.78
             )
@@ -40,7 +40,7 @@ struct PreviewNftService: NftService {
             return Nft(
                 id: "3",
                 name: "Spring",
-                images: [],
+                imagesURLs: [],
                 rating: 5,
                 price: 1.78
             )

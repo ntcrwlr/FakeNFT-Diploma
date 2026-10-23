@@ -9,7 +9,7 @@ import Foundation
 
 struct CartItem: Identifiable {
     let id: String
-    let image: String
+    let imageName: String
     let name: String
     let rating: Int
     let price: Double

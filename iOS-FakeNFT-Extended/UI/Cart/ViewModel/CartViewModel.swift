@@ -46,7 +46,7 @@ final class CartViewModel {
                 
                 let item = CartItem(
                     id: nft.id,
-                    image: nft.images.first?.absoluteString ?? "",
+                    imageName: nft.imagesURLs.first?.absoluteString ?? "",
                     name: nft.name,
                     rating: nft.rating,
                     price: nft.price

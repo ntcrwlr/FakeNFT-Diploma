@@ -37,8 +37,7 @@ struct CartBottomPaymentView: View {
             }
             .buttonStyle(.plain)
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 16)
+        .padding(16)
         .background {
             UnevenRoundedRectangle(
                 topLeadingRadius: 12,

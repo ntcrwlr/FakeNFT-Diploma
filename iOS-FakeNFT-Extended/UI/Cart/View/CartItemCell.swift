@@ -14,6 +14,17 @@ struct CartItemCell: View {
     let price: String
     let onDelete: () -> Void
     
+    private var ratingView: some View {
+        HStack(spacing: 2) {
+            ForEach(1...5, id: \.self) { star in
+                Image(systemName: "star.fill")
+                    .font(.system(size: 12))
+                    .foregroundStyle(star <= rating ? .yellow : .lightGrey)
+            }
+        }
+        .padding(.top, 4)
+    }
+    
     var body: some View {
         HStack(spacing: 20) {
             Group {
@@ -45,11 +56,7 @@ struct CartItemCell: View {
                     .font(.system(size: 17, weight: .bold))
                     .foregroundColor(.primary)
                 
-                Image("rating\(rating)")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 12)
-                    .padding(.top, 4)
+                ratingView
                 
                 Text("Цена")
                     .font(.system(size: 13, weight: .regular))
@@ -64,11 +71,10 @@ struct CartItemCell: View {
             Spacer(minLength: 0)
             
             Button(action: onDelete) {
-                Image("cart")
+                Image(.cart)
                     .renderingMode(.template)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 40, height: 40)
                     .frame(width: 44, height: 44)
                     .foregroundStyle(.primary)
                     .contentShape(Rectangle())
