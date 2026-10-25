@@ -50,6 +50,7 @@
 		F01920260000000000000012 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01920260000000000000011 /* ProfileView.swift */; };
 		F02120260000000000000002 /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02120260000000000000001 /* EditProfileViewModel.swift */; };
 		F02120260000000000000004 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02120260000000000000003 /* EditProfileView.swift */; };
+		F02020260000000000000002 /* ProfileWebsiteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02020260000000000000001 /* ProfileWebsiteView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -114,6 +115,7 @@
 		F01920260000000000000011 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		F02120260000000000000001 /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
 		F02120260000000000000003 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
+		F02020260000000000000001 /* ProfileWebsiteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileWebsiteView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -365,6 +367,7 @@
 				F0192026000000000000000E /* Components */,
 				F02120260000000000000003 /* EditProfileView.swift */,
 				F01920260000000000000011 /* ProfileView.swift */,
+				F02020260000000000000001 /* ProfileWebsiteView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -524,6 +527,7 @@
 				F0192026000000000000000C /* ProfileViewModel.swift in Sources */,
 				F01920260000000000000010 /* ProfileMenuRow.swift in Sources */,
 				F01920260000000000000012 /* ProfileView.swift in Sources */,
+				F02020260000000000000002 /* ProfileWebsiteView.swift in Sources */,
 				ABC5E1992C31F666002B4068 /* Fonts.swift in Sources */,
 				ABC5E1CF2C32041D002B4068 /* NftDetailViewController.swift in Sources */,
 				ABC5E1B72C31FC70002B4068 /* ServicesAssembly.swift in Sources */,
@@ -728,6 +732,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iOS-FakeNFT-Extended/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = "iOS-FakeNFT-Extended/Info.plist";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -756,6 +761,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iOS-FakeNFT-Extended/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = "iOS-FakeNFT-Extended/Info.plist";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

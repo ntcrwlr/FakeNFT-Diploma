@@ -9,14 +9,14 @@ struct ProfileView: View {
     private let onEdit: () -> Void
     private let onOwnedNFTs: () -> Void
     private let onFavoriteNFTs: () -> Void
-    private let onWebsite: () -> Void
+    private let onWebsite: (URL) -> Void
 
     init(
         viewModel: ProfileViewModel,
         onEdit: @escaping () -> Void = {},
         onOwnedNFTs: @escaping () -> Void = {},
         onFavoriteNFTs: @escaping () -> Void = {},
-        onWebsite: @escaping () -> Void = {}
+        onWebsite: @escaping (URL) -> Void = { _ in }
     ) {
         _viewModel = State(initialValue: viewModel)
         self.onEdit = onEdit
@@ -37,7 +37,11 @@ struct ProfileView: View {
                     .lineSpacing(2)
                     .fixedSize(horizontal: false, vertical: true)
                     .padding(.bottom, 12)
-                Button(action: onWebsite) {
+                Button {
+                    if let url = viewModel.websiteURL {
+                        onWebsite(url)
+                    }
+                } label: {
                     Text(viewModel.profile.websiteTitle)
                         .font(.system(size: websiteSize))
                         .foregroundStyle(Color(uiColor: .profileLink))
@@ -47,6 +51,8 @@ struct ProfileView: View {
                         .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
+                .disabled(viewModel.websiteURL == nil)
+                .accessibilityIdentifier("profile.website")
                 .accessibilityHint("Сайт пользователя")
                 .padding(.bottom, 18)
                 VStack(spacing: 0) {

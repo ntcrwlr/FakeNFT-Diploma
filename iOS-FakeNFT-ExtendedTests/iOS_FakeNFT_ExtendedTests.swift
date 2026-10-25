@@ -57,3 +57,26 @@ final class EditProfileViewModelTests: XCTestCase {
         XCTAssertNotNil(model.errorMessage)
     }
 }
+
+@MainActor
+final class ProfileWebsiteTests: XCTestCase {
+    func testWebsiteAcceptsHTTPAndHTTPS() {
+        for address in ["https://example.com/path?query=1", "http://example.com", " https://example.com \n"] {
+            let model = makeModel(website: address)
+            XCTAssertEqual(model.websiteURL?.host, "example.com")
+        }
+    }
+
+    func testWebsiteRejectsEmptyMalformedAndUnsupportedLinks() {
+        for address in ["", " \n", "example.com", "https://", "https://exa mple.com", "file:///tmp/site.html", "javascript:alert(1)"] {
+            XCTAssertNil(makeModel(website: address).websiteURL, address)
+        }
+    }
+
+    private func makeModel(website: String) -> ProfileViewModel {
+        ProfileViewModel(profile: UserProfile(
+            name: "User", biography: "Bio", websiteTitle: website,
+            avatarAssetName: "ProfileAvatar", ownedNFTCount: 0, favoriteNFTCount: 0
+        ))
+    }
+}
