@@ -73,6 +73,7 @@ struct EditProfileView: View {
         .scrollDismissesKeyboard(.interactively)
         .foregroundStyle(Color(uiColor: .profileForeground))
         .background(Color(uiColor: .profileBackground).ignoresSafeArea())
+        .accessibilityIdentifier("profile.edit.screen")
         .safeAreaInset(edge: .top, spacing: 0) { navigationBar }
         .toolbar(.hidden, for: .navigationBar, .tabBar)
         .safeAreaInset(edge: .bottom, spacing: 0) {
@@ -127,7 +128,6 @@ struct EditProfileView: View {
             saveRequested = false
             if saved { dismiss() }
         }
-        .accessibilityIdentifier("profile.edit.screen")
     }
 
     private var navigationBar: some View {
