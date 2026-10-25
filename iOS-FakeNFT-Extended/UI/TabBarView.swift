@@ -24,6 +24,7 @@ struct TabBarView: View {
                 EditProfileView(
                     viewModel: EditProfileViewModel(profile: profileViewModel.profile),
                     onSave: { draft in
+                        try await Task.sleep(for: .milliseconds(500))
                         try Task.checkCancellation()
                         profileViewModel.updateProfile(draft.updatedProfile)
                     }
