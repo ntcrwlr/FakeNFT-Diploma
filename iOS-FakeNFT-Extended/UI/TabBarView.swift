@@ -21,7 +21,13 @@ struct TabBarView: View {
                 Label(NSLocalizedString("Tab.profile", comment: ""), systemImage: "person.crop.circle.fill")
             }
             .fullScreenCover(isPresented: $showsEditProfile) {
-                EditProfileView(viewModel: EditProfileViewModel(profile: profileViewModel.profile))
+                EditProfileView(
+                    viewModel: EditProfileViewModel(profile: profileViewModel.profile),
+                    onSave: { draft in
+                        try Task.checkCancellation()
+                        profileViewModel.updateProfile(draft.updatedProfile)
+                    }
+                )
             }
 
             TestCatalogView()

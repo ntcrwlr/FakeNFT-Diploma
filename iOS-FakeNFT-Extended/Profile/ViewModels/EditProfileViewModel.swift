@@ -12,13 +12,23 @@ final class EditProfileViewModel {
     private(set) var isSaving = false
     var errorMessage: String?
     let avatarAssetName: String
-    private let initialName: String
-    private let initialBiography: String
-    private let initialWebsite: String
+    private let initialProfile: UserProfile
 
     var hasChanges: Bool {
-        name != initialName || biography != initialBiography || website != initialWebsite
-            || avatarURL != nil || isAvatarRemoved
+        updatedProfile != initialProfile
+    }
+
+    var updatedProfile: UserProfile {
+        UserProfile(
+            name: name,
+            biography: biography,
+            websiteTitle: website,
+            avatarAssetName: avatarAssetName,
+            avatarURL: avatarURL,
+            isAvatarRemoved: isAvatarRemoved,
+            ownedNFTCount: initialProfile.ownedNFTCount,
+            favoriteNFTCount: initialProfile.favoriteNFTCount
+        )
     }
 
     init(profile: UserProfile) {
@@ -26,9 +36,9 @@ final class EditProfileViewModel {
         biography = profile.biography
         website = profile.websiteTitle
         avatarAssetName = profile.avatarAssetName
-        initialName = profile.name
-        initialBiography = profile.biography
-        initialWebsite = profile.websiteTitle
+        avatarURL = profile.avatarURL
+        isAvatarRemoved = profile.isAvatarRemoved
+        initialProfile = profile
     }
 
     func updateAvatar(link: String) {

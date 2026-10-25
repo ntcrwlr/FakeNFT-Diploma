@@ -80,3 +80,41 @@ final class ProfileWebsiteTests: XCTestCase {
         ))
     }
 }
+
+@MainActor
+final class ProfileEditingTests: XCTestCase {
+    func testSaveUpdatesProfileAndNextDraft() async {
+        let profile = ProfileViewModel(profile: ProfileFixtures.preview)
+        let draft = EditProfileViewModel(profile: profile.profile)
+        draft.name = "Новое имя"
+        draft.biography = "Новое описание"
+        draft.website = "https://new.example.com"
+        draft.updateAvatar(link: "https://example.com/photo.png")
+
+        let saved = await draft.save { profile.updateProfile($0.updatedProfile) }
+
+        XCTAssertTrue(saved)
+        XCTAssertEqual(profile.profile.name, "Новое имя")
+        XCTAssertEqual(profile.profile.biography, "Новое описание")
+        XCTAssertEqual(profile.websiteURL?.host, "new.example.com")
+        XCTAssertEqual(profile.profile.ownedNFTCount, ProfileFixtures.preview.ownedNFTCount)
+        XCTAssertEqual(profile.profile.favoriteNFTCount, ProfileFixtures.preview.favoriteNFTCount)
+        let reopened = EditProfileViewModel(profile: profile.profile)
+        XCTAssertEqual(reopened.updatedProfile, draft.updatedProfile)
+        XCTAssertFalse(reopened.hasChanges)
+    }
+
+    func testDiscardedDraftDoesNotChangeProfileAndNewSessionStartsWithMocks() {
+        let profile = ProfileViewModel(profile: ProfileFixtures.preview)
+        let draft = EditProfileViewModel(profile: profile.profile)
+        draft.name = "Несохранённое имя"
+        draft.removeAvatar()
+        XCTAssertEqual(profile.profile, ProfileFixtures.preview)
+
+        profile.updateProfile(draft.updatedProfile)
+        let reopened = EditProfileViewModel(profile: profile.profile)
+        XCTAssertTrue(reopened.isAvatarRemoved)
+        XCTAssertFalse(reopened.hasChanges)
+        XCTAssertEqual(ProfileViewModel(profile: ProfileFixtures.preview).profile, ProfileFixtures.preview)
+    }
+}

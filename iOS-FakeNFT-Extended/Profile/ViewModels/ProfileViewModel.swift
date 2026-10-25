@@ -16,6 +16,10 @@ final class ProfileViewModel {
         return url
     }
 
+    func updateProfile(_ profile: UserProfile) {
+        self.profile = profile
+    }
+
     init(profile: UserProfile) {
         self.profile = profile
     }

@@ -102,12 +102,31 @@ struct ProfileView: View {
     }
 
     private var avatar: some View {
-        Image(viewModel.profile.avatarAssetName)
-            .resizable()
+        Group {
+            if viewModel.profile.isAvatarRemoved {
+                avatarPlaceholder
+            } else if let url = viewModel.profile.avatarURL {
+                AsyncImage(url: url) { phase in
+                    switch phase {
+                    case .success(let image): image.resizable()
+                    case .empty: ProgressView()
+                    default: avatarPlaceholder
+                    }
+                }
+            } else {
+                Image(viewModel.profile.avatarAssetName).resizable()
+            }
+        }
             .scaledToFill()
             .frame(width: 70, height: 70)
             .clipShape(Circle())
             .accessibilityLabel("Фото пользователя")
+    }
+
+    private var avatarPlaceholder: some View {
+        Image(systemName: "person.crop.circle.fill")
+            .resizable()
+            .foregroundStyle(.secondary)
     }
 
     private var name: some View {
