@@ -42,6 +42,15 @@
 		ABC5E1E62C320585002B4068 /* LinePageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC5E1E52C320585002B4068 /* LinePageControl.swift */; };
 		ABC5E1E82C320610002B4068 /* NftDetailBridgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC5E1E72C320610002B4068 /* NftDetailBridgeView.swift */; };
 		ABC5E1EB2C32084F002B4068 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = ABC5E1E92C32084F002B4068 /* Localizable.strings */; };
+		F01920260000000000000004 /* ProfileFixtures.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01920260000000000000003 /* ProfileFixtures.swift */; };
+		F01920260000000000000006 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01920260000000000000005 /* UserProfile.swift */; };
+		F01920260000000000000009 /* ProfileAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F01920260000000000000008 /* ProfileAssets.xcassets */; };
+		F0192026000000000000000C /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0192026000000000000000B /* ProfileViewModel.swift */; };
+		F01920260000000000000010 /* ProfileMenuRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0192026000000000000000F /* ProfileMenuRow.swift */; };
+		F01920260000000000000012 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01920260000000000000011 /* ProfileView.swift */; };
+		F02120260000000000000002 /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02120260000000000000001 /* EditProfileViewModel.swift */; };
+		F02120260000000000000004 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02120260000000000000003 /* EditProfileView.swift */; };
+		F02020260000000000000002 /* ProfileWebsiteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02020260000000000000001 /* ProfileWebsiteView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,6 +107,15 @@
 		ABC5E1E52C320585002B4068 /* LinePageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinePageControl.swift; sourceTree = "<group>"; };
 		ABC5E1E72C320610002B4068 /* NftDetailBridgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftDetailBridgeView.swift; sourceTree = "<group>"; };
 		ABC5E1EA2C32084F002B4068 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F01920260000000000000003 /* ProfileFixtures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFixtures.swift; sourceTree = "<group>"; };
+		F01920260000000000000005 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		F01920260000000000000008 /* ProfileAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ProfileAssets.xcassets; sourceTree = "<group>"; };
+		F0192026000000000000000B /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		F0192026000000000000000F /* ProfileMenuRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileMenuRow.swift; sourceTree = "<group>"; };
+		F01920260000000000000011 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		F02120260000000000000001 /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
+		F02120260000000000000003 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
+		F02020260000000000000001 /* ProfileWebsiteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileWebsiteView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +170,7 @@
 			children = (
 				ABC5E16B2C31F5AF002B4068 /* iOS_FakeNFT_ExtendedApp.swift */,
 				ABC5E1E92C32084F002B4068 /* Localizable.strings */,
+				F01920260000000000000001 /* Profile */,
 				ABC5E1952C31F64A002B4068 /* DesignSystem */,
 				ABC5E19A2C31F687002B4068 /* Foundation */,
 				ABC5E19E2C31F6C1002B4068 /* Models */,
@@ -305,6 +324,62 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
+		F01920260000000000000001 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				F01920260000000000000002 /* Models */,
+				F01920260000000000000007 /* Resources */,
+				F0192026000000000000000A /* ViewModels */,
+				F0192026000000000000000D /* Views */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		F01920260000000000000002 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F01920260000000000000003 /* ProfileFixtures.swift */,
+				F01920260000000000000005 /* UserProfile.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		F01920260000000000000007 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F01920260000000000000008 /* ProfileAssets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		F0192026000000000000000A /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				F02120260000000000000001 /* EditProfileViewModel.swift */,
+				F0192026000000000000000B /* ProfileViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		F0192026000000000000000D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F0192026000000000000000E /* Components */,
+				F02120260000000000000003 /* EditProfileView.swift */,
+				F01920260000000000000011 /* ProfileView.swift */,
+				F02020260000000000000001 /* ProfileWebsiteView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F0192026000000000000000E /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				F0192026000000000000000F /* ProfileMenuRow.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -373,7 +448,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1530;
-				LastUpgradeCheck = 1530;
+				LastUpgradeCheck = 2660;
 				TargetAttributes = {
 					ABC5E1672C31F5AF002B4068 = {
 						CreatedOnToolsVersion = 15.3;
@@ -417,6 +492,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F01920260000000000000009 /* ProfileAssets.xcassets in Resources */,
 				ABC5E1732C31F5AF002B4068 /* Preview Assets.xcassets in Resources */,
 				ABC5E1EB2C32084F002B4068 /* Localizable.strings in Resources */,
 				ABC5E1702C31F5AF002B4068 /* Assets.xcassets in Resources */,
@@ -444,6 +520,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F02120260000000000000002 /* EditProfileViewModel.swift in Sources */,
+				F02120260000000000000004 /* EditProfileView.swift in Sources */,
+				F01920260000000000000004 /* ProfileFixtures.swift in Sources */,
+				F01920260000000000000006 /* UserProfile.swift in Sources */,
+				F0192026000000000000000C /* ProfileViewModel.swift in Sources */,
+				F01920260000000000000010 /* ProfileMenuRow.swift in Sources */,
+				F01920260000000000000012 /* ProfileView.swift in Sources */,
+				F02020260000000000000002 /* ProfileWebsiteView.swift in Sources */,
 				ABC5E1992C31F666002B4068 /* Fonts.swift in Sources */,
 				ABC5E1CF2C32041D002B4068 /* NftDetailViewController.swift in Sources */,
 				ABC5E1B72C31FC70002B4068 /* ServicesAssembly.swift in Sources */,
@@ -576,6 +660,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -632,6 +717,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -646,6 +732,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iOS-FakeNFT-Extended/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = "iOS-FakeNFT-Extended/Info.plist";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -674,6 +761,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iOS-FakeNFT-Extended/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = "iOS-FakeNFT-Extended/Info.plist";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -696,7 +784,6 @@
 		ABC5E1902C31F5B0002B4068 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -715,7 +802,6 @@
 		ABC5E1912C31F5B0002B4068 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -734,7 +820,6 @@
 		ABC5E1932C31F5B0002B4068 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -751,7 +836,6 @@
 		ABC5E1942C31F5B0002B4068 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
