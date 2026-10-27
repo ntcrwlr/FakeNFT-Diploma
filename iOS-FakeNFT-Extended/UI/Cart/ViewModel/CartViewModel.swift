@@ -60,7 +60,7 @@ final class CartViewModel {
         } catch {
             print("Ошибка загрузки корзины: \(error)")
             // Временно использовать CartMockData.items для проверки UI,пока сервер недоступен.
-            // items = CartMockData.items
+             items = CartMockData.items
             errorMessage = "Не удалось загрузить корзину. Попробуйте ещё раз."
         }
     }

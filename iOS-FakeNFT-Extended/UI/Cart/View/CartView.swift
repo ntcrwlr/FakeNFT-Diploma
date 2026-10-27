@@ -11,6 +11,8 @@ import ProgressHUD
 struct CartView: View {
     @State private var viewModel: CartViewModel
     @State private var showErrorAlert = false
+    @State private var selectedItem: CartItem?
+    @State private var showDeleteConfirmation = false
     
     init(viewModel: CartViewModel) {
         _viewModel = State(initialValue: viewModel)
@@ -40,7 +42,10 @@ struct CartView: View {
                         name: item.name,
                         rating: item.rating,
                         price: formatPrice(item.price),
-                        onDelete: {}
+                        onDelete: {
+                            selectedItem = item
+                            showDeleteConfirmation = true
+                        }
                     )
                     .listRowSeparator(.hidden)
                     .listRowInsets(
@@ -57,6 +62,32 @@ struct CartView: View {
             .padding(.top, 20)
         }
     }
+    
+    @ViewBuilder
+    private var deleteOverlay: some View {
+        if showDeleteConfirmation, let item = selectedItem {
+            Rectangle()
+                .fill(.ultraThinMaterial)
+                .overlay {
+                    Color.black.opacity(0.2)
+                }
+                .ignoresSafeArea()
+                .overlay {
+                    DeleteConfirmationView(
+                        item: item,
+                        onDelete: {
+                            showDeleteConfirmation = false
+                            selectedItem = nil
+                        },
+                        onCancel: {
+                            showDeleteConfirmation = false
+                            selectedItem = nil
+                        }
+                    )
+                }
+        }
+    }
+
     
     var body: some View {
         NavigationStack {
@@ -98,7 +129,6 @@ struct CartView: View {
                             await viewModel.loadCart()
                         }
                     }
-                    
                     Button("Отмена", role: .cancel) {}
                 } message: {
                     Text(
@@ -109,6 +139,9 @@ struct CartView: View {
                 .onChange(of: viewModel.errorMessage) { _, errorMessage in
                     showErrorAlert = errorMessage != nil
                 }
+        }
+        .overlay {
+            deleteOverlay
         }
     }
 }
