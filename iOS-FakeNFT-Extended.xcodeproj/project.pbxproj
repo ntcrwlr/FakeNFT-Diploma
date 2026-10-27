@@ -51,6 +51,10 @@
 		F02120260000000000000002 /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02120260000000000000001 /* EditProfileViewModel.swift */; };
 		F02120260000000000000004 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02120260000000000000003 /* EditProfileView.swift */; };
 		F02020260000000000000002 /* ProfileWebsiteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02020260000000000000001 /* ProfileWebsiteView.swift */; };
+		F02720260000000000000002 /* OwnedNFT.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02720260000000000000001 /* OwnedNFT.swift */; };
+		F02720260000000000000004 /* OwnedNFTsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02720260000000000000003 /* OwnedNFTsViewModel.swift */; };
+		F02720260000000000000006 /* OwnedNFTRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02720260000000000000005 /* OwnedNFTRow.swift */; };
+		F02720260000000000000008 /* OwnedNFTsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02720260000000000000007 /* OwnedNFTsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -116,6 +120,10 @@
 		F02120260000000000000001 /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
 		F02120260000000000000003 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		F02020260000000000000001 /* ProfileWebsiteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileWebsiteView.swift; sourceTree = "<group>"; };
+		F02720260000000000000001 /* OwnedNFT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnedNFT.swift; sourceTree = "<group>"; };
+		F02720260000000000000003 /* OwnedNFTsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnedNFTsViewModel.swift; sourceTree = "<group>"; };
+		F02720260000000000000005 /* OwnedNFTRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnedNFTRow.swift; sourceTree = "<group>"; };
+		F02720260000000000000007 /* OwnedNFTsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnedNFTsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -338,6 +346,7 @@
 		F01920260000000000000002 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				F02720260000000000000001 /* OwnedNFT.swift */,
 				F01920260000000000000003 /* ProfileFixtures.swift */,
 				F01920260000000000000005 /* UserProfile.swift */,
 			);
@@ -355,6 +364,7 @@
 		F0192026000000000000000A /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				F02720260000000000000003 /* OwnedNFTsViewModel.swift */,
 				F02120260000000000000001 /* EditProfileViewModel.swift */,
 				F0192026000000000000000B /* ProfileViewModel.swift */,
 			);
@@ -364,6 +374,7 @@
 		F0192026000000000000000D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				F02720260000000000000007 /* OwnedNFTsView.swift */,
 				F0192026000000000000000E /* Components */,
 				F02120260000000000000003 /* EditProfileView.swift */,
 				F01920260000000000000011 /* ProfileView.swift */,
@@ -375,6 +386,7 @@
 		F0192026000000000000000E /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				F02720260000000000000005 /* OwnedNFTRow.swift */,
 				F0192026000000000000000F /* ProfileMenuRow.swift */,
 			);
 			path = Components;
@@ -520,6 +532,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F02720260000000000000008 /* OwnedNFTsView.swift in Sources */,
+				F02720260000000000000006 /* OwnedNFTRow.swift in Sources */,
+				F02720260000000000000004 /* OwnedNFTsViewModel.swift in Sources */,
+				F02720260000000000000002 /* OwnedNFT.swift in Sources */,
 				F02120260000000000000002 /* EditProfileViewModel.swift in Sources */,
 				F02120260000000000000004 /* EditProfileView.swift in Sources */,
 				F01920260000000000000004 /* ProfileFixtures.swift in Sources */,
