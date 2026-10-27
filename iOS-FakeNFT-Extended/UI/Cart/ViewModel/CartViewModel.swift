@@ -64,4 +64,32 @@ final class CartViewModel {
             errorMessage = "Не удалось загрузить корзину. Попробуйте ещё раз."
         }
     }
+    
+    func removeItem(_ item: CartItem) async {
+        guard !isLoading else { return }
+
+        isLoading = true
+        errorMessage = nil
+
+        defer {
+            isLoading = false
+        }
+
+        let updatedNFTIDs = items
+            .filter { $0.id != item.id }
+            .map { $0.id }
+
+        do {
+            try await cartService.updateOrder(
+                id: "1",
+                nftIDs: updatedNFTIDs
+            )
+
+            items.removeAll { $0.id == item.id }
+        } catch {
+            print("Ошибка удаления NFT: \(error)")
+            errorMessage = "Не удалось удалить NFT. Попробуйте ещё раз."
+        }
+    }
+
 }

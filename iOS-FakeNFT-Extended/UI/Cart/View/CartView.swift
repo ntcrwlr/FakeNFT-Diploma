@@ -76,8 +76,11 @@ struct CartView: View {
                     DeleteConfirmationView(
                         item: item,
                         onDelete: {
-                            showDeleteConfirmation = false
-                            selectedItem = nil
+                            Task {
+                                await viewModel.removeItem(item)
+                                selectedItem = nil
+                                showDeleteConfirmation = false
+                            }
                         },
                         onCancel: {
                             showDeleteConfirmation = false
@@ -87,7 +90,7 @@ struct CartView: View {
                 }
         }
     }
-
+    
     
     var body: some View {
         NavigationStack {
