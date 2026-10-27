@@ -39,9 +39,9 @@ struct OwnedNFTsView: View {
         .navigationBarBackButtonHidden()
         .toolbar(.hidden, for: .navigationBar, .tabBar)
         .confirmationDialog("Сортировка", isPresented: $viewModel.isSortMenuPresented, titleVisibility: .visible) {
-            Button("По цене", action: viewModel.closeSortMenu)
-            Button("По рейтингу", action: viewModel.closeSortMenu)
-            Button("По названию", action: viewModel.closeSortMenu)
+            Button("По цене") { viewModel.selectSortOption(.price) }
+            Button("По рейтингу") { viewModel.selectSortOption(.rating) }
+            Button("По названию") { viewModel.selectSortOption(.name) }
             Button("Закрыть", role: .cancel, action: viewModel.closeSortMenu)
         }
         .accessibilityIdentifier("ownedNFTs.screen")
