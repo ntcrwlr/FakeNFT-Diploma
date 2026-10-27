@@ -1,5 +1,11 @@
 import Foundation
 
+enum OwnedNFTSortOption: String, CaseIterable {
+    case price
+    case rating
+    case name
+}
+
 struct OwnedNFT: Identifiable {
     let id: String
     let name: String

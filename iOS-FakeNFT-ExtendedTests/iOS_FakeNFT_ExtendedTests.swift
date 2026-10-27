@@ -131,9 +131,9 @@ final class OwnedNFTsViewModelTests: XCTestCase {
     ]
 
     func testSelectionSortsItemsAndClosesMenu() {
-        let model = OwnedNFTsViewModel(items: samples)
-        XCTAssertNil(model.selectedSortOption)
-        XCTAssertEqual(model.items.map(\.id), ["1", "2", "3"])
+        let model = OwnedNFTsViewModel(items: samples, settingsService: UserSettingsService(userDefaults: makeDefaults()))
+        XCTAssertEqual(model.selectedSortOption, .rating)
+        XCTAssertEqual(model.items.map(\.id), ["1", "3", "2"])
 
         for (option, expected) in [
             (OwnedNFTSortOption.price, ["2", "1", "3"]),
@@ -158,7 +158,7 @@ final class OwnedNFTsViewModelTests: XCTestCase {
     }
 
     func testUpdatedItemsUseCurrentSelection() {
-        let model = OwnedNFTsViewModel(items: [])
+        let model = OwnedNFTsViewModel(items: [], settingsService: UserSettingsService(userDefaults: makeDefaults()))
         model.selectSortOption(.price)
         model.updateItems(samples.reversed())
         XCTAssertEqual(model.items.map(\.id), ["2", "1", "3"])
@@ -167,7 +167,7 @@ final class OwnedNFTsViewModelTests: XCTestCase {
     }
 
     func testEmptyAndSingleItemListsForEveryCriterion() {
-        let model = OwnedNFTsViewModel(items: [])
+        let model = OwnedNFTsViewModel(items: [], settingsService: UserSettingsService(userDefaults: makeDefaults()))
         for option in OwnedNFTSortOption.allCases {
             model.updateItems([])
             model.selectSortOption(option)
@@ -179,7 +179,7 @@ final class OwnedNFTsViewModelTests: XCTestCase {
     }
 
     func testCancelPreservesSelectionAndOrder() {
-        let model = OwnedNFTsViewModel(items: samples)
+        let model = OwnedNFTsViewModel(items: samples, settingsService: UserSettingsService(userDefaults: makeDefaults()))
         model.selectSortOption(.name)
         model.isSortMenuPresented = true
         model.closeSortMenu()
@@ -189,11 +189,66 @@ final class OwnedNFTsViewModelTests: XCTestCase {
     }
 
     func testEqualValuesKeepSourceOrderAcrossSelections() {
-        let model = OwnedNFTsViewModel(items: OwnedNFTFixtures.preview)
+        let model = OwnedNFTsViewModel(items: OwnedNFTFixtures.preview, settingsService: UserSettingsService(userDefaults: makeDefaults()))
         model.selectSortOption(.name)
         model.selectSortOption(.price)
         XCTAssertEqual(model.items.map(\.id), OwnedNFTFixtures.preview.map(\.id))
         model.selectSortOption(.rating)
         XCTAssertEqual(model.items.map(\.id), OwnedNFTFixtures.preview.map(\.id))
     }
+
+    func testSelectionPersistsAndRestoresForEveryCriterion() {
+        let defaults = makeDefaults()
+        let model = OwnedNFTsViewModel(items: samples, settingsService: UserSettingsService(userDefaults: defaults))
+        for (option, expected) in [
+            (OwnedNFTSortOption.price, ["2", "1", "3"]),
+            (.rating, ["1", "3", "2"]),
+            (.name, ["2", "3", "1"])
+        ] {
+            model.selectSortOption(option)
+            XCTAssertEqual(defaults.string(forKey: "profile.ownedNFTs.sortOption"), option.rawValue)
+
+            let reopened = OwnedNFTsViewModel(items: samples, settingsService: UserSettingsService(userDefaults: defaults))
+            XCTAssertEqual(reopened.selectedSortOption, option)
+            XCTAssertEqual(reopened.items.map(\.id), expected)
+            reopened.updateItems(samples.reversed())
+            XCTAssertEqual(reopened.items.map(\.id), expected)
+        }
+    }
+
+    func testUnknownSavedCriterionFallsBackToRating() {
+        let defaults = makeDefaults()
+        defaults.set("unknown", forKey: "profile.ownedNFTs.sortOption")
+        let model = OwnedNFTsViewModel(items: samples, settingsService: UserSettingsService(userDefaults: defaults))
+        XCTAssertEqual(model.selectedSortOption, .rating)
+        XCTAssertEqual(model.items.map(\.id), ["1", "3", "2"])
+        model.selectSortOption(.name)
+        XCTAssertEqual(defaults.string(forKey: "profile.ownedNFTs.sortOption"), "name")
+    }
+
+    func testViewModelReadsAndUpdatesInjectedSettingsService() {
+        let service = UserSettingsServiceStub()
+        service.ownedNFTSortOption = .name
+        let model = OwnedNFTsViewModel(items: samples, settingsService: service)
+        XCTAssertEqual(model.selectedSortOption, .name)
+        XCTAssertEqual(model.items.map(\.id), ["2", "3", "1"])
+
+        model.selectSortOption(.price)
+        XCTAssertEqual(service.ownedNFTSortOption, .price)
+        model.closeSortMenu()
+        XCTAssertEqual(service.ownedNFTSortOption, .price)
+    }
+
+    private func makeDefaults() -> UserDefaults {
+        let suiteName = "OwnedNFTsViewModelTests.\(UUID().uuidString)"
+        let defaults = UserDefaults(suiteName: suiteName)!
+        addTeardownBlock {
+            UserDefaults(suiteName: suiteName)?.removePersistentDomain(forName: suiteName)
+        }
+        return defaults
+    }
+}
+
+private final class UserSettingsServiceStub: UserSettingsServiceProtocol {
+    var ownedNFTSortOption: OwnedNFTSortOption = .rating
 }

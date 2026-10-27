@@ -1,21 +1,15 @@
 import Foundation
 import Observation
 
-enum OwnedNFTSortOption: CaseIterable {
-    case price
-    case rating
-    case name
-}
-
 @MainActor
 @Observable
 final class OwnedNFTsViewModel {
+    private let settingsService: UserSettingsServiceProtocol
     private var sourceItems: [OwnedNFT]
-    private(set) var selectedSortOption: OwnedNFTSortOption?
+    private(set) var selectedSortOption: OwnedNFTSortOption
     var isSortMenuPresented = false
 
     var items: [OwnedNFT] {
-        guard let selectedSortOption else { return sourceItems }
         return sourceItems.sorted { first, second in
             switch selectedSortOption {
             case .price:
@@ -30,8 +24,10 @@ final class OwnedNFTsViewModel {
 
     var isEmpty: Bool { sourceItems.isEmpty }
 
-    init(items: [OwnedNFT]) {
+    init(items: [OwnedNFT], settingsService: UserSettingsServiceProtocol = UserSettingsService()) {
+        self.settingsService = settingsService
         self.sourceItems = items
+        self.selectedSortOption = settingsService.ownedNFTSortOption
     }
 
     func updateItems(_ items: [OwnedNFT]) {
@@ -40,6 +36,7 @@ final class OwnedNFTsViewModel {
 
     func selectSortOption(_ option: OwnedNFTSortOption) {
         selectedSortOption = option
+        settingsService.ownedNFTSortOption = option
         closeSortMenu()
     }
 
