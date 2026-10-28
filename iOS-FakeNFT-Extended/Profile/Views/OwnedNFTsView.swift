@@ -12,7 +12,7 @@ struct OwnedNFTsView: View {
         ZStack {
             Color(uiColor: .profileBackground).ignoresSafeArea()
             if viewModel.isEmpty {
-                Text("У Вас ещё нет NFT")
+                Text(NSLocalizedString("OwnedNFTs.empty", comment: "Message shown when the user owns no NFTs"))
                     .font(.system(.body, weight: .bold))
                     .accessibilityIdentifier("ownedNFTs.empty")
             } else {
@@ -38,11 +38,25 @@ struct OwnedNFTsView: View {
         }
         .navigationBarBackButtonHidden()
         .toolbar(.hidden, for: .navigationBar, .tabBar)
-        .confirmationDialog("Сортировка", isPresented: $viewModel.isSortMenuPresented, titleVisibility: .visible) {
-            Button("По цене") { viewModel.selectSortOption(.price) }
-            Button("По рейтингу") { viewModel.selectSortOption(.rating) }
-            Button("По названию") { viewModel.selectSortOption(.name) }
-            Button("Закрыть", role: .cancel, action: viewModel.closeSortMenu)
+        .confirmationDialog(
+            NSLocalizedString("OwnedNFTs.sort", comment: "NFT sorting menu title and button label"),
+            isPresented: $viewModel.isSortMenuPresented,
+            titleVisibility: .visible
+        ) {
+            Button(NSLocalizedString("OwnedNFTs.sort.price", comment: "Sort NFTs by price")) {
+                viewModel.selectSortOption(.price)
+            }
+            Button(NSLocalizedString("OwnedNFTs.sort.rating", comment: "Sort NFTs by rating")) {
+                viewModel.selectSortOption(.rating)
+            }
+            Button(NSLocalizedString("OwnedNFTs.sort.name", comment: "Sort NFTs by name")) {
+                viewModel.selectSortOption(.name)
+            }
+            Button(
+                NSLocalizedString("OwnedNFTs.close", comment: "Close the NFT sorting menu"),
+                role: .cancel,
+                action: viewModel.closeSortMenu
+            )
         }
         .accessibilityIdentifier("ownedNFTs.screen")
     }
@@ -51,7 +65,7 @@ struct OwnedNFTsView: View {
         HStack {
             backButton
             Spacer()
-            Text("Мои NFT")
+            Text(NSLocalizedString("OwnedNFTs.title", comment: "Owned NFTs screen title"))
                 .font(.system(.body, weight: .bold))
                 .accessibilityAddTraits(.isHeader)
             Spacer()
@@ -63,7 +77,7 @@ struct OwnedNFTsView: View {
                     .frame(width: 44, height: 44)
                     .contentShape(Rectangle())
             }
-            .accessibilityLabel("Сортировка")
+            .accessibilityLabel(NSLocalizedString("OwnedNFTs.sort", comment: "NFT sorting menu title and button label"))
             .accessibilityIdentifier("ownedNFTs.sort")
         }
         .buttonStyle(.plain)
@@ -80,7 +94,7 @@ struct OwnedNFTsView: View {
                 .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        .accessibilityLabel("Назад")
+        .accessibilityLabel(NSLocalizedString("OwnedNFTs.back", comment: "Return to the profile screen"))
         .accessibilityIdentifier("ownedNFTs.back")
     }
 }

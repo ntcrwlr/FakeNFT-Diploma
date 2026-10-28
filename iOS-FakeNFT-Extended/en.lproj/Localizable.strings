@@ -5,3 +5,17 @@
 "Error.unknown" = "Произошла неизвестная ошибка";
 "Error.repeat" = "Повторить";
 "Error.title" = "Ошибка";
+
+"OwnedNFTs.empty" = "У Вас ещё нет NFT";
+"OwnedNFTs.title" = "Мои NFT";
+"OwnedNFTs.sort" = "Сортировка";
+"OwnedNFTs.sort.price" = "По цене";
+"OwnedNFTs.sort.rating" = "По рейтингу";
+"OwnedNFTs.sort.name" = "По названию";
+"OwnedNFTs.close" = "Закрыть";
+"OwnedNFTs.back" = "Назад";
+"OwnedNFTs.favorite" = "В избранном";
+"OwnedNFTs.image" = "Изображение NFT";
+"OwnedNFTs.rating" = "Рейтинг: %ld из 5";
+"OwnedNFTs.author" = "от %@";
+"OwnedNFTs.price" = "Цена";

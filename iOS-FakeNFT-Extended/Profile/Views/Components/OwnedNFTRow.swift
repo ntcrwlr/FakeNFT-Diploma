@@ -52,7 +52,11 @@ struct OwnedNFTRow: View {
                     .padding(10)
             }
         }
-        .accessibilityLabel(item.isFavorite ? "В избранном" : "Изображение NFT")
+        .accessibilityLabel(
+            item.isFavorite
+                ? NSLocalizedString("OwnedNFTs.favorite", comment: "Accessibility label for a favorite NFT image")
+                : NSLocalizedString("OwnedNFTs.image", comment: "Accessibility label for an NFT image")
+        )
     }
 
     private var details: some View {
@@ -67,15 +71,25 @@ struct OwnedNFTRow: View {
                 }
             }
             .accessibilityElement(children: .ignore)
-            .accessibilityLabel("Рейтинг: \(item.rating) из 5")
-            Text("от \(item.author)")
+            .accessibilityLabel(
+                String(
+                    format: NSLocalizedString("OwnedNFTs.rating", comment: "NFT rating out of five; %ld is the rating"),
+                    item.rating
+                )
+            )
+            Text(
+                String(
+                    format: NSLocalizedString("OwnedNFTs.author", comment: "NFT author attribution; %@ is the author name"),
+                    item.author
+                )
+            )
                 .font(.system(size: 13))
         }
     }
 
     private var price: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text("Цена")
+            Text(NSLocalizedString("OwnedNFTs.price", comment: "NFT price label"))
                 .font(.system(size: 13))
             Text(item.formattedPrice)
                 .font(.system(.body, weight: .bold))
