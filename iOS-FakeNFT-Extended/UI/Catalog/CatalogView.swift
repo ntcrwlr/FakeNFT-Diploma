@@ -79,13 +79,20 @@ struct CatalogView: View {
 
     private func collectionsList(_ collections: [NftCollection]) -> some View {
         List(collections) { collection in
-            CatalogCollectionRow(collection: collection)
-                .listRowSeparator(.hidden)
-                .listRowInsets(Constants.rowInsets)
-                .listRowBackground(Color.white)
+            NavigationLink(value: collection) {
+                CatalogCollectionRow(collection: collection)
+            }
+            .buttonStyle(.plain)
+            .navigationLinkIndicatorVisibility(.hidden)
+            .listRowSeparator(.hidden)
+            .listRowInsets(Constants.rowInsets)
+            .listRowBackground(Color.white)
         }
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
+        .navigationDestination(for: NftCollection.self) { collection in
+            CollectionDetailsView(collection: collection)
+        }
     }
 
     private var errorContent: some View {
