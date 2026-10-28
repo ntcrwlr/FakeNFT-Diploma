@@ -1,0 +1,16 @@
+Target dependency graph (7 targets)
+Target 'iOS-FakeNFT-Extended' in project 'iOS-FakeNFT-Extended'
+➜ Explicit dependency on target 'Kingfisher-product' in project 'Kingfisher'
+➜ Explicit dependency on target 'ProgressHUD-product' in project 'ProgressHUD'
+Target 'ProgressHUD-product' in project 'ProgressHUD'
+➜ Explicit dependency on target 'ProgressHUD' in project 'ProgressHUD'
+➜ Explicit dependency on target 'ProgressHUD_ProgressHUD' in project 'ProgressHUD'
+Target 'ProgressHUD' in project 'ProgressHUD'
+➜ Explicit dependency on target 'ProgressHUD_ProgressHUD' in project 'ProgressHUD'
+Target 'ProgressHUD_ProgressHUD' in project 'ProgressHUD' (no dependencies)
+Target 'Kingfisher-product' in project 'Kingfisher'
+➜ Explicit dependency on target 'Kingfisher' in project 'Kingfisher'
+➜ Explicit dependency on target 'Kingfisher_Kingfisher' in project 'Kingfisher'
+Target 'Kingfisher' in project 'Kingfisher'
+➜ Explicit dependency on target 'Kingfisher_Kingfisher' in project 'Kingfisher'
+Target 'Kingfisher_Kingfisher' in project 'Kingfisher' (no dependencies)

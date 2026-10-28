@@ -4,7 +4,7 @@ struct CatalogView: View {
     @AppStorage(CatalogSort.storageKey) private var sortRawValue = CatalogSort.nftCount.rawValue
     @State private var viewModel: CatalogViewModel
 
-    init(collectionService: CollectionService) {
+    init(collectionService: CollectionServiceProtocol) {
         let storedSort = UserDefaults.standard.string(forKey: CatalogSort.storageKey)
         let sort = CatalogSort(rawValue: storedSort ?? "") ?? .nftCount
         _viewModel = State(initialValue: CatalogViewModel(collectionService: collectionService, sort: sort))
@@ -18,33 +18,14 @@ struct CatalogView: View {
 
     var body: some View {
         NavigationStack {
-            screen
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color.white)
+            content
                 .navigationTitle("")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Menu {
-                            Section(Constants.sortTitle) {
-                                Button(Constants.sortByName) {
-                                    sortRawValue = CatalogSort.name.rawValue
-                                }
-                                Button(Constants.sortByCount) {
-                                    sortRawValue = CatalogSort.nftCount.rawValue
-                                }
-                            }
-                        } label: {
-                            Image(systemName: "line.3.horizontal")
-                                .font(.system(size: 17))
-                                .foregroundStyle(Color.black)
-                        }
-                        .accessibilityLabel(Constants.sortTitle)
-                        .tint(Color.black)
-                    }
+                    sortButton
                 }
                 .onChange(of: sortRawValue) { _, newValue in
-                    viewModel.setSort(CatalogSort(rawValue: newValue) ?? .nftCount)
+                    applySort(newValue)
                 }
                 .task {
                     await viewModel.loadIfNeeded()
@@ -52,14 +33,46 @@ struct CatalogView: View {
         }
     }
 
+    private var content: some View {
+        screen
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color.white)
+    }
+
+    @ToolbarContentBuilder
+    private var sortButton: some ToolbarContent {
+        ToolbarItem(placement: .topBarTrailing) {
+            Menu {
+                Section(Constants.sortTitle) {
+                    Button(Constants.sortByName) {
+                        sortRawValue = CatalogSort.name.rawValue
+                    }
+                    Button(Constants.sortByCount) {
+                        sortRawValue = CatalogSort.nftCount.rawValue
+                    }
+                }
+            } label: {
+                Image(systemName: "line.3.horizontal")
+                    .font(.system(size: 17))
+                    .foregroundStyle(Color.black)
+            }
+            .accessibilityLabel(Constants.sortTitle)
+            .tint(Color.black)
+        }
+    }
+
+    private func applySort(_ rawValue: String) {
+        viewModel.setSort(CatalogSort(rawValue: rawValue) ?? .nftCount)
+    }
+
     @ViewBuilder
     private var screen: some View {
-        switch viewModel.phase {
-        case .idle, .loading:
+        switch viewModel.state {
+        case .loading:
             ProgressView()
-        case .failed:
+        case .error:
             errorContent
-        case .loaded(let collections):
+        case .success(let collections):
             collectionsList(collections)
         }
     }

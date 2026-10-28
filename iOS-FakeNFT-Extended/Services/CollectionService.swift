@@ -1,10 +1,10 @@
 import Foundation
 
-protocol CollectionService {
+protocol CollectionServiceProtocol {
     func loadCollections() async throws -> [NftCollection]
 }
 
-final class CollectionServiceImpl: CollectionService {
+final class CollectionService: CollectionServiceProtocol {
     private let networkClient: NetworkClient
 
     init(networkClient: NetworkClient) {
