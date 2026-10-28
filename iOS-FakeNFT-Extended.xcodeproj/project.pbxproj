@@ -48,6 +48,8 @@
 		C47A10142C31F001002B4068 /* CatalogViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A10042C31F001002B4068 /* CatalogViewModel.swift */; };
 		C47A10152C31F001002B4068 /* CatalogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A10052C31F001002B4068 /* CatalogView.swift */; };
 		C47A101B2C31F001002B4068 /* CollectionDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A100B2C31F001002B4068 /* CollectionDetailsView.swift */; };
+		C47A101C2C31F001002B4068 /* CollectionDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A100C2C31F001002B4068 /* CollectionDetailsViewModel.swift */; };
+		C47A101D2C31F001002B4068 /* CollectionNftCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A100D2C31F001002B4068 /* CollectionNftCell.swift */; };
 		C47A10162C31F001002B4068 /* CatalogSort.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A10062C31F001002B4068 /* CatalogSort.swift */; };
 		C47A10172C31F001002B4068 /* CatalogState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A10072C31F001002B4068 /* CatalogState.swift */; };
 /* End PBXBuildFile section */
@@ -112,6 +114,8 @@
 		C47A10042C31F001002B4068 /* CatalogViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogViewModel.swift; sourceTree = "<group>"; };
 		C47A10052C31F001002B4068 /* CatalogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogView.swift; sourceTree = "<group>"; };
 		C47A100B2C31F001002B4068 /* CollectionDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionDetailsView.swift; sourceTree = "<group>"; };
+		C47A100C2C31F001002B4068 /* CollectionDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionDetailsViewModel.swift; sourceTree = "<group>"; };
+		C47A100D2C31F001002B4068 /* CollectionNftCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionNftCell.swift; sourceTree = "<group>"; };
 		C47A10062C31F001002B4068 /* CatalogSort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogSort.swift; sourceTree = "<group>"; };
 		C47A10072C31F001002B4068 /* CatalogState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogState.swift; sourceTree = "<group>"; };
 		C47A10092C31F001002B4068 /* Secrets.example.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Secrets.example.plist; sourceTree = "<group>"; };
@@ -333,6 +337,8 @@
 				C47A10072C31F001002B4068 /* CatalogState.swift */,
 				C47A10062C31F001002B4068 /* CatalogSort.swift */,
 				C47A10042C31F001002B4068 /* CatalogViewModel.swift */,
+				C47A100C2C31F001002B4068 /* CollectionDetailsViewModel.swift */,
+				C47A100D2C31F001002B4068 /* CollectionNftCell.swift */,
 				C47A100B2C31F001002B4068 /* CollectionDetailsView.swift */,
 				C47A10052C31F001002B4068 /* CatalogView.swift */,
 			);
@@ -528,6 +534,8 @@
 				C47A10172C31F001002B4068 /* CatalogState.swift in Sources */,
 				C47A10152C31F001002B4068 /* CatalogView.swift in Sources */,
 				C47A101B2C31F001002B4068 /* CollectionDetailsView.swift in Sources */,
+				C47A101C2C31F001002B4068 /* CollectionDetailsViewModel.swift in Sources */,
+				C47A101D2C31F001002B4068 /* CollectionNftCell.swift in Sources */,
 				ABC5E1DF2C3204FB002B4068 /* LoadingView.swift in Sources */,
 				ABC5E1972C31F656002B4068 /* Colors.swift in Sources */,
 				ABC5E1A42C31F800002B4068 /* NetworkClient.swift in Sources */,

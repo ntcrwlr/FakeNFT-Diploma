@@ -3,14 +3,17 @@ import SwiftUI
 struct CatalogView: View {
     @AppStorage(CatalogSort.storageKey) private var sortRawValue = CatalogSort.nftCount.rawValue
     @State private var viewModel: CatalogViewModel
+    private let nftService: NftService
 
-    init(collectionService: CollectionServiceProtocol) {
+    init(collectionService: CollectionServiceProtocol, nftService: NftService) {
+        self.nftService = nftService
         let storedSort = UserDefaults.standard.string(forKey: CatalogSort.storageKey)
         let sort = CatalogSort(rawValue: storedSort ?? "") ?? .nftCount
         _viewModel = State(initialValue: CatalogViewModel(collectionService: collectionService, sort: sort))
     }
 
     init(previewCollections: [NftCollection]) {
+        nftService = PreviewNftService()
         _viewModel = State(
             initialValue: CatalogViewModel(previewCollections: previewCollections, sort: .nftCount)
         )
@@ -91,7 +94,7 @@ struct CatalogView: View {
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
         .navigationDestination(for: NftCollection.self) { collection in
-            CollectionDetailsView(collection: collection)
+            CollectionDetailsView(collection: collection, nftService: nftService)
         }
     }
 
