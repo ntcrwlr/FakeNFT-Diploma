@@ -13,6 +13,7 @@ struct CartView: View {
     @State private var showErrorAlert = false
     @State private var selectedItem: CartItem?
     @State private var showDeleteConfirmation = false
+    @State private var showSortDialog = false
     
     init(viewModel: CartViewModel) {
         _viewModel = State(initialValue: viewModel)
@@ -69,7 +70,7 @@ struct CartView: View {
             Rectangle()
                 .fill(.ultraThinMaterial)
                 .overlay {
-                    Color.black.opacity(0.2)
+                    Color("blurOverlayColor")
                 }
                 .ignoresSafeArea()
                 .overlay {
@@ -97,16 +98,13 @@ struct CartView: View {
             content
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button {} label: {
-                            Image("sort")
-                                .renderingMode(.template)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 42, height: 42)
-                                .foregroundStyle(.primary)
-                        }
-                        .buttonStyle(.plain)
+                    Button {
+                        showSortDialog = true
+                    } label: {
+                        Image("sort")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 42, height: 42)
                     }
                 }
                 .safeAreaInset(edge: .bottom, spacing: 0) {
@@ -145,6 +143,16 @@ struct CartView: View {
         }
         .overlay {
             deleteOverlay
+        }
+        .sheet(isPresented: $showSortDialog) {
+            SortView(
+                onSelect: { option in
+                    viewModel.sortItems(by: option)
+                },
+                onClose: {
+                    showSortDialog = false
+                }
+            )
         }
     }
 }

@@ -8,6 +8,12 @@
 
 import Foundation
 
+enum CartSortOption {
+    case price
+    case rating
+    case name
+}
+
 @Observable
 @MainActor
 final class CartViewModel {
@@ -24,6 +30,19 @@ final class CartViewModel {
     ) {
         self.cartService = cartService
         self.nftService = nftService
+    }
+    
+    func sortItems(by option: CartSortOption) {
+        switch option {
+        case .price:
+            items.sort { $0.price < $1.price }
+        case .rating:
+            items.sort { $0.rating > $1.rating }
+        case .name:
+            items.sort {
+                $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending
+            }
+        }
     }
     
     func loadCart() async {
@@ -91,5 +110,4 @@ final class CartViewModel {
             errorMessage = "Не удалось удалить NFT. Попробуйте ещё раз."
         }
     }
-
 }
