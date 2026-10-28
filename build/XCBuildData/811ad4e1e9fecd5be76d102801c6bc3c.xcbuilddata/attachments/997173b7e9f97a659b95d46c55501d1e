@@ -1,0 +1,186 @@
+{
+  "" : {
+    "const-values" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/iOS-FakeNFT-Extended-primary.swiftconstvalues",
+    "dependencies" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/iOS-FakeNFT-Extended-primary.d",
+    "diagnostics" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/iOS-FakeNFT-Extended-primary.dia",
+    "emit-module-dependencies" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/iOS-FakeNFT-Extended-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/iOS-FakeNFT-Extended-primary-emit-module.dia",
+    "pch" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/iOS-FakeNFT-Extended-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/iOS-FakeNFT-Extended-primary.swiftdeps"
+  },
+  "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/DerivedSources/GeneratedAssetSymbols.swift" : {
+    "index-unit-output-path" : "/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "llvm-bc" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/GeneratedAssetSymbols.bc",
+    "object" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/GeneratedAssetSymbols.o"
+  },
+  "/Users/sergbuskov/Desktop/FakeNFT-Diploma/iOS-FakeNFT-Extended/DesignSystem/Colors.swift" : {
+    "index-unit-output-path" : "/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/Colors.o",
+    "llvm-bc" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/Colors.bc",
+    "object" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/Colors.o"
+  },
+  "/Users/sergbuskov/Desktop/FakeNFT-Diploma/iOS-FakeNFT-Extended/DesignSystem/Fonts.swift" : {
+    "index-unit-output-path" : "/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/Fonts.o",
+    "llvm-bc" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/Fonts.bc",
+    "object" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/Fonts.o"
+  },
+  "/Users/sergbuskov/Desktop/FakeNFT-Diploma/iOS-FakeNFT-Extended/Foundation/DateFormatters+Presets.swift" : {
+    "index-unit-output-path" : "/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/DateFormatters+Presets.o",
+    "llvm-bc" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/DateFormatters+Presets.bc",
+    "object" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/DateFormatters+Presets.o"
+  },
+  "/Users/sergbuskov/Desktop/FakeNFT-Diploma/iOS-FakeNFT-Extended/Foundation/MemoryStorage/NftStorage.swift" : {
+    "index-unit-output-path" : "/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/NftStorage.o",
+    "llvm-bc" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/NftStorage.bc",
+    "object" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/NftStorage.o"
+  },
+  "/Users/sergbuskov/Desktop/FakeNFT-Diploma/iOS-FakeNFT-Extended/Foundation/NetworkClient/NetworkClient.swift" : {
+    "index-unit-output-path" : "/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/NetworkClient.o",
+    "llvm-bc" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/NetworkClient.bc",
+    "object" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/NetworkClient.o"
+  },
+  "/Users/sergbuskov/Desktop/FakeNFT-Diploma/iOS-FakeNFT-Extended/Foundation/NetworkClient/NetworkRequest.swift" : {
+    "index-unit-output-path" : "/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/NetworkRequest.o",
+    "llvm-bc" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/NetworkRequest.bc",
+    "object" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/NetworkRequest.o"
+  },
+  "/Users/sergbuskov/Desktop/FakeNFT-Diploma/iOS-FakeNFT-Extended/Models/Network/Nft.swift" : {
+    "index-unit-output-path" : "/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/Nft.o",
+    "llvm-bc" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/Nft.bc",
+    "object" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/Nft.o"
+  },
+  "/Users/sergbuskov/Desktop/FakeNFT-Diploma/iOS-FakeNFT-Extended/Models/Network/NftCollection.swift" : {
+    "index-unit-output-path" : "/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/NftCollection.o",
+    "llvm-bc" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/NftCollection.bc",
+    "object" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/NftCollection.o"
+  },
+  "/Users/sergbuskov/Desktop/FakeNFT-Diploma/iOS-FakeNFT-Extended/Services/CollectionService.swift" : {
+    "index-unit-output-path" : "/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/CollectionService.o",
+    "llvm-bc" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/CollectionService.bc",
+    "object" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/CollectionService.o"
+  },
+  "/Users/sergbuskov/Desktop/FakeNFT-Diploma/iOS-FakeNFT-Extended/Services/NftService.swift" : {
+    "index-unit-output-path" : "/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/NftService.o",
+    "llvm-bc" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/NftService.bc",
+    "object" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/NftService.o"
+  },
+  "/Users/sergbuskov/Desktop/FakeNFT-Diploma/iOS-FakeNFT-Extended/Services/Requests/CollectionsRequest.swift" : {
+    "index-unit-output-path" : "/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/CollectionsRequest.o",
+    "llvm-bc" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/CollectionsRequest.bc",
+    "object" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/CollectionsRequest.o"
+  },
+  "/Users/sergbuskov/Desktop/FakeNFT-Diploma/iOS-FakeNFT-Extended/Services/Requests/ExampleRequest.swift" : {
+    "index-unit-output-path" : "/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/ExampleRequest.o",
+    "llvm-bc" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/ExampleRequest.bc",
+    "object" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/ExampleRequest.o"
+  },
+  "/Users/sergbuskov/Desktop/FakeNFT-Diploma/iOS-FakeNFT-Extended/Services/Requests/NftByIdRequest.swift" : {
+    "index-unit-output-path" : "/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/NftByIdRequest.o",
+    "llvm-bc" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/NftByIdRequest.bc",
+    "object" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/NftByIdRequest.o"
+  },
+  "/Users/sergbuskov/Desktop/FakeNFT-Diploma/iOS-FakeNFT-Extended/Services/Requests/RequestConstants.swift" : {
+    "index-unit-output-path" : "/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/RequestConstants.o",
+    "llvm-bc" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/RequestConstants.bc",
+    "object" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/RequestConstants.o"
+  },
+  "/Users/sergbuskov/Desktop/FakeNFT-Diploma/iOS-FakeNFT-Extended/Services/ServicesAssembly.swift" : {
+    "index-unit-output-path" : "/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/ServicesAssembly.o",
+    "llvm-bc" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/ServicesAssembly.bc",
+    "object" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/ServicesAssembly.o"
+  },
+  "/Users/sergbuskov/Desktop/FakeNFT-Diploma/iOS-FakeNFT-Extended/UI/Catalog/CatalogSort.swift" : {
+    "index-unit-output-path" : "/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/CatalogSort.o",
+    "llvm-bc" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/CatalogSort.bc",
+    "object" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/CatalogSort.o"
+  },
+  "/Users/sergbuskov/Desktop/FakeNFT-Diploma/iOS-FakeNFT-Extended/UI/Catalog/CatalogState.swift" : {
+    "index-unit-output-path" : "/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/CatalogState.o",
+    "llvm-bc" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/CatalogState.bc",
+    "object" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/CatalogState.o"
+  },
+  "/Users/sergbuskov/Desktop/FakeNFT-Diploma/iOS-FakeNFT-Extended/UI/Catalog/CatalogView.swift" : {
+    "index-unit-output-path" : "/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/CatalogView.o",
+    "llvm-bc" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/CatalogView.bc",
+    "object" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/CatalogView.o"
+  },
+  "/Users/sergbuskov/Desktop/FakeNFT-Diploma/iOS-FakeNFT-Extended/UI/Catalog/CatalogViewModel.swift" : {
+    "index-unit-output-path" : "/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/CatalogViewModel.o",
+    "llvm-bc" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/CatalogViewModel.bc",
+    "object" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/CatalogViewModel.o"
+  },
+  "/Users/sergbuskov/Desktop/FakeNFT-Diploma/iOS-FakeNFT-Extended/UI/ContentView.swift" : {
+    "index-unit-output-path" : "/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/ContentView.o",
+    "llvm-bc" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/ContentView.bc",
+    "object" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/ContentView.o"
+  },
+  "/Users/sergbuskov/Desktop/FakeNFT-Diploma/iOS-FakeNFT-Extended/UI/NftDetailBridgeView.swift" : {
+    "index-unit-output-path" : "/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/NftDetailBridgeView.o",
+    "llvm-bc" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/NftDetailBridgeView.bc",
+    "object" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/NftDetailBridgeView.o"
+  },
+  "/Users/sergbuskov/Desktop/FakeNFT-Diploma/iOS-FakeNFT-Extended/UI/NftDetails/Cell/NftDetailCellModel.swift" : {
+    "index-unit-output-path" : "/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/NftDetailCellModel.o",
+    "llvm-bc" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/NftDetailCellModel.bc",
+    "object" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/NftDetailCellModel.o"
+  },
+  "/Users/sergbuskov/Desktop/FakeNFT-Diploma/iOS-FakeNFT-Extended/UI/NftDetails/Cell/NftImageCollectionViewCell.swift" : {
+    "index-unit-output-path" : "/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/NftImageCollectionViewCell.o",
+    "llvm-bc" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/NftImageCollectionViewCell.bc",
+    "object" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/NftImageCollectionViewCell.o"
+  },
+  "/Users/sergbuskov/Desktop/FakeNFT-Diploma/iOS-FakeNFT-Extended/UI/NftDetails/Common/CellsReusingUtils.swift" : {
+    "index-unit-output-path" : "/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/CellsReusingUtils.o",
+    "llvm-bc" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/CellsReusingUtils.bc",
+    "object" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/CellsReusingUtils.o"
+  },
+  "/Users/sergbuskov/Desktop/FakeNFT-Diploma/iOS-FakeNFT-Extended/UI/NftDetails/Common/ErrorView.swift" : {
+    "index-unit-output-path" : "/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/ErrorView.o",
+    "llvm-bc" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/ErrorView.bc",
+    "object" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/ErrorView.o"
+  },
+  "/Users/sergbuskov/Desktop/FakeNFT-Diploma/iOS-FakeNFT-Extended/UI/NftDetails/Common/LinePageControl.swift" : {
+    "index-unit-output-path" : "/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/LinePageControl.o",
+    "llvm-bc" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/LinePageControl.bc",
+    "object" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/LinePageControl.o"
+  },
+  "/Users/sergbuskov/Desktop/FakeNFT-Diploma/iOS-FakeNFT-Extended/UI/NftDetails/Common/LoadingView.swift" : {
+    "index-unit-output-path" : "/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/LoadingView.o",
+    "llvm-bc" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/LoadingView.bc",
+    "object" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/LoadingView.o"
+  },
+  "/Users/sergbuskov/Desktop/FakeNFT-Diploma/iOS-FakeNFT-Extended/UI/NftDetails/Common/UIView+Constraints.swift" : {
+    "index-unit-output-path" : "/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/UIView+Constraints.o",
+    "llvm-bc" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/UIView+Constraints.bc",
+    "object" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/UIView+Constraints.o"
+  },
+  "/Users/sergbuskov/Desktop/FakeNFT-Diploma/iOS-FakeNFT-Extended/UI/NftDetails/NftDetailAssembly.swift" : {
+    "index-unit-output-path" : "/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/NftDetailAssembly.o",
+    "llvm-bc" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/NftDetailAssembly.bc",
+    "object" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/NftDetailAssembly.o"
+  },
+  "/Users/sergbuskov/Desktop/FakeNFT-Diploma/iOS-FakeNFT-Extended/UI/NftDetails/NftDetailInput.swift" : {
+    "index-unit-output-path" : "/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/NftDetailInput.o",
+    "llvm-bc" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/NftDetailInput.bc",
+    "object" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/NftDetailInput.o"
+  },
+  "/Users/sergbuskov/Desktop/FakeNFT-Diploma/iOS-FakeNFT-Extended/UI/NftDetails/NftDetailPresenter.swift" : {
+    "index-unit-output-path" : "/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/NftDetailPresenter.o",
+    "llvm-bc" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/NftDetailPresenter.bc",
+    "object" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/NftDetailPresenter.o"
+  },
+  "/Users/sergbuskov/Desktop/FakeNFT-Diploma/iOS-FakeNFT-Extended/UI/NftDetails/NftDetailViewController.swift" : {
+    "index-unit-output-path" : "/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/NftDetailViewController.o",
+    "llvm-bc" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/NftDetailViewController.bc",
+    "object" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/NftDetailViewController.o"
+  },
+  "/Users/sergbuskov/Desktop/FakeNFT-Diploma/iOS-FakeNFT-Extended/UI/TabBarView.swift" : {
+    "index-unit-output-path" : "/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/TabBarView.o",
+    "llvm-bc" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/TabBarView.bc",
+    "object" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/TabBarView.o"
+  },
+  "/Users/sergbuskov/Desktop/FakeNFT-Diploma/iOS-FakeNFT-Extended/iOS_FakeNFT_ExtendedApp.swift" : {
+    "index-unit-output-path" : "/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/iOS_FakeNFT_ExtendedApp.o",
+    "llvm-bc" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/iOS_FakeNFT_ExtendedApp.bc",
+    "object" : "/Users/sergbuskov/Desktop/FakeNFT-Diploma/build/iOS-FakeNFT-Extended.build/Release-iphoneos/iOS-FakeNFT-Extended.build/Objects-normal/arm64/iOS_FakeNFT_ExtendedApp.o"
+  }
+}

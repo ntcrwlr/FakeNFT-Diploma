@@ -1,0 +1,156 @@
+{
+  "" : {
+    "const-values" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD-primary.swiftconstvalues",
+    "dependencies" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD-primary.d",
+    "diagnostics" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD-primary.dia",
+    "emit-module-dependencies" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD-primary-emit-module.dia",
+    "pch" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD-primary.swiftdeps"
+  },
+  "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/ProgressHUD/Sources/Animations/ProgressHUD+ActivityIndicator.swift" : {
+    "index-unit-output-path" : "/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+ActivityIndicator.o",
+    "llvm-bc" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+ActivityIndicator.bc",
+    "object" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+ActivityIndicator.o"
+  },
+  "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/ProgressHUD/Sources/Animations/ProgressHUD+BallVerticalBounce.swift" : {
+    "index-unit-output-path" : "/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+BallVerticalBounce.o",
+    "llvm-bc" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+BallVerticalBounce.bc",
+    "object" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+BallVerticalBounce.o"
+  },
+  "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/ProgressHUD/Sources/Animations/ProgressHUD+BarSweepToggle.swift" : {
+    "index-unit-output-path" : "/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+BarSweepToggle.o",
+    "llvm-bc" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+BarSweepToggle.bc",
+    "object" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+BarSweepToggle.o"
+  },
+  "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/ProgressHUD/Sources/Animations/ProgressHUD+CircleArcDotSpin.swift" : {
+    "index-unit-output-path" : "/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+CircleArcDotSpin.o",
+    "llvm-bc" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+CircleArcDotSpin.bc",
+    "object" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+CircleArcDotSpin.o"
+  },
+  "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/ProgressHUD/Sources/Animations/ProgressHUD+CircleBarSpinFade.swift" : {
+    "index-unit-output-path" : "/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+CircleBarSpinFade.o",
+    "llvm-bc" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+CircleBarSpinFade.bc",
+    "object" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+CircleBarSpinFade.o"
+  },
+  "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/ProgressHUD/Sources/Animations/ProgressHUD+CircleDotSpinFade.swift" : {
+    "index-unit-output-path" : "/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+CircleDotSpinFade.o",
+    "llvm-bc" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+CircleDotSpinFade.bc",
+    "object" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+CircleDotSpinFade.o"
+  },
+  "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/ProgressHUD/Sources/Animations/ProgressHUD+CirclePulseMultiple.swift" : {
+    "index-unit-output-path" : "/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+CirclePulseMultiple.o",
+    "llvm-bc" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+CirclePulseMultiple.bc",
+    "object" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+CirclePulseMultiple.o"
+  },
+  "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/ProgressHUD/Sources/Animations/ProgressHUD+CirclePulseSingle.swift" : {
+    "index-unit-output-path" : "/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+CirclePulseSingle.o",
+    "llvm-bc" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+CirclePulseSingle.bc",
+    "object" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+CirclePulseSingle.o"
+  },
+  "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/ProgressHUD/Sources/Animations/ProgressHUD+CircleRippleMultiple.swift" : {
+    "index-unit-output-path" : "/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+CircleRippleMultiple.o",
+    "llvm-bc" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+CircleRippleMultiple.bc",
+    "object" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+CircleRippleMultiple.o"
+  },
+  "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/ProgressHUD/Sources/Animations/ProgressHUD+CircleRippleSingle.swift" : {
+    "index-unit-output-path" : "/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+CircleRippleSingle.o",
+    "llvm-bc" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+CircleRippleSingle.bc",
+    "object" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+CircleRippleSingle.o"
+  },
+  "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/ProgressHUD/Sources/Animations/ProgressHUD+CircleRotateChase.swift" : {
+    "index-unit-output-path" : "/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+CircleRotateChase.o",
+    "llvm-bc" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+CircleRotateChase.bc",
+    "object" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+CircleRotateChase.o"
+  },
+  "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/ProgressHUD/Sources/Animations/ProgressHUD+CircleStrokeSpin.swift" : {
+    "index-unit-output-path" : "/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+CircleStrokeSpin.o",
+    "llvm-bc" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+CircleStrokeSpin.bc",
+    "object" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+CircleStrokeSpin.o"
+  },
+  "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/ProgressHUD/Sources/Animations/ProgressHUD+DualDotSidestep.swift" : {
+    "index-unit-output-path" : "/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+DualDotSidestep.o",
+    "llvm-bc" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+DualDotSidestep.bc",
+    "object" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+DualDotSidestep.o"
+  },
+  "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/ProgressHUD/Sources/Animations/ProgressHUD+HorizontalBarScaling.swift" : {
+    "index-unit-output-path" : "/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+HorizontalBarScaling.o",
+    "llvm-bc" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+HorizontalBarScaling.bc",
+    "object" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+HorizontalBarScaling.o"
+  },
+  "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/ProgressHUD/Sources/Animations/ProgressHUD+HorizontalDotScaling.swift" : {
+    "index-unit-output-path" : "/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+HorizontalDotScaling.o",
+    "llvm-bc" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+HorizontalDotScaling.bc",
+    "object" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+HorizontalDotScaling.o"
+  },
+  "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/ProgressHUD/Sources/Animations/ProgressHUD+PacmanProgress.swift" : {
+    "index-unit-output-path" : "/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+PacmanProgress.o",
+    "llvm-bc" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+PacmanProgress.bc",
+    "object" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+PacmanProgress.o"
+  },
+  "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/ProgressHUD/Sources/Animations/ProgressHUD+QuintupleDotDance.swift" : {
+    "index-unit-output-path" : "/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+QuintupleDotDance.o",
+    "llvm-bc" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+QuintupleDotDance.bc",
+    "object" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+QuintupleDotDance.o"
+  },
+  "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/ProgressHUD/Sources/Animations/ProgressHUD+SFSymbolBounce.swift" : {
+    "index-unit-output-path" : "/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+SFSymbolBounce.o",
+    "llvm-bc" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+SFSymbolBounce.bc",
+    "object" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+SFSymbolBounce.o"
+  },
+  "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/ProgressHUD/Sources/Animations/ProgressHUD+SemiRingRotation.swift" : {
+    "index-unit-output-path" : "/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+SemiRingRotation.o",
+    "llvm-bc" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+SemiRingRotation.bc",
+    "object" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+SemiRingRotation.o"
+  },
+  "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/ProgressHUD/Sources/Animations/ProgressHUD+SquareCircuitSnake.swift" : {
+    "index-unit-output-path" : "/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+SquareCircuitSnake.o",
+    "llvm-bc" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+SquareCircuitSnake.bc",
+    "object" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+SquareCircuitSnake.o"
+  },
+  "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/ProgressHUD/Sources/Animations/ProgressHUD+TriangleDotShift.swift" : {
+    "index-unit-output-path" : "/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+TriangleDotShift.o",
+    "llvm-bc" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+TriangleDotShift.bc",
+    "object" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+TriangleDotShift.o"
+  },
+  "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/ProgressHUD/Sources/ProgressHUD+Banner.swift" : {
+    "index-unit-output-path" : "/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+Banner.o",
+    "llvm-bc" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+Banner.bc",
+    "object" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+Banner.o"
+  },
+  "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/ProgressHUD/Sources/ProgressHUD+Enums.swift" : {
+    "index-unit-output-path" : "/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+Enums.o",
+    "llvm-bc" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+Enums.bc",
+    "object" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+Enums.o"
+  },
+  "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/ProgressHUD/Sources/ProgressHUD+LiveIcon.swift" : {
+    "index-unit-output-path" : "/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+LiveIcon.o",
+    "llvm-bc" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+LiveIcon.bc",
+    "object" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+LiveIcon.o"
+  },
+  "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/ProgressHUD/Sources/ProgressHUD+Public.swift" : {
+    "index-unit-output-path" : "/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+Public.o",
+    "llvm-bc" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+Public.bc",
+    "object" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD+Public.o"
+  },
+  "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/ProgressHUD/Sources/ProgressHUD.swift" : {
+    "index-unit-output-path" : "/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD.o",
+    "llvm-bc" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD.bc",
+    "object" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressHUD.o"
+  },
+  "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/ProgressHUD/Sources/ProgressView.swift" : {
+    "index-unit-output-path" : "/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressView.o",
+    "llvm-bc" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressView.bc",
+    "object" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/ProgressView.o"
+  },
+  "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/DerivedSources/GeneratedAssetSymbols.swift" : {
+    "index-unit-output-path" : "/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "llvm-bc" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/GeneratedAssetSymbols.bc",
+    "object" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/GeneratedAssetSymbols.o"
+  },
+  "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/DerivedSources/resource_bundle_accessor.swift" : {
+    "index-unit-output-path" : "/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/resource_bundle_accessor.o",
+    "llvm-bc" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/resource_bundle_accessor.bc",
+    "object" : "/Users/sergbuskov/Library/Developer/Xcode/DerivedData/iOS-FakeNFT-Extended-bzthswqehqtymscapnuvucnsueyk/SourcePackages/checkouts/ProgressHUD/build/ProgressHUD.build/Release-iphoneos/ProgressHUD-t.build/Objects-normal/arm64/resource_bundle_accessor.o"
+  }
+}

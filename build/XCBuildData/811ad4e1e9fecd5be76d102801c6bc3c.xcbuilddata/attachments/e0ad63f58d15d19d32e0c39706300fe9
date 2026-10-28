@@ -1,0 +1,4 @@
+module ProgressHUD {
+header "ProgressHUD-Swift.h"
+export *
+}

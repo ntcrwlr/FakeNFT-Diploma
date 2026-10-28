@@ -22,7 +22,7 @@ final class ServicesAssembly {
         )
     }
 
-    var collectionService: CollectionService {
-        CollectionServiceImpl(networkClient: networkClient)
+    var collectionService: CollectionServiceProtocol {
+        CollectionService(networkClient: networkClient)
     }
 }

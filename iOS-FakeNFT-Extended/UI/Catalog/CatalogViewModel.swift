@@ -1,31 +1,17 @@
 import Foundation
 import Observation
 
-enum CatalogSort: String {
-    case name
-    case nftCount
-
-    static let storageKey = "catalog.sort"
-}
-
 @MainActor
 @Observable
 final class CatalogViewModel {
-    private let collectionService: CollectionService
+    private let collectionService: CollectionServiceProtocol
     private var collections: [NftCollection] = []
     private var isLoading = false
 
-    private(set) var phase: Phase = .idle
+    private(set) var state: CatalogState = .loading
     private(set) var sort: CatalogSort
 
-    enum Phase {
-        case idle
-        case loading
-        case loaded([NftCollection])
-        case failed
-    }
-
-    init(collectionService: CollectionService, sort: CatalogSort) {
+    init(collectionService: CollectionServiceProtocol, sort: CatalogSort) {
         self.collectionService = collectionService
         self.sort = sort
     }
@@ -33,13 +19,12 @@ final class CatalogViewModel {
     convenience init(previewCollections: [NftCollection], sort: CatalogSort) {
         self.init(collectionService: PreviewCollectionService(), sort: sort)
         collections = previewCollections
-        phase = .loaded(sorted(previewCollections))
+        state = .success(sorted(previewCollections))
     }
 
     func loadIfNeeded() async {
-        if case .idle = phase {
-            await load()
-        }
+        guard case .loading = state else { return }
+        await load()
     }
 
     func load() async {
@@ -47,29 +32,23 @@ final class CatalogViewModel {
         isLoading = true
         defer { isLoading = false }
 
-        phase = .loading
+        state = .loading
         do {
             let collections = try await collectionService.loadCollections()
-            guard !Task.isCancelled else {
-                phase = .idle
-                return
-            }
+            guard !Task.isCancelled else { return }
             self.collections = collections
-            phase = .loaded(sorted(collections))
+            state = .success(sorted(collections))
         } catch {
-            guard !Task.isCancelled else {
-                phase = .idle
-                return
-            }
-            phase = .failed
+            guard !Task.isCancelled else { return }
+            state = .error
         }
     }
 
     func setSort(_ sort: CatalogSort) {
         guard self.sort != sort else { return }
         self.sort = sort
-        guard case .loaded = phase else { return }
-        phase = .loaded(sorted(collections))
+        guard case .success = state else { return }
+        state = .success(sorted(collections))
     }
 
     private func sorted(_ collections: [NftCollection]) -> [NftCollection] {
@@ -84,7 +63,7 @@ final class CatalogViewModel {
     }
 }
 
-private final class PreviewCollectionService: CollectionService {
+private final class PreviewCollectionService: CollectionServiceProtocol {
     func loadCollections() async throws -> [NftCollection] {
         []
     }
