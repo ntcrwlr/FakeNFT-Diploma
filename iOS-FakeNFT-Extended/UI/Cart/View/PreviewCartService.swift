@@ -9,6 +9,10 @@
 import Foundation
 
 struct PreviewCartService: CartService {
+    func updateOrder(id: String, nftIDs: [String]) async throws {
+        //
+    }
+    
     func loadOrder(id: String) async throws -> Order {
         Order(
             id: id,

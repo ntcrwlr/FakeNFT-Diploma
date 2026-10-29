@@ -11,6 +11,9 @@ import ProgressHUD
 struct CartView: View {
     @State private var viewModel: CartViewModel
     @State private var showErrorAlert = false
+    @State private var selectedItem: CartItem?
+    @State private var showDeleteConfirmation = false
+    @State private var showSortDialog = false
     
     init(viewModel: CartViewModel) {
         _viewModel = State(initialValue: viewModel)
@@ -40,7 +43,10 @@ struct CartView: View {
                         name: item.name,
                         rating: item.rating,
                         price: formatPrice(item.price),
-                        onDelete: {}
+                        onDelete: {
+                            selectedItem = item
+                            showDeleteConfirmation = true
+                        }
                     )
                     .listRowSeparator(.hidden)
                     .listRowInsets(
@@ -58,21 +64,47 @@ struct CartView: View {
         }
     }
     
+    @ViewBuilder
+    private var deleteOverlay: some View {
+        if showDeleteConfirmation, let item = selectedItem {
+            Rectangle()
+                .fill(.ultraThinMaterial)
+                .overlay {
+                    Color("blurOverlayColor")
+                }
+                .ignoresSafeArea()
+                .overlay {
+                    DeleteConfirmationView(
+                        item: item,
+                        onDelete: {
+                            Task {
+                                await viewModel.removeItem(item)
+                                selectedItem = nil
+                                showDeleteConfirmation = false
+                            }
+                        },
+                        onCancel: {
+                            showDeleteConfirmation = false
+                            selectedItem = nil
+                        }
+                    )
+                }
+        }
+    }
+    
+    
     var body: some View {
         NavigationStack {
             content
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button {} label: {
-                            Image("sort")
-                                .renderingMode(.template)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 42, height: 42)
-                                .foregroundStyle(.primary)
-                        }
-                        .buttonStyle(.plain)
+                    Button {
+                        showSortDialog = true
+                    } label: {
+                        Image("sort")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 42, height: 42)
                     }
                 }
                 .safeAreaInset(edge: .bottom, spacing: 0) {
@@ -98,7 +130,6 @@ struct CartView: View {
                             await viewModel.loadCart()
                         }
                     }
-                    
                     Button("Отмена", role: .cancel) {}
                 } message: {
                     Text(
@@ -109,6 +140,19 @@ struct CartView: View {
                 .onChange(of: viewModel.errorMessage) { _, errorMessage in
                     showErrorAlert = errorMessage != nil
                 }
+        }
+        .overlay {
+            deleteOverlay
+        }
+        .sheet(isPresented: $showSortDialog) {
+            SortView(
+                onSelect: { option in
+                    viewModel.sortItems(by: option)
+                },
+                onClose: {
+                    showSortDialog = false
+                }
+            )
         }
     }
 }
