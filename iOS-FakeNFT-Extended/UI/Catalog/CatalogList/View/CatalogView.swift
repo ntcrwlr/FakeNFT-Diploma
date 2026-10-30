@@ -3,17 +3,11 @@ import SwiftUI
 struct CatalogView: View {
     @AppStorage(CatalogSort.storageKey) private var sortRawValue = CatalogSort.nftCount.rawValue
     @State private var viewModel: CatalogViewModel
+    private let nftService: NftService
 
-    init(collectionService: CollectionServiceProtocol) {
-        let storedSort = UserDefaults.standard.string(forKey: CatalogSort.storageKey)
-        let sort = CatalogSort(rawValue: storedSort ?? "") ?? .nftCount
-        _viewModel = State(initialValue: CatalogViewModel(collectionService: collectionService, sort: sort))
-    }
-
-    init(previewCollections: [NftCollection]) {
-        _viewModel = State(
-            initialValue: CatalogViewModel(previewCollections: previewCollections, sort: .nftCount)
-        )
+    init(viewModel: CatalogViewModel, nftService: NftService) {
+        _viewModel = State(initialValue: viewModel)
+        self.nftService = nftService
     }
 
     var body: some View {
@@ -79,13 +73,20 @@ struct CatalogView: View {
 
     private func collectionsList(_ collections: [NftCollection]) -> some View {
         List(collections) { collection in
-            CatalogCollectionRow(collection: collection)
-                .listRowSeparator(.hidden)
-                .listRowInsets(Constants.rowInsets)
-                .listRowBackground(Color.white)
+            NavigationLink(value: collection) {
+                CatalogCollectionRow(collection: collection)
+            }
+            .buttonStyle(.plain)
+            .navigationLinkIndicatorVisibility(.hidden)
+            .listRowSeparator(.hidden)
+            .listRowInsets(Constants.rowInsets)
+            .listRowBackground(Color.white)
         }
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
+        .navigationDestination(for: NftCollection.self) { collection in
+            CollectionDetailsView(collection: collection, nftService: nftService)
+        }
     }
 
     private var errorContent: some View {
@@ -148,30 +149,11 @@ private enum Constants {
 }
 
 #Preview {
-    CatalogView(previewCollections: [
-        NftCollection(
-            id: "peach",
-            name: "Peach",
-            cover: "",
-            description: "",
-            author: "",
-            nfts: (0..<11).map(String.init)
+    CatalogView(
+        viewModel: CatalogViewModel(
+            previewCollections: PreviewData.collections,
+            sort: .nftCount
         ),
-        NftCollection(
-            id: "blue",
-            name: "Blue",
-            cover: "",
-            description: "",
-            author: "",
-            nfts: (0..<6).map(String.init)
-        ),
-        NftCollection(
-            id: "brown",
-            name: "Brown",
-            cover: "",
-            description: "",
-            author: "",
-            nfts: (0..<8).map(String.init)
-        )
-    ])
+        nftService: PreviewNftService()
+    )
 }

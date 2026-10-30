@@ -5,7 +5,10 @@ struct TabBarView: View {
 
     var body: some View {
         TabView {
-            CatalogView(collectionService: servicesAssembly.collectionService)
+            CatalogAssembly.makeView(
+                collectionService: servicesAssembly.collectionService,
+                nftService: servicesAssembly.nftService
+            )
                 .tabItem {
                     Label(
                         NSLocalizedString("Tab.catalog", comment: ""),

@@ -1,6 +1,6 @@
 import Foundation
 
-struct NftCollection: Decodable, Sendable, Identifiable {
+struct NftCollection: Decodable, Hashable, Sendable, Identifiable {
     /// Уникальный идентификатор коллекции.
     let id: String
 
