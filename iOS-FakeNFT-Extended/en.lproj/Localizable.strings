@@ -1,11 +1,18 @@
+// MARK: - Tab Bar
 "Tab.catalog" = "Каталог";
+
+// MARK: - Catalog
 "Catalog.openNft" = "Открыть Nft";
 "Catalog.sort" = "Сортировка";
 "Catalog.sort.byName" = "По названию";
 "Catalog.sort.byCount" = "По количеству NFT";
 "Catalog.sort.close" = "Закрыть";
+
+// MARK: - Collection
 "Collection.author" = "Автор коллекции: ";
+
+// MARK: - Errors
+"Error.title" = "Ошибка";
 "Error.network" = "Произошла ошибка сети";
 "Error.unknown" = "Произошла неизвестная ошибка";
 "Error.repeat" = "Повторить";
-"Error.title" = "Ошибка";

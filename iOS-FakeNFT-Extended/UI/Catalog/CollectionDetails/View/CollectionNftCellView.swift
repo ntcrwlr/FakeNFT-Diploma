@@ -1,7 +1,11 @@
 import SwiftUI
 
-struct CollectionNftCell: View {
+struct CollectionNftCellView: View {
     let nft: Nft
+
+    private var filledStars: Int {
+        min(Constants.starCount, max(0, nft.rating / 2))
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -46,16 +50,8 @@ struct CollectionNftCell: View {
         }
     }
 
-    private var filledStars: Int {
-        min(Constants.starCount, max(0, nft.rating / 2))
-    }
-
     private var priceText: String {
-        let formatter = NumberFormatter()
-        formatter.locale = Locale(identifier: "ru_RU")
-        formatter.minimumFractionDigits = 0
-        formatter.maximumFractionDigits = 2
-        let value = formatter.string(from: NSNumber(value: nft.price)) ?? "\(nft.price)"
+        let value = NumberFormatter.nftPrice.string(from: NSNumber(value: nft.price)) ?? "\(nft.price)"
         return "\(value) ETH"
     }
 }

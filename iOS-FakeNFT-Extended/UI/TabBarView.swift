@@ -5,7 +5,7 @@ struct TabBarView: View {
 
     var body: some View {
         TabView {
-            CatalogView(
+            CatalogAssembly.makeView(
                 collectionService: servicesAssembly.collectionService,
                 nftService: servicesAssembly.nftService
             )

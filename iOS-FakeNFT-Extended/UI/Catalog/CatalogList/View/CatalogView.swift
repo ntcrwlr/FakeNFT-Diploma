@@ -5,18 +5,9 @@ struct CatalogView: View {
     @State private var viewModel: CatalogViewModel
     private let nftService: NftService
 
-    init(collectionService: CollectionServiceProtocol, nftService: NftService) {
+    init(viewModel: CatalogViewModel, nftService: NftService) {
+        _viewModel = State(initialValue: viewModel)
         self.nftService = nftService
-        let storedSort = UserDefaults.standard.string(forKey: CatalogSort.storageKey)
-        let sort = CatalogSort(rawValue: storedSort ?? "") ?? .nftCount
-        _viewModel = State(initialValue: CatalogViewModel(collectionService: collectionService, sort: sort))
-    }
-
-    init(previewCollections: [NftCollection]) {
-        nftService = PreviewNftService()
-        _viewModel = State(
-            initialValue: CatalogViewModel(previewCollections: previewCollections, sort: .nftCount)
-        )
     }
 
     var body: some View {
@@ -158,30 +149,11 @@ private enum Constants {
 }
 
 #Preview {
-    CatalogView(previewCollections: [
-        NftCollection(
-            id: "peach",
-            name: "Peach",
-            cover: "",
-            description: "",
-            author: "",
-            nfts: (0..<11).map(String.init)
+    CatalogView(
+        viewModel: CatalogViewModel(
+            previewCollections: PreviewData.collections,
+            sort: .nftCount
         ),
-        NftCollection(
-            id: "blue",
-            name: "Blue",
-            cover: "",
-            description: "",
-            author: "",
-            nfts: (0..<6).map(String.init)
-        ),
-        NftCollection(
-            id: "brown",
-            name: "Brown",
-            cover: "",
-            description: "",
-            author: "",
-            nfts: (0..<8).map(String.init)
-        )
-    ])
+        nftService: PreviewNftService()
+    )
 }

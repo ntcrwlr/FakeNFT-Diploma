@@ -1,5 +1,22 @@
 import SwiftUI
 
+// MARK: - Constants
+
+private enum Constants {
+    static let coverHeight: CGFloat = 250
+    static let gridRowSpacing: CGFloat = 28
+    static let columns = [
+        GridItem(.flexible(), spacing: 9),
+        GridItem(.flexible(), spacing: 9),
+        GridItem(.flexible(), spacing: 9)
+    ]
+
+    static let authorPrefix = NSLocalizedString("Collection.author", comment: "")
+    static let errorTitle = NSLocalizedString("Error.title", comment: "")
+    static let errorMessage = NSLocalizedString("Error.network", comment: "")
+    static let retryTitle = NSLocalizedString("Error.repeat", comment: "")
+}
+
 struct CollectionDetailsView: View {
     @State private var viewModel: CollectionDetailsViewModel
 
@@ -8,6 +25,8 @@ struct CollectionDetailsView: View {
             initialValue: CollectionDetailsViewModel(collection: collection, nftService: nftService)
         )
     }
+
+    // MARK: - Body
 
     var body: some View {
         ScrollView {
@@ -20,6 +39,8 @@ struct CollectionDetailsView: View {
             await viewModel.loadIfNeeded()
         }
     }
+
+    // MARK: - Subviews
 
     private var content: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -72,7 +93,7 @@ struct CollectionDetailsView: View {
     @ViewBuilder
     private var nftsContent: some View {
         switch viewModel.state {
-        case .loading:
+        case .idle, .loading:
             ProgressView()
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 24)
@@ -81,17 +102,6 @@ struct CollectionDetailsView: View {
         case .success(let nfts):
             nftGrid(nfts)
         }
-    }
-
-    private func nftGrid(_ nfts: [Nft]) -> some View {
-        LazyVGrid(columns: Constants.columns, spacing: Constants.gridRowSpacing) {
-            ForEach(nfts, id: \.id) { nft in
-                CollectionNftCell(nft: nft)
-            }
-        }
-        .padding(.horizontal, 16)
-        .padding(.top, 24)
-        .padding(.bottom, 24)
     }
 
     private var errorContent: some View {
@@ -108,22 +118,22 @@ struct CollectionDetailsView: View {
         }
         .padding(24)
     }
+
+    // MARK: - Private Methods
+
+    private func nftGrid(_ nfts: [Nft]) -> some View {
+        LazyVGrid(columns: Constants.columns, spacing: Constants.gridRowSpacing) {
+            ForEach(nfts, id: \.id) { nft in
+                CollectionNftCellView(nft: nft)
+            }
+        }
+        .padding(.horizontal, 16)
+        .padding(.top, 24)
+        .padding(.bottom, 24)
+    }
 }
 
-private enum Constants {
-    static let coverHeight: CGFloat = 250
-    static let gridRowSpacing: CGFloat = 28
-    static let columns = [
-        GridItem(.flexible(), spacing: 9),
-        GridItem(.flexible(), spacing: 9),
-        GridItem(.flexible(), spacing: 9)
-    ]
-
-    static let authorPrefix = NSLocalizedString("Collection.author", comment: "")
-    static let errorTitle = NSLocalizedString("Error.title", comment: "")
-    static let errorMessage = NSLocalizedString("Error.network", comment: "")
-    static let retryTitle = NSLocalizedString("Error.repeat", comment: "")
-}
+// MARK: - Preview
 
 #Preview {
     NavigationStack {
