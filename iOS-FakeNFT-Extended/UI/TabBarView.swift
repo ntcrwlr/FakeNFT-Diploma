@@ -4,6 +4,7 @@ struct TabBarView: View {
     @State private var profileViewModel = ProfileViewModel(profile: ProfileFixtures.preview)
     @State private var showsEditProfile = false
     @State private var showsOwnedNFTs = false
+    @State private var showsFavoriteNFTs = false
     @State private var websitePath: [URL] = []
 
     var body: some View {
@@ -13,10 +14,14 @@ struct TabBarView: View {
                     viewModel: profileViewModel,
                     onEdit: { showsEditProfile = true },
                     onOwnedNFTs: { showsOwnedNFTs = true },
+                    onFavoriteNFTs: { showsFavoriteNFTs = true },
                     onWebsite: { websitePath.append($0) }
                 )
                 .navigationDestination(isPresented: $showsOwnedNFTs) {
                     OwnedNFTsView(viewModel: OwnedNFTsViewModel(items: OwnedNFTFixtures.preview))
+                }
+                .navigationDestination(isPresented: $showsFavoriteNFTs) {
+                    FavoriteNFTsView(items: FavoriteNFTFixtures.preview)
                 }
                 .navigationDestination(for: URL.self) { url in
                     ProfileWebsiteView(url: url)

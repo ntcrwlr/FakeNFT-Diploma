@@ -5,7 +5,7 @@ struct ProfileView: View {
     @ScaledMetric(relativeTo: .body) private var biographySize = 13
     @ScaledMetric(relativeTo: .body) private var websiteSize = 15
 
-    // Navigation belongs to the composition layer and will be connected separately.
+    // Navigation is handled by the composition layer.
     private let onEdit: () -> Void
     private let onOwnedNFTs: () -> Void
     private let onFavoriteNFTs: () -> Void
@@ -58,6 +58,7 @@ struct ProfileView: View {
                 VStack(spacing: 0) {
                     ProfileMenuRow(title: "Мои NFT", count: viewModel.profile.ownedNFTCount, action: onOwnedNFTs)
                     ProfileMenuRow(title: "Избранные NFT", count: viewModel.profile.favoriteNFTCount, action: onFavoriteNFTs)
+                        .accessibilityIdentifier("profile.favorites")
                 }
             }
             .padding(.horizontal, 16)
