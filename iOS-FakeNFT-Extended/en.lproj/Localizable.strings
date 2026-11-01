@@ -19,3 +19,9 @@
 "OwnedNFTs.rating" = "Рейтинг: %ld из 5";
 "OwnedNFTs.author" = "от %@";
 "OwnedNFTs.price" = "Цена";
+
+"FavoriteNFTs.title" = "Избранные NFT";
+"FavoriteNFTs.empty" = "У Вас ещё нет избранных NFT";
+"FavoriteNFTs.back" = "Назад";
+"FavoriteNFTs.favorite" = "%@, в избранном";
+"FavoriteNFTs.rating" = "Рейтинг: %ld из 5";

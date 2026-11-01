@@ -56,6 +56,9 @@
 		F02720260000000000000004 /* OwnedNFTsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02720260000000000000003 /* OwnedNFTsViewModel.swift */; };
 		F02720260000000000000006 /* OwnedNFTRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02720260000000000000005 /* OwnedNFTRow.swift */; };
 		F02720260000000000000008 /* OwnedNFTsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02720260000000000000007 /* OwnedNFTsView.swift */; };
+		F03120260000000000000002 /* FavoriteNFT.swift in Sources */ = {isa = PBXBuildFile; fileRef = F03120260000000000000001 /* FavoriteNFT.swift */; };
+		F03120260000000000000004 /* FavoriteNFTCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F03120260000000000000003 /* FavoriteNFTCard.swift */; };
+		F03120260000000000000006 /* FavoriteNFTsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F03120260000000000000005 /* FavoriteNFTsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,6 +129,9 @@
 		F02720260000000000000003 /* OwnedNFTsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnedNFTsViewModel.swift; sourceTree = "<group>"; };
 		F02720260000000000000005 /* OwnedNFTRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnedNFTRow.swift; sourceTree = "<group>"; };
 		F02720260000000000000007 /* OwnedNFTsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnedNFTsView.swift; sourceTree = "<group>"; };
+		F03120260000000000000001 /* FavoriteNFT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteNFT.swift; sourceTree = "<group>"; };
+		F03120260000000000000003 /* FavoriteNFTCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteNFTCard.swift; sourceTree = "<group>"; };
+		F03120260000000000000005 /* FavoriteNFTsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteNFTsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -350,6 +356,7 @@
 			isa = PBXGroup;
 			children = (
 				F02720260000000000000001 /* OwnedNFT.swift */,
+				F03120260000000000000001 /* FavoriteNFT.swift */,
 				F01920260000000000000003 /* ProfileFixtures.swift */,
 				F01920260000000000000005 /* UserProfile.swift */,
 			);
@@ -378,6 +385,7 @@
 			isa = PBXGroup;
 			children = (
 				F02720260000000000000007 /* OwnedNFTsView.swift */,
+				F03120260000000000000005 /* FavoriteNFTsView.swift */,
 				F0192026000000000000000E /* Components */,
 				F02120260000000000000003 /* EditProfileView.swift */,
 				F01920260000000000000011 /* ProfileView.swift */,
@@ -390,6 +398,7 @@
 			isa = PBXGroup;
 			children = (
 				F02720260000000000000005 /* OwnedNFTRow.swift */,
+				F03120260000000000000003 /* FavoriteNFTCard.swift */,
 				F0192026000000000000000F /* ProfileMenuRow.swift */,
 			);
 			path = Components;
@@ -536,9 +545,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				F02720260000000000000008 /* OwnedNFTsView.swift in Sources */,
+				F03120260000000000000006 /* FavoriteNFTsView.swift in Sources */,
 				F02720260000000000000006 /* OwnedNFTRow.swift in Sources */,
+				F03120260000000000000004 /* FavoriteNFTCard.swift in Sources */,
 				F02720260000000000000004 /* OwnedNFTsViewModel.swift in Sources */,
 				F02720260000000000000002 /* OwnedNFT.swift in Sources */,
+				F03120260000000000000002 /* FavoriteNFT.swift in Sources */,
 				F02120260000000000000002 /* EditProfileViewModel.swift in Sources */,
 				F02120260000000000000004 /* EditProfileView.swift in Sources */,
 				F01920260000000000000004 /* ProfileFixtures.swift in Sources */,
