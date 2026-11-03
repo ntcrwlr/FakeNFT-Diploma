@@ -6,8 +6,7 @@ struct FavoriteNFTCard: View {
 
     var body: some View {
         HStack(spacing: 12) {
-            Image(item.imageName)
-                .resizable()
+            artwork
                 .scaledToFill()
                 .frame(width: 80, height: 80)
                 .clipShape(RoundedRectangle(cornerRadius: 12))
@@ -56,6 +55,16 @@ struct FavoriteNFTCard: View {
         }
         .foregroundStyle(Color(uiColor: .profileForeground))
         .accessibilityElement(children: .contain)
+    }
+
+    private var artwork: some View {
+        Group {
+            if let imageName = item.imageName {
+                Image(imageName).resizable()
+            } else {
+                Color(uiColor: .profileFieldBackground)
+            }
+        }
     }
 }
 

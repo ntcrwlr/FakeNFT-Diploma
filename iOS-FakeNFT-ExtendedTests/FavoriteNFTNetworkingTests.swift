@@ -2,6 +2,69 @@ import XCTest
 @testable import iOS_FakeNFT_Extended
 
 @MainActor
+final class FavoriteNFTsViewModelTests: XCTestCase {
+    func testLoadPublishesServerCardsAndDoesNotReloadOnReappearance() async {
+        let service = FavoriteNFTServiceStub()
+        let viewModel = FavoriteNFTsViewModel(service: service)
+        XCTAssertTrue(viewModel.items.isEmpty)
+
+        await viewModel.loadFavorites()
+        await viewModel.loadFavorites()
+
+        XCTAssertEqual(service.calls, 1)
+        XCTAssertEqual(viewModel.items.map(\.id), ["server-id"])
+        XCTAssertEqual(viewModel.items.first?.name, "Server NFT")
+        XCTAssertEqual(viewModel.items.first?.rating, 4)
+        XCTAssertEqual(viewModel.items.first?.price, Decimal(235) / 100)
+        XCTAssertNil(viewModel.items.first?.imageName)
+        XCTAssertNil(viewModel.loadingError)
+    }
+
+    func testFailedLoadCanBeRetried() async {
+        let service = FavoriteNFTServiceStub()
+        service.error = URLError(.notConnectedToInternet)
+        let viewModel = FavoriteNFTsViewModel(service: service)
+
+        await viewModel.loadFavorites()
+        XCTAssertTrue(viewModel.items.isEmpty)
+        XCTAssertNotNil(viewModel.loadingError)
+
+        service.error = nil
+        await viewModel.loadFavorites()
+        XCTAssertEqual(service.calls, 2)
+        XCTAssertEqual(viewModel.items.count, 1)
+        XCTAssertNil(viewModel.loadingError)
+    }
+
+    func testCancelledLoadDoesNotPublishResponse() async {
+        let service = FavoriteNFTServiceStub()
+        let viewModel = FavoriteNFTsViewModel(service: service)
+        let task = Task {
+            withUnsafeCurrentTask { $0?.cancel() }
+            await viewModel.loadFavorites()
+        }
+        await task.value
+
+        XCTAssertTrue(viewModel.items.isEmpty)
+        XCTAssertNil(viewModel.loadingError)
+        await viewModel.loadFavorites()
+        XCTAssertEqual(viewModel.items.count, 1)
+    }
+}
+
+@MainActor
+private final class FavoriteNFTServiceStub: FavoriteNFTService {
+    var calls = 0
+    var error: Error?
+
+    func loadFavoriteNFTs() async throws -> [Nft] {
+        calls += 1
+        if let error { throw error }
+        return [Nft(id: "server-id", name: "Server NFT", rating: 4, price: Decimal(235) / 100, images: [])]
+    }
+}
+
+@MainActor
 final class FavoriteNFTServiceTests: XCTestCase {
     func testLoadUsesLikesAndPreservesProfileOrder() async throws {
         var paths: [String] = []

@@ -1,14 +1,22 @@
 import SwiftUI
 
 struct FavoriteNFTsView: View {
-    let items: [FavoriteNFT]
+    @State private var viewModel: FavoriteNFTsViewModel
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
+    init(viewModel: FavoriteNFTsViewModel) {
+        _viewModel = State(initialValue: viewModel)
+    }
+
+    init(items: [FavoriteNFT]) {
+        self.init(viewModel: FavoriteNFTsViewModel(items: items))
+    }
 
     var body: some View {
         GeometryReader { geometry in
             ZStack {
                 Color(uiColor: .profileBackground).ignoresSafeArea()
-                if items.isEmpty {
+                if viewModel.items.isEmpty {
                     Text(NSLocalizedString("FavoriteNFTs.empty", comment: "No favorite NFTs message"))
                         .font(.system(.body, weight: .bold))
                         .multilineTextAlignment(.center)
@@ -24,7 +32,7 @@ struct FavoriteNFTsView: View {
                             ),
                             spacing: 20
                         ) {
-                            ForEach(items) { item in
+                            ForEach(viewModel.items) { item in
                                 // Removing favorites is implemented in a separate task.
                                 FavoriteNFTCard(item: item, onFavoriteTap: {})
                             }
@@ -46,6 +54,7 @@ struct FavoriteNFTsView: View {
         .toolbarBackground(Color(uiColor: .profileBackground), for: .navigationBar)
         .toolbarBackground(.visible, for: .navigationBar)
         .accessibilityIdentifier("favoriteNFTs.screen")
+        .task { await viewModel.loadFavorites() }
     }
 }
 

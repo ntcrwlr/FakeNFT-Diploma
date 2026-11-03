@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct TabBarView: View {
+    @Environment(ServicesAssembly.self) private var servicesAssembly
     @State private var profileViewModel: ProfileViewModel
     @State private var showsEditProfile = false
     @State private var showsOwnedNFTs = false
@@ -25,7 +26,7 @@ struct TabBarView: View {
                     OwnedNFTsView(viewModel: OwnedNFTsViewModel(items: OwnedNFTFixtures.preview))
                 }
                 .navigationDestination(isPresented: $showsFavoriteNFTs) {
-                    FavoriteNFTsView(items: FavoriteNFTFixtures.preview)
+                    FavoriteNFTsView(viewModel: FavoriteNFTsViewModel(service: servicesAssembly.favoriteNFTService))
                 }
                 .navigationDestination(for: URL.self) { url in
                     ProfileWebsiteView(url: url)
