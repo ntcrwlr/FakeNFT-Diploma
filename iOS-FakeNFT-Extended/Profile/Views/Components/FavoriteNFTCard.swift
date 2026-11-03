@@ -7,7 +7,6 @@ struct FavoriteNFTCard: View {
     var body: some View {
         HStack(spacing: 12) {
             artwork
-                .scaledToFill()
                 .frame(width: 80, height: 80)
                 .clipShape(RoundedRectangle(cornerRadius: 12))
                 .accessibilityHidden(true)
@@ -60,11 +59,37 @@ struct FavoriteNFTCard: View {
     private var artwork: some View {
         Group {
             if let imageName = item.imageName {
-                Image(imageName).resizable()
+                Image(imageName)
+                    .resizable()
+                    .scaledToFill()
             } else {
-                Color(uiColor: .profileFieldBackground)
+                AsyncImage(url: artworkURL) { phase in
+                    switch phase {
+                    case .success(let image):
+                        image.resizable().scaledToFill()
+                    default:
+                        artworkPlaceholder
+                    }
+                }
             }
         }
+    }
+
+    private var artworkURL: URL? {
+        guard let url = item.imageURL,
+              let scheme = url.scheme?.lowercased(),
+              ["http", "https"].contains(scheme),
+              let host = url.host, !host.isEmpty else { return nil }
+        return url
+    }
+
+    private var artworkPlaceholder: some View {
+        Color(uiColor: .profileFieldBackground)
+            .overlay {
+                Image(systemName: "photo")
+                    .font(.system(size: 28))
+                    .foregroundStyle(.secondary)
+            }
     }
 }
 

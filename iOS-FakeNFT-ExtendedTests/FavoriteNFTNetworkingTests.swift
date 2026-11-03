@@ -17,6 +17,7 @@ final class FavoriteNFTsViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.items.first?.rating, 4)
         XCTAssertEqual(viewModel.items.first?.price, Decimal(235) / 100)
         XCTAssertNil(viewModel.items.first?.imageName)
+        XCTAssertEqual(viewModel.items.first?.imageURL, URL(string: "https://example.com/nft.png"))
         XCTAssertNil(viewModel.loadingError)
     }
 
@@ -60,7 +61,10 @@ private final class FavoriteNFTServiceStub: FavoriteNFTService {
     func loadFavoriteNFTs() async throws -> [Nft] {
         calls += 1
         if let error { throw error }
-        return [Nft(id: "server-id", name: "Server NFT", rating: 4, price: Decimal(235) / 100, images: [])]
+        return [Nft(
+            id: "server-id", name: "Server NFT", rating: 4, price: Decimal(235) / 100,
+            images: [URL(string: "https://example.com/nft.png")!, URL(string: "https://example.com/second.png")!]
+        )]
     }
 }
 

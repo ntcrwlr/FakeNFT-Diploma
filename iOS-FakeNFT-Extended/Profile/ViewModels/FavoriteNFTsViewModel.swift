@@ -30,7 +30,10 @@ final class FavoriteNFTsViewModel {
             let response = try await service.loadFavoriteNFTs()
             try Task.checkCancellation()
             items = response.map {
-                FavoriteNFT(id: $0.id, name: $0.name, price: $0.price, rating: $0.rating, imageName: nil)
+                FavoriteNFT(
+                    id: $0.id, name: $0.name, price: $0.price, rating: $0.rating,
+                    imageName: nil, imageURL: $0.images.first
+                )
             }
             hasLoaded = true
         } catch is CancellationError {
