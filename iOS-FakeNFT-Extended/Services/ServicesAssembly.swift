@@ -25,4 +25,8 @@ final class ServicesAssembly {
     var profileService: ProfileService {
         ProfileServiceImpl(networkClient: networkClient)
     }
+
+    var favoriteNFTService: FavoriteNFTService {
+        FavoriteNFTServiceImpl(profileService: profileService, nftService: nftService)
+    }
 }
