@@ -3,6 +3,7 @@ import XCTest
 final class iOS_FakeNFT_ExtendedUITests: XCTestCase {
     func testFavoritesNavigationPreservesProfileAndSupportsBackGesture() {
         let app = XCUIApplication()
+        app.launchArguments = ["-profile-fixture"]
         app.launch()
 
         let favorites = app.buttons["profile.favorites"]
@@ -37,6 +38,7 @@ final class iOS_FakeNFT_ExtendedUITests: XCTestCase {
 
     func testWebsitePushesAndReturnsWithoutChangingProfile() {
         let app = XCUIApplication()
+        app.launchArguments = ["-profile-fixture"]
         app.launch()
 
         let website = app.buttons["profile.website"]
@@ -58,6 +60,7 @@ final class iOS_FakeNFT_ExtendedUITests: XCTestCase {
 
     func testProfileTabAndEditingNavigation() throws {
         let app = XCUIApplication()
+        app.launchArguments = ["-profile-fixture"]
         app.launch()
 
         let tabs = app.tabBars

@@ -71,6 +71,7 @@ struct ProfileView: View {
         .toolbarBackground(Color(uiColor: .profileBackground), for: .tabBar)
         .toolbarBackground(.visible, for: .tabBar)
         .accessibilityIdentifier("profile.screen")
+        .task { await viewModel.loadProfile() }
     }
 
     private var editButton: some View {
@@ -114,8 +115,10 @@ struct ProfileView: View {
                     default: avatarPlaceholder
                     }
                 }
+            } else if let assetName = viewModel.profile.avatarAssetName {
+                Image(assetName).resizable()
             } else {
-                Image(viewModel.profile.avatarAssetName).resizable()
+                avatarPlaceholder
             }
         }
             .scaledToFill()

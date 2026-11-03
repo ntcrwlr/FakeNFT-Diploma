@@ -11,7 +11,7 @@ final class EditProfileViewModel {
     private(set) var isAvatarRemoved = false
     private(set) var isSaving = false
     var errorMessage: String?
-    let avatarAssetName: String
+    let avatarAssetName: String?
     private let initialProfile: UserProfile
 
     var hasChanges: Bool {

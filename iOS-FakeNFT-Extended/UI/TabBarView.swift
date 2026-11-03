@@ -1,11 +1,15 @@
 import SwiftUI
 
 struct TabBarView: View {
-    @State private var profileViewModel = ProfileViewModel(profile: ProfileFixtures.preview)
+    @State private var profileViewModel: ProfileViewModel
     @State private var showsEditProfile = false
     @State private var showsOwnedNFTs = false
     @State private var showsFavoriteNFTs = false
     @State private var websitePath: [URL] = []
+
+    init(profileViewModel: ProfileViewModel) {
+        _profileViewModel = State(initialValue: profileViewModel)
+    }
 
     var body: some View {
         TabView {

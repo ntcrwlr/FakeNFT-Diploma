@@ -172,8 +172,10 @@ struct EditProfileView: View {
                         default: avatarPlaceholder
                         }
                     }
+                } else if let assetName = viewModel.avatarAssetName {
+                    Image(assetName).resizable()
                 } else {
-                    Image(viewModel.avatarAssetName).resizable()
+                    avatarPlaceholder
                 }
             }
             .scaledToFill()

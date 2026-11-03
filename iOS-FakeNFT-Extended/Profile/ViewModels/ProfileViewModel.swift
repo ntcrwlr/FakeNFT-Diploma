@@ -5,6 +5,10 @@ import Observation
 @Observable
 final class ProfileViewModel {
     private(set) var profile: UserProfile
+    private(set) var loadedProfile: Profile?
+    private(set) var loadingError: Error?
+    private let profileService: ProfileService?
+    private var isLoading = false
 
     var websiteURL: URL? {
         let value = profile.websiteTitle.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -22,5 +26,29 @@ final class ProfileViewModel {
 
     init(profile: UserProfile) {
         self.profile = profile
+        profileService = nil
+    }
+
+    init(profileService: ProfileService) {
+        self.profileService = profileService
+        profile = .empty
+    }
+
+    func loadProfile() async {
+        guard let profileService, !isLoading else { return }
+        isLoading = true
+        loadingError = nil
+        defer { isLoading = false }
+
+        do {
+            let response = try await profileService.loadProfile()
+            try Task.checkCancellation()
+            loadedProfile = response
+            profile = UserProfile(profile: response)
+        } catch is CancellationError {
+            return
+        } catch {
+            loadingError = error
+        }
     }
 }
