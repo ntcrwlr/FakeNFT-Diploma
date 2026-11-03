@@ -6,6 +6,7 @@ import Observation
 final class FavoriteNFTsViewModel {
     private(set) var items: [FavoriteNFT]
     private(set) var loadingError: Error?
+    private(set) var removalError: Error?
     private let service: FavoriteNFTService?
     private var isLoading = false
     private var hasLoaded = false
@@ -41,6 +42,17 @@ final class FavoriteNFTsViewModel {
         } catch {
             guard !Task.isCancelled else { return }
             loadingError = error
+        }
+    }
+
+    func removeFavorite(id: String) async {
+        guard let service, items.contains(where: { $0.id == id }) else { return }
+        removalError = nil
+        do {
+            try await service.removeFavoriteNFT(id: id)
+            items.removeAll { $0.id == id }
+        } catch {
+            removalError = error
         }
     }
 }

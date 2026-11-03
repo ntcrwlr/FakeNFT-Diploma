@@ -228,6 +228,10 @@ private actor ProfileServiceStub: ProfileService {
     func saveProfile(_ profile: ProfileUpdate) async throws -> Profile {
         try await loadProfile()
     }
+
+    func saveLikes(_ ids: [String]) async throws -> Profile {
+        try await loadProfile()
+    }
 }
 
 private final class ProfileURLProtocol: URLProtocol {

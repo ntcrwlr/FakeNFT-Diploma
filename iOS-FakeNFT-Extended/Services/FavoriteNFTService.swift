@@ -3,12 +3,14 @@ import Foundation
 @MainActor
 protocol FavoriteNFTService {
     func loadFavoriteNFTs() async throws -> [Nft]
+    func removeFavoriteNFT(id: String) async throws
 }
 
 @MainActor
 final class FavoriteNFTServiceImpl: FavoriteNFTService {
     private let profileService: ProfileService
     private let nftService: NftService
+    private var removalTask: Task<Void, Error>?
 
     init(profileService: ProfileService, nftService: NftService) {
         self.profileService = profileService
@@ -28,5 +30,17 @@ final class FavoriteNFTServiceImpl: FavoriteNFTService {
 
         try Task.checkCancellation()
         return favorites
+    }
+
+    func removeFavoriteNFT(id: String) async throws {
+        let previousTask = removalTask
+        let task = Task { [profileService] in
+            // Each update replaces all likes, so concurrent removals must be serialized.
+            _ = await previousTask?.result
+            let profile = try await profileService.loadProfile()
+            _ = try await profileService.saveLikes(profile.likes.filter { $0 != id })
+        }
+        removalTask = task
+        try await task.value
     }
 }

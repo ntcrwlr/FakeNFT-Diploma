@@ -33,8 +33,9 @@ struct FavoriteNFTsView: View {
                             spacing: 20
                         ) {
                             ForEach(viewModel.items) { item in
-                                // Removing favorites is implemented in a separate task.
-                                FavoriteNFTCard(item: item, onFavoriteTap: {})
+                                FavoriteNFTCard(item: item) {
+                                    Task { await viewModel.removeFavorite(id: item.id) }
+                                }
                             }
                         }
                         .padding(.horizontal, 16)

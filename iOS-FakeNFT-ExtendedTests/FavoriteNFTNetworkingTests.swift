@@ -12,13 +12,41 @@ final class FavoriteNFTsViewModelTests: XCTestCase {
         await viewModel.loadFavorites()
 
         XCTAssertEqual(service.calls, 1)
-        XCTAssertEqual(viewModel.items.map(\.id), ["server-id"])
+        XCTAssertEqual(viewModel.items.map(\.id), ["server-id", "other-id"])
         XCTAssertEqual(viewModel.items.first?.name, "Server NFT")
         XCTAssertEqual(viewModel.items.first?.rating, 4)
         XCTAssertEqual(viewModel.items.first?.price, Decimal(235) / 100)
         XCTAssertNil(viewModel.items.first?.imageName)
         XCTAssertEqual(viewModel.items.first?.imageURL, URL(string: "https://example.com/nft.png"))
         XCTAssertNil(viewModel.loadingError)
+    }
+
+    func testRemovalWaitsForSuccessAndPreservesOtherCards() async {
+        let service = FavoriteNFTServiceStub()
+        let viewModel = FavoriteNFTsViewModel(service: service)
+        await viewModel.loadFavorites()
+        service.waitsForRemoval = true
+        let removal = Task { await viewModel.removeFavorite(id: "server-id") }
+        while service.removalContinuation == nil { await Task.yield() }
+        XCTAssertEqual(viewModel.items.map(\.id), ["server-id", "other-id"])
+        service.removalContinuation?.resume()
+        await removal.value
+        XCTAssertEqual(service.removedIDs, ["server-id"])
+        XCTAssertEqual(viewModel.items.map(\.id), ["other-id"])
+    }
+
+    func testFailedRemovalKeepsCardAndCanBeRetried() async {
+        let service = FavoriteNFTServiceStub()
+        let viewModel = FavoriteNFTsViewModel(service: service)
+        await viewModel.loadFavorites()
+        service.error = URLError(.notConnectedToInternet)
+        await viewModel.removeFavorite(id: "server-id")
+        XCTAssertEqual(viewModel.items.map(\.id), ["server-id", "other-id"])
+        XCTAssertNotNil(viewModel.removalError)
+        service.error = nil
+        await viewModel.removeFavorite(id: "server-id")
+        XCTAssertEqual(viewModel.items.map(\.id), ["other-id"])
+        XCTAssertNil(viewModel.removalError)
     }
 
     func testFailedLoadCanBeRetried() async {
@@ -33,7 +61,7 @@ final class FavoriteNFTsViewModelTests: XCTestCase {
         service.error = nil
         await viewModel.loadFavorites()
         XCTAssertEqual(service.calls, 2)
-        XCTAssertEqual(viewModel.items.count, 1)
+        XCTAssertEqual(viewModel.items.count, 2)
         XCTAssertNil(viewModel.loadingError)
     }
 
@@ -49,12 +77,24 @@ final class FavoriteNFTsViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel.items.isEmpty)
         XCTAssertNil(viewModel.loadingError)
         await viewModel.loadFavorites()
-        XCTAssertEqual(viewModel.items.count, 1)
+        XCTAssertEqual(viewModel.items.count, 2)
     }
 }
 
 @MainActor
 private final class FavoriteNFTServiceStub: FavoriteNFTService {
+    var removedIDs: [String] = []
+    var removalContinuation: CheckedContinuation<Void, Error>?
+    var waitsForRemoval = false
+
+    func removeFavoriteNFT(id: String) async throws {
+        removedIDs.append(id)
+        if let error { throw error }
+        if waitsForRemoval {
+            try await withCheckedThrowingContinuation { removalContinuation = $0 }
+        }
+    }
+
     var calls = 0
     var error: Error?
 
@@ -64,12 +104,62 @@ private final class FavoriteNFTServiceStub: FavoriteNFTService {
         return [Nft(
             id: "server-id", name: "Server NFT", rating: 4, price: Decimal(235) / 100,
             images: [URL(string: "https://example.com/nft.png")!, URL(string: "https://example.com/second.png")!]
-        )]
+        ), Nft(id: "other-id", name: "Other NFT", rating: 3, price: 1, images: [])]
     }
 }
 
 @MainActor
 final class FavoriteNFTServiceTests: XCTestCase {
+    func testRemovalPersistsOnlyRemainingLikesAndReloadsWithoutDeletedNFT() async throws {
+        var likes = ["nft-1", "nft-2", "nft-3"]
+        var bodies: [String] = []
+        let service = makeService { request in
+            if request.httpMethod == "PUT" {
+                XCTAssertEqual(request.url?.path, "/api/v1/profile/1")
+                XCTAssertEqual(request.value(forHTTPHeaderField: "Content-Type"), "application/x-www-form-urlencoded")
+                let body = try favoriteRequestBody(request)
+                bodies.append(body)
+                var components = URLComponents()
+                components.percentEncodedQuery = body
+                let fields = try XCTUnwrap(components.queryItems)
+                XCTAssertEqual(fields.map(\.name), ["likes"])
+                let value = try XCTUnwrap(fields.first?.value)
+                guard !value.isEmpty else { return (406, Data()) }
+                likes = value == "null" ? [] : value.split(separator: ",").map(String.init)
+            }
+            if request.url?.path == "/api/v1/profile/1" {
+                return (200, try profileData(likes: likes))
+            }
+            return (200, nftData(id: try XCTUnwrap(request.url?.lastPathComponent)))
+        }
+        try await service.removeFavoriteNFT(id: "nft-2")
+        let reloaded = try await service.loadFavoriteNFTs()
+        XCTAssertEqual(reloaded.map(\.id), ["nft-1", "nft-3"])
+        async let first: Void = service.removeFavoriteNFT(id: "nft-1")
+        async let second: Void = service.removeFavoriteNFT(id: "nft-3")
+        _ = try await (first, second)
+        XCTAssertEqual(bodies.count, 3)
+        XCTAssertEqual(bodies.last, "likes=null")
+        let empty = try await service.loadFavoriteNFTs()
+        XCTAssertTrue(empty.isEmpty)
+    }
+
+    func testFailedRemovalPropagatesAndDoesNotBlockNextRemoval() async throws {
+        var shouldFail = true
+        let service = makeService { request in
+            if request.httpMethod == "PUT", shouldFail { return (503, Data()) }
+            return (200, try profileData(likes: ["nft-1"]))
+        }
+        do {
+            try await service.removeFavoriteNFT(id: "nft-1")
+            XCTFail("Expected update error")
+        } catch NetworkClientError.httpStatusCode(let code) {
+            XCTAssertEqual(code, 503)
+        }
+        shouldFail = false
+        try await service.removeFavoriteNFT(id: "nft-1")
+    }
+
     func testLoadUsesLikesAndPreservesProfileOrder() async throws {
         var paths: [String] = []
         let service = makeService { request in
@@ -275,4 +365,21 @@ private final class FavoriteNFTURLProtocol: URLProtocol {
     }
 
     override func stopLoading() {}
+}
+
+private func favoriteRequestBody(_ request: URLRequest) throws -> String {
+    if let data = request.httpBody {
+        return try XCTUnwrap(String(data: data, encoding: .utf8))
+    }
+    let stream = try XCTUnwrap(request.httpBodyStream)
+    stream.open()
+    defer { stream.close() }
+    var data = Data()
+    var buffer = [UInt8](repeating: 0, count: 1024)
+    while stream.hasBytesAvailable {
+        let count = stream.read(&buffer, maxLength: buffer.count)
+        guard count > 0 else { break }
+        data.append(contentsOf: buffer.prefix(count))
+    }
+    return try XCTUnwrap(String(data: data, encoding: .utf8))
 }
