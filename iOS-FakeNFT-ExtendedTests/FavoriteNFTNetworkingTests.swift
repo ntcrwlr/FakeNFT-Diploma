@@ -3,12 +3,11 @@ import XCTest
 
 @MainActor
 final class FavoriteNFTsViewModelTests: XCTestCase {
-    func testLoadPublishesServerCardsAndDoesNotReloadOnReappearance() async {
+    func testLoadPublishesServerCards() async {
         let service = FavoriteNFTServiceStub()
         let viewModel = FavoriteNFTsViewModel(service: service)
         XCTAssertTrue(viewModel.items.isEmpty)
 
-        await viewModel.loadFavorites()
         await viewModel.loadFavorites()
 
         XCTAssertEqual(service.calls, 1)
@@ -19,6 +18,59 @@ final class FavoriteNFTsViewModelTests: XCTestCase {
         XCTAssertNil(viewModel.items.first?.imageName)
         XCTAssertEqual(viewModel.items.first?.imageURL, URL(string: "https://example.com/nft.png"))
         XCTAssertNil(viewModel.loadingError)
+    }
+
+    func testReappearanceReplacesFavoritesWithCurrentServerList() async {
+        let service = FavoriteNFTServiceStub()
+        let viewModel = FavoriteNFTsViewModel(service: service)
+        await viewModel.loadFavorites()
+
+        service.response = [Nft(id: "added-id", name: "Added NFT", rating: 5, price: 2, images: [])]
+        await viewModel.loadFavorites()
+
+        XCTAssertEqual(service.calls, 2)
+        XCTAssertEqual(viewModel.items.map(\.id), ["added-id"])
+
+        service.response = []
+        await viewModel.loadFavorites()
+        XCTAssertEqual(service.calls, 3)
+        XCTAssertTrue(viewModel.items.isEmpty)
+    }
+
+    func testFailedRefreshPreservesCardsAndCanBeRetried() async {
+        let service = FavoriteNFTServiceStub()
+        let viewModel = FavoriteNFTsViewModel(service: service)
+        await viewModel.loadFavorites()
+
+        service.error = URLError(.notConnectedToInternet)
+        await viewModel.loadFavorites()
+        XCTAssertEqual(viewModel.items.map(\.id), ["server-id", "other-id"])
+        XCTAssertNotNil(viewModel.loadingError)
+
+        service.error = nil
+        service.response = []
+        await viewModel.loadFavorites()
+        XCTAssertEqual(service.calls, 3)
+        XCTAssertTrue(viewModel.items.isEmpty)
+        XCTAssertNil(viewModel.loadingError)
+    }
+
+    func testRefreshDoesNotStartDuplicateRequestOrClearCardsWhileLoading() async {
+        let service = FavoriteNFTServiceStub()
+        let viewModel = FavoriteNFTsViewModel(service: service)
+        await viewModel.loadFavorites()
+        service.waitsForLoad = true
+        service.response = []
+        let refresh = Task { await viewModel.loadFavorites() }
+        while service.loadContinuation == nil { await Task.yield() }
+
+        await viewModel.loadFavorites()
+        XCTAssertEqual(service.calls, 2)
+        XCTAssertEqual(viewModel.items.map(\.id), ["server-id", "other-id"])
+
+        service.loadContinuation?.resume()
+        await refresh.value
+        XCTAssertTrue(viewModel.items.isEmpty)
     }
 
     func testRemovalWaitsForSuccessAndPreservesOtherCards() async {
@@ -119,14 +171,20 @@ private final class FavoriteNFTServiceStub: FavoriteNFTService {
 
     var calls = 0
     var error: Error?
+    var waitsForLoad = false
+    var loadContinuation: CheckedContinuation<Void, Never>?
+    var response = [Nft(
+        id: "server-id", name: "Server NFT", rating: 4, price: Decimal(235) / 100,
+        images: [URL(string: "https://example.com/nft.png")!, URL(string: "https://example.com/second.png")!]
+    ), Nft(id: "other-id", name: "Other NFT", rating: 3, price: 1, images: [])]
 
     func loadFavoriteNFTs() async throws -> [Nft] {
         calls += 1
+        if waitsForLoad {
+            await withCheckedContinuation { loadContinuation = $0 }
+        }
         if let error { throw error }
-        return [Nft(
-            id: "server-id", name: "Server NFT", rating: 4, price: Decimal(235) / 100,
-            images: [URL(string: "https://example.com/nft.png")!, URL(string: "https://example.com/second.png")!]
-        ), Nft(id: "other-id", name: "Other NFT", rating: 3, price: 1, images: [])]
+        return response
     }
 }
 
