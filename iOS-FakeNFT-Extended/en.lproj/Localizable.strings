@@ -22,6 +22,9 @@
 
 "FavoriteNFTs.title" = "Избранные NFT";
 "FavoriteNFTs.empty" = "У Вас ещё нет избранных NFT";
+"FavoriteNFTs.loading" = "Загрузка избранных NFT…";
+"FavoriteNFTs.loadingError.message" = "Не удалось загрузить избранные NFT. Попробуйте ещё раз.";
+"FavoriteNFTs.loadingError.retry" = "Повторить";
 "FavoriteNFTs.back" = "Назад";
 "FavoriteNFTs.favorite" = "%@, в избранном";
 "FavoriteNFTs.rating" = "Рейтинг: %ld из 5";

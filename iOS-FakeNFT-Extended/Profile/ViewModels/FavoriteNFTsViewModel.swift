@@ -10,7 +10,12 @@ final class FavoriteNFTsViewModel {
     private(set) var failedRemovalID: String?
     private(set) var removingIDs: Set<String> = []
     private let service: FavoriteNFTService?
-    private var isLoading = false
+    private(set) var isLoading = false
+    private(set) var hasLoaded = false
+
+    var isEmpty: Bool {
+        hasLoaded && items.isEmpty && !isLoading && loadingError == nil
+    }
 
     init(service: FavoriteNFTService) {
         self.service = service
@@ -20,6 +25,7 @@ final class FavoriteNFTsViewModel {
     init(items: [FavoriteNFT]) {
         self.items = items
         service = nil
+        hasLoaded = true
     }
 
     func loadFavorites() async {
@@ -37,6 +43,7 @@ final class FavoriteNFTsViewModel {
                     imageName: nil, imageURL: $0.images.first
                 )
             }
+            hasLoaded = true
         } catch is CancellationError {
             return
         } catch {

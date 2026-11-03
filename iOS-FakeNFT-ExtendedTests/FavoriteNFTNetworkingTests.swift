@@ -3,6 +3,56 @@ import XCTest
 
 @MainActor
 final class FavoriteNFTsViewModelTests: XCTestCase {
+    func testEmptyStateAppearsOnlyAfterSuccessfulLoad() async {
+        let service = FavoriteNFTServiceStub()
+        service.response = []
+        service.waitsForLoad = true
+        let viewModel = FavoriteNFTsViewModel(service: service)
+        XCTAssertFalse(viewModel.isEmpty)
+        let load = Task { await viewModel.loadFavorites() }
+        while service.loadContinuation == nil { await Task.yield() }
+        XCTAssertTrue(viewModel.isLoading)
+        XCTAssertFalse(viewModel.isEmpty)
+        await viewModel.loadFavorites()
+        XCTAssertEqual(service.calls, 1)
+        service.loadContinuation?.resume()
+        await load.value
+        XCTAssertFalse(viewModel.isLoading)
+        XCTAssertTrue(viewModel.isEmpty)
+    }
+
+    func testRepeatedLoadFailureDoesNotShowEmptyStateAndRetryCanReturnEmptyList() async {
+        let service = FavoriteNFTServiceStub()
+        service.error = URLError(.notConnectedToInternet)
+        let viewModel = FavoriteNFTsViewModel(service: service)
+        for _ in 0..<2 {
+            await viewModel.loadFavorites()
+            XCTAssertNotNil(viewModel.loadingError)
+            XCTAssertFalse(viewModel.isLoading)
+            XCTAssertFalse(viewModel.isEmpty)
+        }
+        service.error = nil
+        service.response = []
+        await viewModel.loadFavorites()
+        XCTAssertEqual(service.calls, 3)
+        XCTAssertNil(viewModel.loadingError)
+        XCTAssertTrue(viewModel.isEmpty)
+    }
+
+    func testRemovingLastFavoriteShowsEmptyStateOnlyAfterSuccess() async {
+        let service = FavoriteNFTServiceStub()
+        service.response = Array(service.response.prefix(1))
+        let viewModel = FavoriteNFTsViewModel(service: service)
+        await viewModel.loadFavorites()
+        service.waitsForRemoval = true
+        let removal = Task { await viewModel.removeFavorite(id: "server-id") }
+        while service.removalContinuation == nil { await Task.yield() }
+        XCTAssertFalse(viewModel.isEmpty)
+        service.removalContinuation?.resume()
+        await removal.value
+        XCTAssertTrue(viewModel.isEmpty)
+    }
+
     func testLoadPublishesServerCards() async {
         let service = FavoriteNFTServiceStub()
         let viewModel = FavoriteNFTsViewModel(service: service)
@@ -67,10 +117,14 @@ final class FavoriteNFTsViewModelTests: XCTestCase {
         await viewModel.loadFavorites()
         XCTAssertEqual(service.calls, 2)
         XCTAssertEqual(viewModel.items.map(\.id), ["server-id", "other-id"])
+        XCTAssertTrue(viewModel.isLoading)
+        XCTAssertFalse(viewModel.isEmpty)
 
         service.loadContinuation?.resume()
         await refresh.value
         XCTAssertTrue(viewModel.items.isEmpty)
+        XCTAssertFalse(viewModel.isLoading)
+        XCTAssertTrue(viewModel.isEmpty)
     }
 
     func testRemovalWaitsForSuccessAndPreservesOtherCards() async {
@@ -150,6 +204,8 @@ final class FavoriteNFTsViewModelTests: XCTestCase {
 
         XCTAssertTrue(viewModel.items.isEmpty)
         XCTAssertNil(viewModel.loadingError)
+        XCTAssertFalse(viewModel.isLoading)
+        XCTAssertFalse(viewModel.isEmpty)
         await viewModel.loadFavorites()
         XCTAssertEqual(viewModel.items.count, 2)
     }

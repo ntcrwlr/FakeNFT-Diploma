@@ -16,13 +16,16 @@ struct FavoriteNFTsView: View {
         GeometryReader { geometry in
             ZStack {
                 Color(uiColor: .profileBackground).ignoresSafeArea()
-                if viewModel.items.isEmpty {
+                if viewModel.isEmpty {
                     Text(NSLocalizedString("FavoriteNFTs.empty", comment: "No favorite NFTs message"))
                         .font(.system(.body, weight: .bold))
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 16)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .accessibilityIdentifier("favoriteNFTs.empty")
+                } else if viewModel.items.isEmpty {
+                    loadingStatus
+                        .padding(16)
                 } else {
                     ScrollView {
                         LazyVGrid(
@@ -42,6 +45,11 @@ struct FavoriteNFTsView: View {
                         .padding(.vertical, 20)
                         .frame(maxWidth: 600)
                         .frame(maxWidth: .infinity)
+                    }
+                    .safeAreaInset(edge: .top, spacing: 0) {
+                        loadingStatus
+                            .frame(maxWidth: .infinity)
+                            .background(Color(uiColor: .profileBackground))
                     }
                 }
             }
@@ -68,6 +76,29 @@ struct FavoriteNFTsView: View {
             }
         } message: { _ in
             Text("FavoriteNFTs.removalError.message")
+        }
+    }
+
+    @ViewBuilder
+    private var loadingStatus: some View {
+        if viewModel.isLoading || (!viewModel.hasLoaded && viewModel.loadingError == nil) {
+            ProgressView("FavoriteNFTs.loading")
+                .tint(Color(uiColor: .profileForeground))
+                .padding()
+                .accessibilityIdentifier("favoriteNFTs.loading")
+        } else if viewModel.loadingError != nil {
+            VStack(spacing: 12) {
+                Text("FavoriteNFTs.loadingError.message")
+                    .multilineTextAlignment(.center)
+                Button("FavoriteNFTs.loadingError.retry") {
+                    Task { await viewModel.loadFavorites() }
+                }
+                .buttonStyle(.bordered)
+                .disabled(viewModel.isLoading)
+                .accessibilityIdentifier("favoriteNFTs.retry")
+            }
+            .padding()
+            .accessibilityIdentifier("favoriteNFTs.loadingError")
         }
     }
 }
