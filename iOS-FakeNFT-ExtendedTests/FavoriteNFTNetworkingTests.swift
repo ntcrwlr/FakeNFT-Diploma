@@ -28,14 +28,18 @@ final class FavoriteNFTsViewModelTests: XCTestCase {
         service.waitsForRemoval = true
         let removal = Task { await viewModel.removeFavorite(id: "server-id") }
         while service.removalContinuation == nil { await Task.yield() }
+        XCTAssertEqual(viewModel.removingIDs, ["server-id"])
+        await viewModel.removeFavorite(id: "server-id")
+        XCTAssertEqual(service.removedIDs, ["server-id"])
         XCTAssertEqual(viewModel.items.map(\.id), ["server-id", "other-id"])
         service.removalContinuation?.resume()
         await removal.value
+        XCTAssertTrue(viewModel.removingIDs.isEmpty)
         XCTAssertEqual(service.removedIDs, ["server-id"])
         XCTAssertEqual(viewModel.items.map(\.id), ["other-id"])
     }
 
-    func testFailedRemovalKeepsCardAndCanBeRetried() async {
+    func testFailedRemovalKeepsCardAndCanBeRetried() async throws {
         let service = FavoriteNFTServiceStub()
         let viewModel = FavoriteNFTsViewModel(service: service)
         await viewModel.loadFavorites()
@@ -43,10 +47,28 @@ final class FavoriteNFTsViewModelTests: XCTestCase {
         await viewModel.removeFavorite(id: "server-id")
         XCTAssertEqual(viewModel.items.map(\.id), ["server-id", "other-id"])
         XCTAssertNotNil(viewModel.removalError)
+        XCTAssertTrue(viewModel.removingIDs.isEmpty)
+        let failedID = try XCTUnwrap(viewModel.failedRemovalID)
+        viewModel.dismissRemovalError()
+        XCTAssertNil(viewModel.removalError)
+        XCTAssertNil(viewModel.failedRemovalID)
+        // The alert captures the NFT ID before SwiftUI dismisses it.
+        await viewModel.removeFavorite(id: failedID)
+        XCTAssertEqual(viewModel.failedRemovalID, failedID)
+        XCTAssertNotNil(viewModel.removalError)
+        XCTAssertTrue(viewModel.removingIDs.isEmpty)
         service.error = nil
-        await viewModel.removeFavorite(id: "server-id")
+        service.waitsForRemoval = true
+        let retry = Task { await viewModel.removeFavorite(id: failedID) }
+        while service.removalContinuation == nil { await Task.yield() }
+        XCTAssertEqual(viewModel.removingIDs, [failedID])
+        service.removalContinuation?.resume()
+        await retry.value
         XCTAssertEqual(viewModel.items.map(\.id), ["other-id"])
         XCTAssertNil(viewModel.removalError)
+        XCTAssertNil(viewModel.failedRemovalID)
+        XCTAssertTrue(viewModel.removingIDs.isEmpty)
+        XCTAssertEqual(service.removedIDs, [failedID, failedID, failedID])
     }
 
     func testFailedLoadCanBeRetried() async {

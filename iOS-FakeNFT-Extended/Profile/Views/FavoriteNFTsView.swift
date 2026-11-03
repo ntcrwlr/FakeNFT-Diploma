@@ -33,7 +33,7 @@ struct FavoriteNFTsView: View {
                             spacing: 20
                         ) {
                             ForEach(viewModel.items) { item in
-                                FavoriteNFTCard(item: item) {
+                                FavoriteNFTCard(item: item, isRemoving: viewModel.removingIDs.contains(item.id)) {
                                     Task { await viewModel.removeFavorite(id: item.id) }
                                 }
                             }
@@ -56,6 +56,19 @@ struct FavoriteNFTsView: View {
         .toolbarBackground(.visible, for: .navigationBar)
         .accessibilityIdentifier("favoriteNFTs.screen")
         .task { await viewModel.loadFavorites() }
+        .alert("FavoriteNFTs.removalError.title", isPresented: Binding(
+            get: { viewModel.failedRemovalID != nil },
+            set: { if !$0 { viewModel.dismissRemovalError() } }
+        ), presenting: viewModel.failedRemovalID) { id in
+            Button("FavoriteNFTs.removalError.retry") {
+                Task { await viewModel.removeFavorite(id: id) }
+            }
+            Button("FavoriteNFTs.removalError.cancel", role: .cancel) {
+                viewModel.dismissRemovalError()
+            }
+        } message: { _ in
+            Text("FavoriteNFTs.removalError.message")
+        }
     }
 }
 

@@ -2,6 +2,7 @@ import SwiftUI
 
 struct FavoriteNFTCard: View {
     let item: FavoriteNFT
+    var isRemoving = false
     var onFavoriteTap: () -> Void
 
     var body: some View {
@@ -19,6 +20,8 @@ struct FavoriteNFTCard: View {
                             .contentShape(Rectangle())
                     }
                     .buttonStyle(.plain)
+                    .disabled(isRemoving)
+                    .opacity(isRemoving ? 0.5 : 1)
                     .padding(4)
                     .accessibilityLabel(String(
                         format: NSLocalizedString("FavoriteNFTs.favorite", comment: "Favorite NFT button; %@ is the name"),

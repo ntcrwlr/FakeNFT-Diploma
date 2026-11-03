@@ -7,6 +7,8 @@ final class FavoriteNFTsViewModel {
     private(set) var items: [FavoriteNFT]
     private(set) var loadingError: Error?
     private(set) var removalError: Error?
+    private(set) var failedRemovalID: String?
+    private(set) var removingIDs: Set<String> = []
     private let service: FavoriteNFTService?
     private var isLoading = false
     private var hasLoaded = false
@@ -46,13 +48,22 @@ final class FavoriteNFTsViewModel {
     }
 
     func removeFavorite(id: String) async {
-        guard let service, items.contains(where: { $0.id == id }) else { return }
-        removalError = nil
+        guard let service, items.contains(where: { $0.id == id }),
+              !removingIDs.contains(id) else { return }
+        removingIDs.insert(id)
+        defer { removingIDs.remove(id) }
+        if failedRemovalID == id { dismissRemovalError() }
         do {
             try await service.removeFavoriteNFT(id: id)
             items.removeAll { $0.id == id }
         } catch {
             removalError = error
+            failedRemovalID = id
         }
+    }
+
+    func dismissRemovalError() {
+        removalError = nil
+        failedRemovalID = nil
     }
 }

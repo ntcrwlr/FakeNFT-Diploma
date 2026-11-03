@@ -25,3 +25,7 @@
 "FavoriteNFTs.back" = "Назад";
 "FavoriteNFTs.favorite" = "%@, в избранном";
 "FavoriteNFTs.rating" = "Рейтинг: %ld из 5";
+"FavoriteNFTs.removalError.title" = "Ошибка";
+"FavoriteNFTs.removalError.message" = "Не удалось удалить NFT из избранного. Попробуйте ещё раз.";
+"FavoriteNFTs.removalError.retry" = "Повторить";
+"FavoriteNFTs.removalError.cancel" = "Отмена";
