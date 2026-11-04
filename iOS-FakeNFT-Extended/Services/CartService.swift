@@ -9,6 +9,7 @@ import Foundation
 
 protocol CartService {
     func loadOrder(id: String) async throws -> Order
+    func updateOrder(id: String, nftIDs: [String]) async throws
 }
 
 @MainActor
@@ -21,7 +22,11 @@ final class CartServiceImpl: CartService {
 
     func loadOrder(id: String) async throws -> Order {
         let request = OrderRequest(id: id)
-        let order: Order = try await networkClient.send(request: request)
-        return order
+        return try await networkClient.send(request: request)
+    }
+
+    func updateOrder(id: String, nftIDs: [String]) async throws {
+        let request = UpdateOrderRequest(id: id, nftIDs: nftIDs)
+        let _: Data = try await networkClient.send(request: request)
     }
 }
