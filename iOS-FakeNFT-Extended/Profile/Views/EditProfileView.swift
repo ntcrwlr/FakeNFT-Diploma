@@ -4,7 +4,6 @@ struct EditProfileView: View {
     @State private var viewModel: EditProfileViewModel
     @State private var showsPhotoMenu = false
     @State private var showsPhotoLink = false
-    @State private var showsExitConfirmation = false
     @State private var photoLink = ""
     @State private var saveRequested = false
     @FocusState private var focusedField: Field?
@@ -110,10 +109,6 @@ struct EditProfileView: View {
             Button("Отмена", role: .cancel) {}
             Button("Сохранить") { viewModel.updateAvatar(link: photoLink) }
         }
-        .alert("Уверены,\nчто хотите выйти?", isPresented: $showsExitConfirmation) {
-            Button("Остаться", role: .cancel) {}
-            Button("Выйти") { cancel() }
-        }
         .alert("Ошибка", isPresented: Binding(
             get: { viewModel.errorMessage != nil },
             set: { if !$0 { viewModel.errorMessage = nil } }
@@ -134,11 +129,7 @@ struct EditProfileView: View {
         HStack {
             Button {
                 focusedField = nil
-                if viewModel.hasChanges {
-                    showsExitConfirmation = true
-                } else {
-                    cancel()
-                }
+                cancel()
             } label: {
                 Image(systemName: "chevron.left")
                     .font(.system(size: 20, weight: .medium))

@@ -20,8 +20,13 @@ final class ProfileViewModel {
         return url
     }
 
-    func updateProfile(_ profile: UserProfile) {
-        self.profile = profile
+    func saveProfile(_ update: ProfileUpdate) async throws {
+        guard let profileService else { throw SaveError.serviceUnavailable }
+        try Task.checkCancellation()
+        let response = try await profileService.saveProfile(update)
+        try Task.checkCancellation()
+        loadedProfile = response
+        profile = UserProfile(profile: response)
     }
 
     init(profile: UserProfile) {
@@ -50,5 +55,9 @@ final class ProfileViewModel {
         } catch {
             loadingError = error
         }
+    }
+
+    private enum SaveError: Error {
+        case serviceUnavailable
     }
 }

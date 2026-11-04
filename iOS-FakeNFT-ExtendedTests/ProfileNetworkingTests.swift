@@ -176,6 +176,162 @@ final class ProfileLoadingTests: XCTestCase {
     }
 }
 
+@MainActor
+final class ProfileEditingTests: XCTestCase {
+    func testDraftUsesCurrentProfileAndDiscardingChangesDoesNotSave() async throws {
+        let response = try JSONDecoder().decode(Profile.self, from: profileJSON)
+        let service = ProfileServiceStub(response: response)
+        let model = ProfileViewModel(profileService: service)
+        await model.loadProfile()
+        let original = model.profile
+        let draft = EditProfileViewModel(profile: model.profile)
+        XCTAssertEqual(draft.updatedProfile, original)
+        XCTAssertFalse(draft.hasChanges)
+
+        draft.name = "Несохранённое имя"
+        draft.biography = "Несохранённое описание"
+        draft.website = "https://new.example.com"
+        draft.removeAvatar()
+
+        XCTAssertEqual(model.profile, original)
+        XCTAssertEqual(model.loadedProfile, response)
+        let reopened = EditProfileViewModel(profile: model.profile)
+        XCTAssertEqual(reopened.updatedProfile, original)
+        XCTAssertFalse(reopened.hasChanges)
+        let updates = await service.savedUpdates
+        XCTAssertTrue(updates.isEmpty)
+    }
+
+    func testSaveSendsDraftAndPublishesServerResponseForNextEditingSession() async throws {
+        let initial = try JSONDecoder().decode(Profile.self, from: profileJSON)
+        let service = ProfileServiceStub(response: initial)
+        let model = ProfileViewModel(profileService: service)
+        await model.loadProfile()
+        let original = model.profile
+        let draft = EditProfileViewModel(profile: model.profile)
+        draft.name = " Новое имя "
+        draft.biography = "Новое описание\nВторая строка"
+        draft.website = " https://new.example.com "
+        draft.updateAvatar(link: "https://example.com/new.png")
+        let response = Profile(
+            id: initial.id, name: "Имя из ответа сервера", avatar: "https://example.com/saved.png",
+            description: "Описание из ответа сервера", website: "https://saved.example.com",
+            nfts: ["nft-1"], likes: []
+        )
+        await service.setResponse(response)
+
+        let saved = await draft.save {
+            XCTAssertEqual(model.profile, original)
+            XCTAssertEqual(model.loadedProfile, initial)
+            try await model.saveProfile($0.profileUpdate)
+        }
+
+        XCTAssertTrue(saved)
+        let updates = await service.savedUpdates
+        XCTAssertEqual(updates.count, 1)
+        let update = try XCTUnwrap(updates.first)
+        XCTAssertEqual(update.name, "Новое имя")
+        XCTAssertEqual(update.description, "Новое описание\nВторая строка")
+        XCTAssertEqual(update.website, "https://new.example.com")
+        XCTAssertEqual(update.avatar, "https://example.com/new.png")
+        XCTAssertEqual(model.loadedProfile, response)
+        XCTAssertEqual(model.profile, UserProfile(profile: response))
+        XCTAssertEqual(model.profile.ownedNFTCount, 1)
+        XCTAssertEqual(model.profile.favoriteNFTCount, 0)
+        let reopened = EditProfileViewModel(profile: model.profile)
+        XCTAssertEqual(reopened.updatedProfile, UserProfile(profile: response))
+        XCTAssertFalse(reopened.hasChanges)
+    }
+
+    func testSaveFailurePreservesOriginalProfileAndEditedFields() async throws {
+        let initial = try JSONDecoder().decode(Profile.self, from: profileJSON)
+        let service = ProfileServiceStub(response: initial)
+        let model = ProfileViewModel(profileService: service)
+        await model.loadProfile()
+        let original = model.profile
+        let draft = EditProfileViewModel(profile: model.profile)
+        draft.name = "Новое имя"
+        draft.biography = "Новое описание"
+        draft.website = "https://new.example.com"
+        draft.updateAvatar(link: "https://example.com/new.png")
+        let edited = draft.updatedProfile
+        await service.setError(URLError(.notConnectedToInternet))
+
+        let saved = await draft.save { try await model.saveProfile($0.profileUpdate) }
+
+        XCTAssertFalse(saved)
+        XCTAssertEqual(model.profile, original)
+        XCTAssertEqual(model.loadedProfile, initial)
+        XCTAssertEqual(draft.updatedProfile, edited)
+        XCTAssertTrue(draft.hasChanges)
+        XCTAssertFalse(draft.isSaving)
+    }
+
+    func testSavingRemovedAvatarAndEmptyOptionalFieldsSendsEmptyValues() async throws {
+        let initial = try JSONDecoder().decode(Profile.self, from: profileJSON)
+        let service = ProfileServiceStub(response: initial)
+        let model = ProfileViewModel(profileService: service)
+        await model.loadProfile()
+        let draft = EditProfileViewModel(profile: model.profile)
+        draft.removeAvatar()
+        draft.biography = ""
+        draft.website = ""
+        let response = Profile(id: initial.id, name: initial.name, avatar: "", description: "", website: "",
+                               nfts: initial.nfts, likes: initial.likes)
+        await service.setResponse(response)
+
+        let saved = await draft.save { try await model.saveProfile($0.profileUpdate) }
+
+        XCTAssertTrue(saved)
+        let updates = await service.savedUpdates
+        let update = try XCTUnwrap(updates.first)
+        XCTAssertEqual(update.avatar, "")
+        XCTAssertEqual(update.description, "")
+        XCTAssertEqual(update.website, "")
+        XCTAssertNil(model.profile.avatarURL)
+        XCTAssertNil(EditProfileViewModel(profile: model.profile).avatarURL)
+    }
+
+    func testInvalidInputDoesNotCallServiceOrChangeProfile() async throws {
+        let initial = try JSONDecoder().decode(Profile.self, from: profileJSON)
+        let service = ProfileServiceStub(response: initial)
+        let model = ProfileViewModel(profileService: service)
+        await model.loadProfile()
+        let original = model.profile
+        let draft = EditProfileViewModel(profile: model.profile)
+        draft.name = " \n"
+
+        let saved = await draft.save { try await model.saveProfile($0.profileUpdate) }
+
+        XCTAssertFalse(saved)
+        let updates = await service.savedUpdates
+        XCTAssertTrue(updates.isEmpty)
+        XCTAssertEqual(model.profile, original)
+        XCTAssertEqual(model.loadedProfile, initial)
+    }
+
+    func testCancelledSaveDoesNotPublishServerResponse() async throws {
+        let initial = try JSONDecoder().decode(Profile.self, from: profileJSON)
+        let service = ProfileServiceStub(response: initial)
+        let model = ProfileViewModel(profileService: service)
+        await model.loadProfile()
+        let original = model.profile
+        let draft = EditProfileViewModel(profile: model.profile)
+        draft.name = "Новое имя"
+        await service.setCancelsSave(true)
+
+        let task = Task { await draft.save { try await model.saveProfile($0.profileUpdate) } }
+        let saved = await task.value
+
+        XCTAssertFalse(saved)
+        XCTAssertEqual(model.profile, original)
+        XCTAssertEqual(model.loadedProfile, initial)
+        XCTAssertEqual(draft.name, "Новое имя")
+        XCTAssertNil(draft.errorMessage)
+        XCTAssertFalse(draft.isSaving)
+    }
+}
+
 private let profileJSON = Data("""
 {"id":"1","name":"Серверное имя","avatar":"https://example.com/avatar.png",
 "description":"Описание с сервера","website":"https://example.com/site",
@@ -213,12 +369,16 @@ private struct JSONTestRequest: NetworkRequest {
 }
 
 private actor ProfileServiceStub: ProfileService {
-    let response: Profile
-    var error: Error?
+    private var response: Profile
+    private var error: Error?
+    private var cancelsSave = false
+    private(set) var savedUpdates: [ProfileUpdate] = []
 
     init(response: Profile) { self.response = response }
 
     func setError(_ error: Error?) { self.error = error }
+    func setResponse(_ response: Profile) { self.response = response }
+    func setCancelsSave(_ cancelsSave: Bool) { self.cancelsSave = cancelsSave }
 
     func loadProfile() async throws -> Profile {
         if let error { throw error }
@@ -226,7 +386,9 @@ private actor ProfileServiceStub: ProfileService {
     }
 
     func saveProfile(_ profile: ProfileUpdate) async throws -> Profile {
-        try await loadProfile()
+        savedUpdates.append(profile)
+        if cancelsSave { withUnsafeCurrentTask { $0?.cancel() } }
+        return try await loadProfile()
     }
 
     func saveLikes(_ ids: [String]) async throws -> Profile {

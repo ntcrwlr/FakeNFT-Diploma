@@ -58,6 +58,56 @@ final class iOS_FakeNFT_ExtendedUITests: XCTestCase {
         XCTAssertTrue(app.tabBars.buttons["Профиль"].isSelected)
     }
 
+    func testCancellingEditedProfileDiscardsChanges() {
+        let app = XCUIApplication()
+        app.launchArguments = ["-profile-fixture"]
+        app.launch()
+        let edit = app.buttons["profile.edit"]
+        XCTAssertTrue(edit.waitForExistence(timeout: 5))
+        edit.tap()
+        let name = app.textFields["profile.edit.name"]
+        XCTAssertTrue(name.waitForExistence(timeout: 5))
+        name.tap()
+        name.typeText(" edited")
+
+        app.buttons["profile.edit.cancel"].tap()
+
+        XCTAssertTrue(edit.waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Joaquin Phoenix"].exists)
+        edit.tap()
+        XCTAssertTrue(name.waitForExistence(timeout: 5))
+        XCTAssertEqual(name.value as? String, "Joaquin Phoenix")
+    }
+
+    func testInvalidNameShowsValidationErrorAndKeepsFormOpen() {
+        let app = XCUIApplication()
+        app.launchArguments = ["-profile-fixture"]
+        app.launch()
+        let edit = app.buttons["profile.edit"]
+        XCTAssertTrue(edit.waitForExistence(timeout: 5))
+        edit.tap()
+        let name = app.textFields["profile.edit.name"]
+        XCTAssertTrue(name.waitForExistence(timeout: 5))
+        name.tap()
+        name.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: "Joaquin Phoenix".count))
+        let website = app.textFields["profile.edit.website"]
+        website.tap()
+        website.typeText("\n")
+        let save = app.buttons["profile.edit.save"]
+        XCTAssertTrue(save.waitForExistence(timeout: 5))
+        save.tap()
+
+        let error = app.alerts["Ошибка"]
+        XCTAssertTrue(error.waitForExistence(timeout: 5))
+        XCTAssertTrue(error.staticTexts["Введите имя."].exists)
+        error.buttons["ОК"].tap()
+        XCTAssertTrue(name.exists)
+        XCTAssertEqual(name.value as? String, "Имя")
+        app.buttons["profile.edit.cancel"].tap()
+        XCTAssertTrue(edit.waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Joaquin Phoenix"].exists)
+    }
+
     func testProfileTabAndEditingNavigation() throws {
         let app = XCUIApplication()
         app.launchArguments = ["-profile-fixture"]
