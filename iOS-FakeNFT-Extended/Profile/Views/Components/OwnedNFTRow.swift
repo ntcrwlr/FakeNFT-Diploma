@@ -31,7 +31,7 @@ struct OwnedNFTRow: View {
                     .resizable()
                     .scaledToFill()
             } else {
-                // Offline placeholder until the original NFT artwork is supplied.
+                // Loading remote artwork from item.imageURL is implemented in a separate task.
                 LinearGradient(
                     colors: [.pink.opacity(0.25), .purple.opacity(0.45)],
                     startPoint: .topLeading,

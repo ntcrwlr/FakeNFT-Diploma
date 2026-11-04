@@ -2,6 +2,141 @@ import XCTest
 @testable import iOS_FakeNFT_Extended
 
 @MainActor
+final class OwnedNFTsLoadingTests: XCTestCase {
+    func testLoadPublishesServerDataAndUsesSelectedSortOption() async {
+        let service = OwnedNFTServiceStub()
+        let viewModel = OwnedNFTsViewModel(service: service, settingsService: OwnedNFTLoadingSettingsStub())
+        viewModel.selectSortOption(.price)
+        XCTAssertTrue(viewModel.items.isEmpty)
+
+        await viewModel.loadOwnedNFTs()
+
+        XCTAssertEqual(service.calls, 1)
+        XCTAssertEqual(viewModel.items.map(\.id), ["other-id", "server-id"])
+        let item = viewModel.items.last
+        XCTAssertEqual(item?.name, "Server NFT")
+        XCTAssertEqual(item?.author, "Alice")
+        XCTAssertEqual(item?.rating, 4)
+        XCTAssertEqual(item?.price, Decimal(235) / 100)
+        XCTAssertEqual(item?.formattedPrice, "2,35 ETH")
+        XCTAssertNil(item?.imageName)
+        XCTAssertEqual(item?.imageURL, URL(string: "https://example.com/nft.png"))
+        XCTAssertNil(viewModel.items.first?.imageURL)
+        XCTAssertNil(viewModel.loadingError)
+    }
+
+    func testSuccessfulLoadReplacesListAndClearsItForEmptyResponse() async {
+        let service = OwnedNFTServiceStub()
+        let viewModel = OwnedNFTsViewModel(service: service, settingsService: OwnedNFTLoadingSettingsStub())
+        await viewModel.loadOwnedNFTs()
+        XCTAssertFalse(viewModel.items.isEmpty)
+
+        service.response = [Nft(id: "added-id", name: "Added NFT", author: "Carol", rating: 5, price: 3, images: [])]
+        await viewModel.loadOwnedNFTs()
+        XCTAssertEqual(viewModel.items.map(\.id), ["added-id"])
+
+        service.response = []
+        await viewModel.loadOwnedNFTs()
+        XCTAssertEqual(service.calls, 3)
+        XCTAssertTrue(viewModel.items.isEmpty)
+        XCTAssertTrue(viewModel.isEmpty)
+    }
+
+    func testFailedLoadPreservesListAndCanBeRetried() async {
+        let service = OwnedNFTServiceStub()
+        let viewModel = OwnedNFTsViewModel(service: service, settingsService: OwnedNFTLoadingSettingsStub())
+        await viewModel.loadOwnedNFTs()
+        let loadedIDs = viewModel.items.map(\.id)
+
+        service.error = URLError(.notConnectedToInternet)
+        await viewModel.loadOwnedNFTs()
+        XCTAssertEqual(viewModel.items.map(\.id), loadedIDs)
+        XCTAssertNotNil(viewModel.loadingError)
+
+        service.error = nil
+        service.response = []
+        await viewModel.loadOwnedNFTs()
+        XCTAssertTrue(viewModel.items.isEmpty)
+        XCTAssertNil(viewModel.loadingError)
+    }
+
+    func testConcurrentLoadDoesNotStartDuplicateRequestOrClearList() async {
+        let service = OwnedNFTServiceStub()
+        let viewModel = OwnedNFTsViewModel(service: service, settingsService: OwnedNFTLoadingSettingsStub())
+        await viewModel.loadOwnedNFTs()
+        let loadedIDs = viewModel.items.map(\.id)
+        let started = expectation(description: "Owned NFT load started")
+        var continuation: CheckedContinuation<Void, Never>?
+        service.onLoad = {
+            await withCheckedContinuation {
+                continuation = $0
+                started.fulfill()
+            }
+        }
+        service.response = []
+        let load = Task { await viewModel.loadOwnedNFTs() }
+        await fulfillment(of: [started], timeout: 2)
+
+        await viewModel.loadOwnedNFTs()
+        XCTAssertEqual(service.calls, 2)
+        XCTAssertEqual(viewModel.items.map(\.id), loadedIDs)
+
+        continuation?.resume()
+        await load.value
+        XCTAssertTrue(viewModel.items.isEmpty)
+    }
+
+    func testCancelledLoadDoesNotPublishResponseAndAllowsAnotherLoad() async {
+        let service = OwnedNFTServiceStub()
+        let viewModel = OwnedNFTsViewModel(service: service, settingsService: OwnedNFTLoadingSettingsStub())
+        let started = expectation(description: "Owned NFT load started")
+        var continuation: CheckedContinuation<Void, Never>?
+        service.onLoad = {
+            await withCheckedContinuation {
+                continuation = $0
+                started.fulfill()
+            }
+        }
+        let load = Task { await viewModel.loadOwnedNFTs() }
+        await fulfillment(of: [started], timeout: 2)
+        load.cancel()
+        continuation?.resume()
+        await load.value
+
+        XCTAssertTrue(viewModel.items.isEmpty)
+        XCTAssertNil(viewModel.loadingError)
+
+        service.onLoad = nil
+        await viewModel.loadOwnedNFTs()
+        XCTAssertEqual(service.calls, 2)
+        XCTAssertFalse(viewModel.items.isEmpty)
+    }
+}
+
+@MainActor
+private final class OwnedNFTServiceStub: OwnedNFTService {
+    var response = [
+        Nft(id: "server-id", name: "Server NFT", author: "Alice", rating: 4, price: Decimal(235) / 100,
+            images: [URL(string: "https://example.com/nft.png")!, URL(string: "https://example.com/other.png")!]),
+        Nft(id: "other-id", name: "Other NFT", author: "Bob", rating: 2, price: 1, images: [])
+    ]
+    var error: Error?
+    var calls = 0
+    var onLoad: (() async -> Void)?
+
+    func loadOwnedNFTs() async throws -> [Nft] {
+        calls += 1
+        await onLoad?()
+        if let error { throw error }
+        return response
+    }
+}
+
+private final class OwnedNFTLoadingSettingsStub: UserSettingsServiceProtocol {
+    var ownedNFTSortOption: OwnedNFTSortOption = .rating
+}
+
+@MainActor
 final class OwnedNFTServiceTests: XCTestCase {
     func testLoadUsesOwnedIDsAndDecodesAllNFTFields() async throws {
         var paths: [String] = []

@@ -23,7 +23,7 @@ struct TabBarView: View {
                     onWebsite: { websitePath.append($0) }
                 )
                 .navigationDestination(isPresented: $showsOwnedNFTs) {
-                    OwnedNFTsView(viewModel: OwnedNFTsViewModel(items: OwnedNFTFixtures.preview))
+                    OwnedNFTsView(viewModel: OwnedNFTsViewModel(service: servicesAssembly.ownedNFTService))
                 }
                 .navigationDestination(isPresented: $showsFavoriteNFTs) {
                     FavoriteNFTsView(viewModel: FavoriteNFTsViewModel(service: servicesAssembly.favoriteNFTService))

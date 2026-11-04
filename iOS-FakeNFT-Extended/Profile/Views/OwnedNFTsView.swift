@@ -59,6 +59,7 @@ struct OwnedNFTsView: View {
             )
         }
         .accessibilityIdentifier("ownedNFTs.screen")
+        .task { await viewModel.loadOwnedNFTs() }
     }
 
     private var header: some View {
