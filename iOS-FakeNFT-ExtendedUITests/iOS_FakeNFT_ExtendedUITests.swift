@@ -1,6 +1,40 @@
 import XCTest
 
 final class iOS_FakeNFT_ExtendedUITests: XCTestCase {
+    func testSaveErrorOffersRetryAndPreservesEditedName() {
+        let app = XCUIApplication()
+        // The fixture has no saving service, so every save fails without changing server data.
+        app.launchArguments = ["-profile-fixture"]
+        app.launch()
+        let edit = app.buttons["profile.edit"]
+        XCTAssertTrue(edit.waitForExistence(timeout: 5))
+        edit.tap()
+        let name = app.textFields["profile.edit.name"]
+        XCTAssertTrue(name.waitForExistence(timeout: 5))
+        name.tap()
+        name.typeText(" retry")
+        let editedName = name.value as? String
+        app.textFields["profile.edit.website"].tap()
+        app.textFields["profile.edit.website"].typeText("\n")
+        app.buttons["profile.edit.save"].tap()
+
+        let error = app.alerts["Ошибка"]
+        for _ in 0..<2 {
+            XCTAssertTrue(error.waitForExistence(timeout: 5))
+            XCTAssertTrue(error.staticTexts["Не удалось сохранить изменения. Попробуйте ещё раз."].exists)
+            XCTAssertTrue(error.buttons["Продолжить редактирование"].exists)
+            error.buttons["Повторить"].tap()
+        }
+        XCTAssertTrue(error.waitForExistence(timeout: 5))
+        error.buttons["Продолжить редактирование"].tap()
+        XCTAssertTrue(name.waitForExistence(timeout: 5))
+        XCTAssertEqual(name.value as? String, editedName)
+        XCTAssertTrue(app.buttons["profile.edit.save"].isEnabled)
+        app.buttons["profile.edit.cancel"].tap()
+        XCTAssertTrue(edit.waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Joaquin Phoenix"].exists)
+    }
+
     func testFavoritesNavigationPreservesProfileAndSupportsBackGesture() {
         let app = XCUIApplication()
         app.launchArguments = ["-profile-fixture"]
@@ -100,6 +134,7 @@ final class iOS_FakeNFT_ExtendedUITests: XCTestCase {
         let error = app.alerts["Ошибка"]
         XCTAssertTrue(error.waitForExistence(timeout: 5))
         XCTAssertTrue(error.staticTexts["Введите имя."].exists)
+        XCTAssertFalse(error.buttons["Повторить"].exists)
         error.buttons["ОК"].tap()
         XCTAssertTrue(name.exists)
         XCTAssertEqual(name.value as? String, "Имя")

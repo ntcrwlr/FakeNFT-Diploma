@@ -7,8 +7,9 @@ final class ProfileViewModel {
     private(set) var profile: UserProfile
     private(set) var loadedProfile: Profile?
     private(set) var loadingError: Error?
+    private(set) var isLoading = false
+    private(set) var hasLoaded = false
     private let profileService: ProfileService?
-    private var isLoading = false
 
     var websiteURL: URL? {
         let value = profile.websiteTitle.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -32,6 +33,7 @@ final class ProfileViewModel {
     init(profile: UserProfile) {
         self.profile = profile
         profileService = nil
+        hasLoaded = true
     }
 
     init(profileService: ProfileService) {
@@ -46,13 +48,16 @@ final class ProfileViewModel {
         defer { isLoading = false }
 
         do {
+            try Task.checkCancellation()
             let response = try await profileService.loadProfile()
             try Task.checkCancellation()
             loadedProfile = response
             profile = UserProfile(profile: response)
+            hasLoaded = true
         } catch is CancellationError {
             return
         } catch {
+            guard !Task.isCancelled else { return }
             loadingError = error
         }
     }

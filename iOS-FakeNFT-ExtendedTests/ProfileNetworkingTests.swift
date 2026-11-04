@@ -116,6 +116,61 @@ final class ProfileServiceTests: XCTestCase {
 
 @MainActor
 final class ProfileLoadingTests: XCTestCase {
+    func testLoadingStatePreventsDuplicatesAndClearsErrorBeforeRetry() async throws {
+        let response = try JSONDecoder().decode(Profile.self, from: profileJSON)
+        let service = DeferredProfileService(response: response)
+        let model = ProfileViewModel(profileService: service)
+        XCTAssertFalse(model.isLoading)
+        XCTAssertFalse(model.hasLoaded)
+        service.error = URLError(.notConnectedToInternet)
+        await model.loadProfile()
+        XCTAssertNotNil(model.loadingError)
+        XCTAssertFalse(model.hasLoaded)
+        XCTAssertFalse(model.isLoading)
+
+        service.error = nil
+        let started = expectation(description: "Retry started")
+        var continuation: CheckedContinuation<Void, Never>?
+        service.onLoad = {
+            await withCheckedContinuation {
+                continuation = $0
+                started.fulfill()
+            }
+        }
+        let retry = Task { await model.loadProfile() }
+        await fulfillment(of: [started], timeout: 2)
+        XCTAssertTrue(model.isLoading)
+        XCTAssertNil(model.loadingError)
+        XCTAssertFalse(model.hasLoaded)
+        await model.loadProfile()
+        XCTAssertEqual(service.loadCalls, 2)
+
+        continuation?.resume()
+        await retry.value
+        XCTAssertFalse(model.isLoading)
+        XCTAssertTrue(model.hasLoaded)
+        XCTAssertEqual(model.profile, UserProfile(profile: response))
+        XCTAssertNil(model.loadingError)
+    }
+
+    func testRepeatedLoadFailureAllowsAnotherRetry() async throws {
+        let response = try JSONDecoder().decode(Profile.self, from: profileJSON)
+        let service = ProfileServiceStub(response: response)
+        let model = ProfileViewModel(profileService: service)
+        await service.setError(URLError(.notConnectedToInternet))
+        for _ in 0..<2 {
+            await model.loadProfile()
+            XCTAssertNotNil(model.loadingError)
+            XCTAssertFalse(model.isLoading)
+            XCTAssertFalse(model.hasLoaded)
+            XCTAssertEqual(model.profile, .empty)
+        }
+        await service.setError(nil)
+        await model.loadProfile()
+        XCTAssertTrue(model.hasLoaded)
+        XCTAssertNil(model.loadingError)
+    }
+
     func testLoadReplacesEmptyStateWithServerData() async throws {
         let response = try JSONDecoder().decode(Profile.self, from: profileJSON)
         let service = ProfileServiceStub(response: response)
@@ -136,6 +191,8 @@ final class ProfileLoadingTests: XCTestCase {
         XCTAssertEqual(model.profile.favoriteNFTCount, 1)
         XCTAssertNil(model.profile.avatarAssetName)
         XCTAssertNil(model.loadingError)
+        XCTAssertTrue(model.hasLoaded)
+        XCTAssertFalse(model.isLoading)
     }
 
     func testFailedReloadPreservesLastProfile() async throws {
@@ -149,6 +206,8 @@ final class ProfileLoadingTests: XCTestCase {
         await model.loadProfile()
         XCTAssertEqual(model.profile, loaded)
         XCTAssertNotNil(model.loadingError)
+        XCTAssertTrue(model.hasLoaded)
+        XCTAssertFalse(model.isLoading)
 
         await service.setError(nil)
         await model.loadProfile()
@@ -164,6 +223,8 @@ final class ProfileLoadingTests: XCTestCase {
 
         XCTAssertEqual(model.profile, .empty)
         XCTAssertNil(model.loadingError)
+        XCTAssertFalse(model.hasLoaded)
+        XCTAssertFalse(model.isLoading)
     }
 
     func testEmptyAvatarUsesPlaceholderAndEmptyListsHaveZeroCounts() throws {
@@ -178,6 +239,65 @@ final class ProfileLoadingTests: XCTestCase {
 
 @MainActor
 final class ProfileEditingTests: XCTestCase {
+    func testRepeatedSaveFailureKeepsDraftAndRetryUsesCurrentFields() async throws {
+        let initial = try JSONDecoder().decode(Profile.self, from: profileJSON)
+        let service = ProfileServiceStub(response: initial)
+        let model = ProfileViewModel(profileService: service)
+        await model.loadProfile()
+        let original = model.profile
+        let draft = EditProfileViewModel(profile: original)
+        draft.name = "Новое имя"
+        draft.biography = "Новое описание"
+        draft.website = "https://new.example.com"
+        draft.updateAvatar(link: "https://example.com/new.png")
+        let edited = draft.updatedProfile
+
+        await service.setError(URLError(.notConnectedToInternet))
+        for _ in 0..<2 {
+            let saved = await draft.save {
+                XCTAssertTrue($0.isSaving)
+                XCTAssertNil($0.errorMessage)
+                XCTAssertFalse($0.canRetrySave)
+                try await model.saveProfile($0.profileUpdate)
+            }
+            XCTAssertFalse(saved)
+            XCTAssertFalse(draft.isSaving)
+            XCTAssertTrue(draft.canRetrySave)
+            XCTAssertNotNil(draft.errorMessage)
+            XCTAssertEqual(draft.updatedProfile, edited)
+            XCTAssertEqual(model.profile, original)
+            XCTAssertEqual(model.loadedProfile, initial)
+        }
+
+        draft.dismissError()
+        XCTAssertNil(draft.errorMessage)
+        XCTAssertFalse(draft.canRetrySave)
+        XCTAssertEqual(draft.updatedProfile, edited)
+        draft.name = "Имя после ошибки"
+        let response = Profile(
+            id: initial.id, name: draft.name, avatar: draft.profileUpdate.avatar,
+            description: draft.biography, website: draft.website,
+            nfts: initial.nfts, likes: initial.likes
+        )
+        await service.setError(nil)
+        await service.setResponse(response)
+
+        let saved = await draft.save { try await model.saveProfile($0.profileUpdate) }
+
+        XCTAssertTrue(saved)
+        XCTAssertFalse(draft.isSaving)
+        XCTAssertFalse(draft.canRetrySave)
+        XCTAssertNil(draft.errorMessage)
+        let updates = await service.savedUpdates
+        XCTAssertEqual(updates.count, 3)
+        let update = try XCTUnwrap(updates.last)
+        XCTAssertEqual(update.name, "Имя после ошибки")
+        XCTAssertEqual(update.description, edited.biography)
+        XCTAssertEqual(update.website, edited.websiteTitle)
+        XCTAssertEqual(update.avatar, edited.avatarURL?.absoluteString)
+        XCTAssertEqual(model.profile, UserProfile(profile: response))
+    }
+
     func testDraftUsesCurrentProfileAndDiscardingChangesDoesNotSave() async throws {
         let response = try JSONDecoder().decode(Profile.self, from: profileJSON)
         let service = ProfileServiceStub(response: response)
@@ -366,6 +486,26 @@ private struct JSONTestRequest: NetworkRequest {
     var endpoint: URL? { ProfileRequest().endpoint }
     var httpMethod: HttpMethod { .put }
     var dto: Encodable? { ["name": "JSON + &"] }
+}
+
+@MainActor
+private final class DeferredProfileService: ProfileService {
+    let response: Profile
+    var error: Error?
+    var onLoad: (() async -> Void)?
+    private(set) var loadCalls = 0
+
+    init(response: Profile) { self.response = response }
+
+    func loadProfile() async throws -> Profile {
+        loadCalls += 1
+        await onLoad?()
+        if let error { throw error }
+        return response
+    }
+
+    func saveProfile(_ profile: ProfileUpdate) async throws -> Profile { response }
+    func saveLikes(_ ids: [String]) async throws -> Profile { response }
 }
 
 private actor ProfileServiceStub: ProfileService {

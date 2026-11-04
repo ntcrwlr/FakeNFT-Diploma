@@ -98,6 +98,50 @@ final class EditProfileViewModelTests: XCTestCase {
         XCTAssertFalse(model.isSaving)
     }
 
+    func testRetryBlocksDuplicateSavesUntilRequestCompletes() async {
+        let model = EditProfileViewModel(profile: ProfileFixtures.preview)
+        _ = await model.save { _ in throw URLError(.notConnectedToInternet) }
+        XCTAssertTrue(model.canRetrySave)
+        let started = expectation(description: "Save retry started")
+        var continuation: CheckedContinuation<Void, Never>?
+        let retry = Task {
+            await model.save { _ in
+                await withCheckedContinuation {
+                    continuation = $0
+                    started.fulfill()
+                }
+            }
+        }
+        await fulfillment(of: [started], timeout: 2)
+        XCTAssertTrue(model.isSaving)
+        XCTAssertNil(model.errorMessage)
+        XCTAssertFalse(model.canRetrySave)
+
+        let duplicate = await model.save { _ in XCTFail("Duplicate retry") }
+        XCTAssertFalse(duplicate)
+        XCTAssertTrue(model.isSaving)
+        continuation?.resume()
+        let saved = await retry.value
+        XCTAssertTrue(saved)
+        XCTAssertFalse(model.isSaving)
+    }
+
+    func testValidationErrorsDoNotOfferSaveRetry() async {
+        let model = EditProfileViewModel(profile: ProfileFixtures.preview)
+        _ = await model.save { _ in throw URLError(.notConnectedToInternet) }
+        XCTAssertTrue(model.canRetrySave)
+
+        model.updateAvatar(link: "file:///tmp/avatar.png")
+        XCTAssertNotNil(model.errorMessage)
+        XCTAssertFalse(model.canRetrySave)
+
+        model.name = ""
+        let saved = await model.save { _ in XCTFail("Invalid input must not be saved") }
+        XCTAssertFalse(saved)
+        XCTAssertNotNil(model.errorMessage)
+        XCTAssertFalse(model.canRetrySave)
+    }
+
     func testSaveFailurePreservesDraftAndClearsLoading() async {
         let model = EditProfileViewModel(profile: ProfileFixtures.preview)
         model.name = "Новое имя"

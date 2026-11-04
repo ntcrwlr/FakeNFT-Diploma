@@ -6,6 +6,9 @@
 "Error.repeat" = "Повторить";
 "Error.title" = "Ошибка";
 
+"Profile.loading" = "Загрузка профиля…";
+"Profile.loadingError.message" = "Не удалось загрузить профиль. Попробуйте ещё раз.";
+
 "OwnedNFTs.empty" = "У Вас ещё нет NFT";
 "OwnedNFTs.title" = "Мои NFT";
 "OwnedNFTs.sort" = "Сортировка";
