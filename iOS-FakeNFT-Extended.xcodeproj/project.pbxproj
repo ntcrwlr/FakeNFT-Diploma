@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F04320260000000000000002 /* OwnedNFTService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04320260000000000000001 /* OwnedNFTService.swift */; };
+		F04320260000000000000004 /* OwnedNFTNetworkingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04320260000000000000003 /* OwnedNFTNetworkingTests.swift */; };
 		F03520260000000000000002 /* FavoriteNFTsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F03520260000000000000001 /* FavoriteNFTsViewModel.swift */; };
 		F03420260000000000000002 /* FavoriteNFTService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F03420260000000000000001 /* FavoriteNFTService.swift */; };
 		F03420260000000000000004 /* FavoriteNFTNetworkingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F03420260000000000000003 /* FavoriteNFTNetworkingTests.swift */; };
@@ -86,6 +88,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F04320260000000000000001 /* OwnedNFTService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnedNFTService.swift; sourceTree = "<group>"; };
+		F04320260000000000000003 /* OwnedNFTNetworkingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnedNFTNetworkingTests.swift; sourceTree = "<group>"; };
 		F03520260000000000000001 /* FavoriteNFTsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteNFTsViewModel.swift; sourceTree = "<group>"; };
 		F03420260000000000000001 /* FavoriteNFTService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteNFTService.swift; sourceTree = "<group>"; };
 		F03420260000000000000003 /* FavoriteNFTNetworkingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteNFTNetworkingTests.swift; sourceTree = "<group>"; };
@@ -223,6 +227,7 @@
 		ABC5E17B2C31F5B0002B4068 /* iOS-FakeNFT-ExtendedTests */ = {
 			isa = PBXGroup;
 			children = (
+				F04320260000000000000003 /* OwnedNFTNetworkingTests.swift */,
 				F03420260000000000000003 /* FavoriteNFTNetworkingTests.swift */,
 				F01320260000000000000007 /* ProfileNetworkingTests.swift */,
 				ABC5E17C2C31F5B0002B4068 /* iOS_FakeNFT_ExtendedTests.swift */,
@@ -294,6 +299,7 @@
 		ABC5E1A92C31FABA002B4068 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				F04320260000000000000001 /* OwnedNFTService.swift */,
 				F03420260000000000000001 /* FavoriteNFTService.swift */,
 				F01320260000000000000005 /* ProfileService.swift */,
 				ABC5E1AC2C31FB6C002B4068 /* Requests */,
@@ -565,6 +571,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F04320260000000000000002 /* OwnedNFTService.swift in Sources */,
 				F03520260000000000000002 /* FavoriteNFTsViewModel.swift in Sources */,
 				F03420260000000000000002 /* FavoriteNFTService.swift in Sources */,
 				F01320260000000000000006 /* ProfileService.swift in Sources */,
@@ -621,6 +628,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F04320260000000000000004 /* OwnedNFTNetworkingTests.swift in Sources */,
 				F03420260000000000000004 /* FavoriteNFTNetworkingTests.swift in Sources */,
 				F01320260000000000000008 /* ProfileNetworkingTests.swift in Sources */,
 				ABC5E17D2C31F5B0002B4068 /* iOS_FakeNFT_ExtendedTests.swift in Sources */,

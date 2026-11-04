@@ -75,7 +75,7 @@ final class FavoriteNFTsViewModelTests: XCTestCase {
         let viewModel = FavoriteNFTsViewModel(service: service)
         await viewModel.loadFavorites()
 
-        service.response = [Nft(id: "added-id", name: "Added NFT", rating: 5, price: 2, images: [])]
+        service.response = [Nft(id: "added-id", name: "Added NFT", author: "Alice", rating: 5, price: 2, images: [])]
         await viewModel.loadFavorites()
 
         XCTAssertEqual(service.calls, 2)
@@ -230,9 +230,9 @@ private final class FavoriteNFTServiceStub: FavoriteNFTService {
     var waitsForLoad = false
     var loadContinuation: CheckedContinuation<Void, Never>?
     var response = [Nft(
-        id: "server-id", name: "Server NFT", rating: 4, price: Decimal(235) / 100,
+        id: "server-id", name: "Server NFT", author: "Alice", rating: 4, price: Decimal(235) / 100,
         images: [URL(string: "https://example.com/nft.png")!, URL(string: "https://example.com/second.png")!]
-    ), Nft(id: "other-id", name: "Other NFT", rating: 3, price: 1, images: [])]
+    ), Nft(id: "other-id", name: "Other NFT", author: "Bob", rating: 3, price: 1, images: [])]
 
     func loadFavoriteNFTs() async throws -> [Nft] {
         calls += 1
@@ -472,7 +472,7 @@ private func profileData(likes: [String]) throws -> Data {
 
 private func nftData(id: String, name: String = "April", rating: Int = 5, price: String = "8.81") -> Data {
     Data("""
-    {"id":"\(id)","name":"\(name)","rating":\(rating),"price":\(price),
+    {"id":"\(id)","name":"\(name)","author":"Alice","rating":\(rating),"price":\(price),
     "images":["https://example.com/\(id)/1.png","https://example.com/\(id)/2.png"]}
     """.utf8)
 }

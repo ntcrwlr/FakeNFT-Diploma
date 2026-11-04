@@ -29,4 +29,8 @@ final class ServicesAssembly {
     var favoriteNFTService: FavoriteNFTService {
         FavoriteNFTServiceImpl(profileService: profileService, nftService: nftService)
     }
+
+    var ownedNFTService: OwnedNFTService {
+        OwnedNFTServiceImpl(profileService: profileService, nftService: nftService)
+    }
 }
