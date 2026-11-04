@@ -7,7 +7,8 @@ final class OwnedNFTsViewModel {
     private let service: OwnedNFTService?
     private let settingsService: UserSettingsServiceProtocol
     private var sourceItems: [OwnedNFT]
-    private var isLoading = false
+    private(set) var isLoading = false
+    private(set) var hasLoaded = false
     private(set) var loadingError: Error?
     private(set) var selectedSortOption: OwnedNFTSortOption
     var isSortMenuPresented = false
@@ -25,7 +26,9 @@ final class OwnedNFTsViewModel {
         }
     }
 
-    var isEmpty: Bool { sourceItems.isEmpty }
+    var isEmpty: Bool {
+        hasLoaded && sourceItems.isEmpty && !isLoading && loadingError == nil
+    }
 
     init(service: OwnedNFTService, settingsService: UserSettingsServiceProtocol = UserSettingsService()) {
         self.service = service
@@ -38,6 +41,7 @@ final class OwnedNFTsViewModel {
         self.service = nil
         self.settingsService = settingsService
         self.sourceItems = items
+        self.hasLoaded = true
         self.selectedSortOption = settingsService.ownedNFTSortOption
     }
 
@@ -57,6 +61,7 @@ final class OwnedNFTsViewModel {
                     rating: $0.rating, imageName: nil, isFavorite: false, imageURL: $0.images.first
                 )
             }
+            hasLoaded = true
         } catch is CancellationError {
             return
         } catch {
@@ -67,6 +72,7 @@ final class OwnedNFTsViewModel {
 
     func updateItems(_ items: [OwnedNFT]) {
         sourceItems = items
+        hasLoaded = true
     }
 
     func selectSortOption(_ option: OwnedNFTSortOption) {

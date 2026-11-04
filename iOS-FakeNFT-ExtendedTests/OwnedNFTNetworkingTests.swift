@@ -3,6 +3,46 @@ import XCTest
 
 @MainActor
 final class OwnedNFTsLoadingTests: XCTestCase {
+    func testEmptyStateRequiresSuccessfulLoadAndRetryClearsErrorWhileLoading() async {
+        let service = OwnedNFTServiceStub()
+        let viewModel = OwnedNFTsViewModel(service: service, settingsService: OwnedNFTLoadingSettingsStub())
+        XCTAssertFalse(viewModel.isEmpty)
+        XCTAssertFalse(viewModel.hasLoaded)
+
+        service.error = URLError(.notConnectedToInternet)
+        for _ in 0..<2 {
+            await viewModel.loadOwnedNFTs()
+            XCTAssertNotNil(viewModel.loadingError)
+            XCTAssertFalse(viewModel.isEmpty)
+            XCTAssertFalse(viewModel.isLoading)
+        }
+
+        let started = expectation(description: "Retry started")
+        var continuation: CheckedContinuation<Void, Never>?
+        service.onLoad = {
+            await withCheckedContinuation {
+                continuation = $0
+                started.fulfill()
+            }
+        }
+        service.error = nil
+        service.response = []
+        let retry = Task { await viewModel.loadOwnedNFTs() }
+        await fulfillment(of: [started], timeout: 2)
+        XCTAssertTrue(viewModel.isLoading)
+        XCTAssertNil(viewModel.loadingError)
+        XCTAssertFalse(viewModel.isEmpty)
+        await viewModel.loadOwnedNFTs()
+        XCTAssertEqual(service.calls, 3)
+
+        continuation?.resume()
+        await retry.value
+        XCTAssertFalse(viewModel.isLoading)
+        XCTAssertTrue(viewModel.hasLoaded)
+        XCTAssertTrue(viewModel.isEmpty)
+        XCTAssertNil(viewModel.loadingError)
+    }
+
     func testLoadPublishesServerDataAndUsesSelectedSortOption() async {
         let service = OwnedNFTServiceStub()
         let viewModel = OwnedNFTsViewModel(service: service, settingsService: OwnedNFTLoadingSettingsStub())

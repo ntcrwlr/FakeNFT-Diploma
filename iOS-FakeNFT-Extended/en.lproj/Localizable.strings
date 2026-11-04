@@ -10,6 +10,9 @@
 "Profile.loadingError.message" = "Не удалось загрузить профиль. Попробуйте ещё раз.";
 
 "OwnedNFTs.empty" = "У Вас ещё нет NFT";
+"OwnedNFTs.loading" = "Загрузка NFT…";
+"OwnedNFTs.loadingError.message" = "Не удалось загрузить NFT. Попробуйте ещё раз.";
+"OwnedNFTs.loadingError.retry" = "Повторить";
 "OwnedNFTs.title" = "Мои NFT";
 "OwnedNFTs.sort" = "Сортировка";
 "OwnedNFTs.sort.price" = "По цене";

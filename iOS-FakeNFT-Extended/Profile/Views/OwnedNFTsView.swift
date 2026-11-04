@@ -11,9 +11,17 @@ struct OwnedNFTsView: View {
     var body: some View {
         ZStack {
             Color(uiColor: .profileBackground).ignoresSafeArea()
-            if viewModel.isEmpty {
+            if viewModel.isLoading || (!viewModel.hasLoaded && viewModel.loadingError == nil) {
+                ProgressView("OwnedNFTs.loading")
+                    .tint(Color(uiColor: .profileForeground))
+                    .accessibilityIdentifier("ownedNFTs.loading")
+            } else if viewModel.loadingError != nil {
+                loadingError
+            } else if viewModel.isEmpty {
                 Text(NSLocalizedString("OwnedNFTs.empty", comment: "Message shown when the user owns no NFTs"))
                     .font(.system(.body, weight: .bold))
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 16)
                     .accessibilityIdentifier("ownedNFTs.empty")
             } else {
                 ScrollView {
@@ -32,7 +40,7 @@ struct OwnedNFTsView: View {
         }
         .foregroundStyle(Color(uiColor: .profileForeground))
         .overlay(alignment: .topLeading) {
-            if viewModel.isEmpty {
+            if !showsList {
                 backButton.padding(.leading, 4)
             }
         }
@@ -60,6 +68,25 @@ struct OwnedNFTsView: View {
         }
         .accessibilityIdentifier("ownedNFTs.screen")
         .task { await viewModel.loadOwnedNFTs() }
+    }
+
+    private var showsList: Bool {
+        viewModel.hasLoaded && !viewModel.isLoading && viewModel.loadingError == nil && !viewModel.isEmpty
+    }
+
+    private var loadingError: some View {
+        VStack(spacing: 12) {
+            Text("OwnedNFTs.loadingError.message")
+                .multilineTextAlignment(.center)
+            Button("OwnedNFTs.loadingError.retry") {
+                Task { await viewModel.loadOwnedNFTs() }
+            }
+            .buttonStyle(.bordered)
+            .disabled(viewModel.isLoading)
+            .accessibilityIdentifier("ownedNFTs.retry")
+        }
+        .padding(16)
+        .accessibilityIdentifier("ownedNFTs.loadingError")
     }
 
     private var header: some View {
