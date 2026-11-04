@@ -29,8 +29,7 @@ struct SortView: View {
             
             CloseSortButton(action: onClose)
         }
-        .padding(.horizontal, 8)
-        .padding(.top, 8)
+        .padding([.horizontal, .top], 8)
         .padding(.bottom, 32)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
         .background(Color.clear)

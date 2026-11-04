@@ -49,14 +49,14 @@ struct DeleteConfirmationView: View {
                     .frame(width: 127, height: 44)
                     .background(Color.black)
                     .foregroundStyle(.red)
-                    .cornerRadius(12)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
 
                 Button("Вернуться", action: onCancel)
                     .font(.system(size: 17, weight: .regular))
                     .frame(width: 127, height: 44)
                     .background(Color.black)
                     .foregroundStyle(.white)
-                    .cornerRadius(12)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
             }
             .padding(.top, 20)
         }

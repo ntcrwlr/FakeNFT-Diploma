@@ -70,7 +70,7 @@ struct CartView: View {
             Rectangle()
                 .fill(.ultraThinMaterial)
                 .overlay {
-                    Color("blurOverlayColor")
+                    Color(.blurOverlay)
                 }
                 .ignoresSafeArea()
                 .overlay {
@@ -101,7 +101,7 @@ struct CartView: View {
                     Button {
                         showSortDialog = true
                     } label: {
-                        Image("sort")
+                        Image(.sort)
                             .resizable()
                             .scaledToFit()
                             .frame(width: 42, height: 42)
@@ -141,6 +141,7 @@ struct CartView: View {
                     showErrorAlert = errorMessage != nil
                 }
         }
+        .statusBarHidden(showDeleteConfirmation)
         .overlay {
             deleteOverlay
         }
