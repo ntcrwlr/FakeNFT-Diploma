@@ -25,21 +25,21 @@ struct OwnedNFTRow: View {
     }
 
     private var artwork: some View {
-        ZStack {
+        Group {
             if let imageName = item.imageName {
                 Image(imageName)
                     .resizable()
                     .scaledToFill()
             } else {
-                // Loading remote artwork from item.imageURL is implemented in a separate task.
-                LinearGradient(
-                    colors: [.pink.opacity(0.25), .purple.opacity(0.45)],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
-                Image(systemName: "photo.artframe")
-                    .font(.system(size: 40))
-                    .foregroundStyle(.white)
+                AsyncImage(url: artworkURL) { phase in
+                    switch phase {
+                    case .success(let image):
+                        image.resizable().scaledToFill()
+                    default:
+                        artworkPlaceholder
+                    }
+                }
+                .id(artworkURL)
             }
         }
         .frame(width: 108, height: 108)
@@ -57,6 +57,27 @@ struct OwnedNFTRow: View {
                 ? NSLocalizedString("OwnedNFTs.favorite", comment: "Accessibility label for a favorite NFT image")
                 : NSLocalizedString("OwnedNFTs.image", comment: "Accessibility label for an NFT image")
         )
+    }
+
+    private var artworkURL: URL? {
+        guard let url = item.imageURL,
+              let scheme = url.scheme?.lowercased(),
+              ["http", "https"].contains(scheme),
+              let host = url.host, !host.isEmpty else { return nil }
+        return url
+    }
+
+    private var artworkPlaceholder: some View {
+        LinearGradient(
+            colors: [.pink.opacity(0.25), .purple.opacity(0.45)],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+        .overlay {
+            Image(systemName: "photo.artframe")
+                .font(.system(size: 40))
+                .foregroundStyle(.white)
+        }
     }
 
     private var details: some View {
