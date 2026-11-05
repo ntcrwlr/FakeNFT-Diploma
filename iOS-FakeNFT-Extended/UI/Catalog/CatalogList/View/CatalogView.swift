@@ -4,10 +4,16 @@ struct CatalogView: View {
     @AppStorage(CatalogSort.storageKey) private var sortRawValue = CatalogSort.nftCount.rawValue
     @State private var viewModel: CatalogViewModel
     private let nftService: NftService
+    private let favoritesService: FavoritesServiceProtocol
 
-    init(viewModel: CatalogViewModel, nftService: NftService) {
+    init(
+        viewModel: CatalogViewModel,
+        nftService: NftService,
+        favoritesService: FavoritesServiceProtocol
+    ) {
         _viewModel = State(initialValue: viewModel)
         self.nftService = nftService
+        self.favoritesService = favoritesService
     }
 
     var body: some View {
@@ -85,7 +91,11 @@ struct CatalogView: View {
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
         .navigationDestination(for: NftCollection.self) { collection in
-            CollectionDetailsView(collection: collection, nftService: nftService)
+            CollectionDetailsView(
+                collection: collection,
+                nftService: nftService,
+                favoritesService: favoritesService
+            )
         }
     }
 
@@ -154,6 +164,8 @@ private enum Constants {
             previewCollections: PreviewData.collections,
             sort: .nftCount
         ),
-        nftService: PreviewNftService()
+        nftService: PreviewNftService(),
+        favoritesService: PreviewFavoritesService()
     )
+    .environment(ServicesAssembly(networkClient: DefaultNetworkClient(), nftStorage: NftStorageImpl()))
 }

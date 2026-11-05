@@ -19,10 +19,19 @@ private enum Constants {
 
 struct CollectionDetailsView: View {
     @State private var viewModel: CollectionDetailsViewModel
+    @State private var openedNft: OpenedNft?
 
-    init(collection: NftCollection, nftService: NftService) {
+    init(
+        collection: NftCollection,
+        nftService: NftService,
+        favoritesService: FavoritesServiceProtocol
+    ) {
         _viewModel = State(
-            initialValue: CollectionDetailsViewModel(collection: collection, nftService: nftService)
+            initialValue: CollectionDetailsViewModel(
+                collection: collection,
+                nftService: nftService,
+                favoritesService: favoritesService
+            )
         )
     }
 
@@ -37,6 +46,10 @@ struct CollectionDetailsView: View {
         .toolbarBackground(.hidden, for: .navigationBar)
         .task {
             await viewModel.loadIfNeeded()
+        }
+        .fullScreenCover(item: $openedNft) { nft in
+            NftDetailBridgeView(nftId: nft.id)
+                .ignoresSafeArea()
         }
     }
 
@@ -81,13 +94,28 @@ struct CollectionDetailsView: View {
     }
 
     private var author: some View {
-        (
+        HStack(alignment: .firstTextBaseline, spacing: 0) {
             Text(Constants.authorPrefix)
                 .foregroundStyle(Color.black)
-            + Text(viewModel.collection.author)
-                .foregroundStyle(Color.blue)
-        )
+            authorName
+        }
         .font(Font(UIFont.caption2))
+    }
+
+    @ViewBuilder
+    private var authorName: some View {
+        if let url = viewModel.authorURL {
+            NavigationLink {
+                CollectionAuthorWebView(url: url)
+            } label: {
+                Text(viewModel.collection.author)
+                    .foregroundStyle(Color.blue)
+            }
+            .buttonStyle(.plain)
+        } else {
+            Text(viewModel.collection.author)
+                .foregroundStyle(Color.blue)
+        }
     }
 
     @ViewBuilder
@@ -124,13 +152,29 @@ struct CollectionDetailsView: View {
     private func nftGrid(_ nfts: [Nft]) -> some View {
         LazyVGrid(columns: Constants.columns, spacing: Constants.gridRowSpacing) {
             ForEach(nfts, id: \.id) { nft in
-                CollectionNftCellView(nft: nft)
+                CollectionNftCellView(
+                    nft: nft,
+                    isLiked: viewModel.isLiked(nft.id),
+                    isLikeEnabled: !viewModel.isLikeInProgress(nft.id),
+                    onLike: {
+                        Task {
+                            await viewModel.toggleLike(id: nft.id)
+                        }
+                    },
+                    onOpen: {
+                        openedNft = OpenedNft(id: nft.id)
+                    }
+                )
             }
         }
         .padding(.horizontal, 16)
         .padding(.top, 24)
         .padding(.bottom, 24)
     }
+}
+
+private struct OpenedNft: Identifiable {
+    let id: String
 }
 
 // MARK: - Preview
@@ -146,7 +190,9 @@ struct CollectionDetailsView: View {
                 author: "https://example.com/john-doe",
                 nfts: ["1", "2", "3", "4", "5", "6"]
             ),
-            nftService: PreviewNftService()
+            nftService: PreviewNftService(),
+            favoritesService: PreviewFavoritesService()
         )
+        .environment(ServicesAssembly(networkClient: DefaultNetworkClient(), nftStorage: NftStorageImpl()))
     }
 }

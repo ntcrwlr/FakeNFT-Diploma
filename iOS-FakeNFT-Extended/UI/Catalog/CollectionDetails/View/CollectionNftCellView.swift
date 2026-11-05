@@ -2,6 +2,10 @@ import SwiftUI
 
 struct CollectionNftCellView: View {
     let nft: Nft
+    let isLiked: Bool
+    let isLikeEnabled: Bool
+    let onLike: () -> Void
+    let onOpen: () -> Void
 
     private var filledStars: Int {
         min(Constants.starCount, max(0, nft.rating / 2))
@@ -10,6 +14,15 @@ struct CollectionNftCellView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             cover
+            Button(action: onOpen) {
+                details
+            }
+            .buttonStyle(.plain)
+        }
+    }
+
+    private var details: some View {
+        VStack(alignment: .leading, spacing: 8) {
             rating
             Text(nft.name)
                 .font(Font(UIFont.bodyBold))
@@ -21,6 +34,7 @@ struct CollectionNftCellView: View {
                 .foregroundStyle(Color.black)
                 .lineLimit(1)
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     private var cover: some View {
@@ -36,6 +50,31 @@ struct CollectionNftCellView: View {
             }
             .aspectRatio(1, contentMode: .fit)
             .clipShape(RoundedRectangle(cornerRadius: Constants.coverCornerRadius))
+            .overlay {
+                Button(action: onOpen) {
+                    Color.clear
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+            }
+            .overlay(alignment: .topTrailing) {
+                likeButton
+                    .zIndex(1)
+            }
+    }
+
+    private var likeButton: some View {
+        Button(action: onLike) {
+            Image(systemName: "heart.fill")
+                .font(.system(size: Constants.heartSize))
+                .foregroundStyle(isLiked ? Color.red : Color.white)
+                .shadow(color: .black.opacity(0.35), radius: 2, y: 1)
+                .frame(width: Constants.heartTapSize, height: Constants.heartTapSize)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .disabled(!isLikeEnabled)
+        .accessibilityLabel(isLiked ? Constants.likedTitle : Constants.likeTitle)
     }
 
     private var rating: some View {
@@ -60,4 +99,8 @@ private enum Constants {
     static let coverCornerRadius: CGFloat = 12
     static let starCount = 5
     static let starSize: CGFloat = 12
+    static let heartSize: CGFloat = 16
+    static let heartTapSize: CGFloat = 32
+    static let likeTitle = NSLocalizedString("Catalog.like", comment: "")
+    static let likedTitle = NSLocalizedString("Catalog.liked", comment: "")
 }

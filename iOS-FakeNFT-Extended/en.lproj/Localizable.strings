@@ -7,6 +7,8 @@
 "Catalog.sort.byName" = "По названию";
 "Catalog.sort.byCount" = "По количеству NFT";
 "Catalog.sort.close" = "Закрыть";
+"Catalog.like" = "Добавить в избранное";
+"Catalog.liked" = "В избранном";
 
 // MARK: - Collection
 "Collection.author" = "Автор коллекции: ";
