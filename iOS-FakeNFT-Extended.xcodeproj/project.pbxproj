@@ -51,6 +51,13 @@
 		C47A101B2C31F001002B4068 /* CollectionDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A100B2C31F001002B4068 /* CollectionDetailsView.swift */; };
 		C47A101C2C31F001002B4068 /* CollectionDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A100C2C31F001002B4068 /* CollectionDetailsViewModel.swift */; };
 		C47A101D2C31F001002B4068 /* CollectionNftCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A100D2C31F001002B4068 /* CollectionNftCellView.swift */; };
+		C47A10372C31F001002B4068 /* CollectionAuthorWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A10362C31F001002B4068 /* CollectionAuthorWebView.swift */; };
+		C47A10392C31F001002B4068 /* FavoritesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A10382C31F001002B4068 /* FavoritesService.swift */; };
+		C47A103B2C31F001002B4068 /* ProfileLikesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A103A2C31F001002B4068 /* ProfileLikesRequest.swift */; };
+		C47A103D2C31F001002B4068 /* PreviewFavoritesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A103C2C31F001002B4068 /* PreviewFavoritesService.swift */; };
+		C47A103F2C31F001002B4068 /* CartService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A103E2C31F001002B4068 /* CartService.swift */; };
+		C47A10412C31F001002B4068 /* OrderRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A10402C31F001002B4068 /* OrderRequest.swift */; };
+		C47A10432C31F001002B4068 /* PreviewCartService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A10422C31F001002B4068 /* PreviewCartService.swift */; };
 		C47A101E2C31F001002B4068 /* CollectionDetailsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A100E2C31F001002B4068 /* CollectionDetailsState.swift */; };
 		C47A101F2C31F001002B4068 /* PreviewNftService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A100F2C31F001002B4068 /* PreviewNftService.swift */; };
 		C47A10332C31F001002B4068 /* CatalogAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A10322C31F001002B4068 /* CatalogAssembly.swift */; };
@@ -122,6 +129,13 @@
 		C47A100B2C31F001002B4068 /* CollectionDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionDetailsView.swift; sourceTree = "<group>"; };
 		C47A100C2C31F001002B4068 /* CollectionDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionDetailsViewModel.swift; sourceTree = "<group>"; };
 		C47A100D2C31F001002B4068 /* CollectionNftCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionNftCellView.swift; sourceTree = "<group>"; };
+		C47A10362C31F001002B4068 /* CollectionAuthorWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionAuthorWebView.swift; sourceTree = "<group>"; };
+		C47A10382C31F001002B4068 /* FavoritesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesService.swift; sourceTree = "<group>"; };
+		C47A103A2C31F001002B4068 /* ProfileLikesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileLikesRequest.swift; sourceTree = "<group>"; };
+		C47A103C2C31F001002B4068 /* PreviewFavoritesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewFavoritesService.swift; sourceTree = "<group>"; };
+		C47A103E2C31F001002B4068 /* CartService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartService.swift; sourceTree = "<group>"; };
+		C47A10402C31F001002B4068 /* OrderRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderRequest.swift; sourceTree = "<group>"; };
+		C47A10422C31F001002B4068 /* PreviewCartService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewCartService.swift; sourceTree = "<group>"; };
 		C47A100E2C31F001002B4068 /* CollectionDetailsState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionDetailsState.swift; sourceTree = "<group>"; };
 		C47A100F2C31F001002B4068 /* PreviewNftService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewNftService.swift; sourceTree = "<group>"; };
 		C47A10322C31F001002B4068 /* CatalogAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogAssembly.swift; sourceTree = "<group>"; };
@@ -280,6 +294,8 @@
 				ABC5E1AC2C31FB6C002B4068 /* Requests */,
 				ABC5E1AA2C31FACD002B4068 /* NftService.swift */,
 				C47A10032C31F001002B4068 /* CollectionService.swift */,
+				C47A10382C31F001002B4068 /* FavoritesService.swift */,
+				C47A103E2C31F001002B4068 /* CartService.swift */,
 				ABC5E1B62C31FC70002B4068 /* ServicesAssembly.swift */,
 			);
 			path = Services;
@@ -291,6 +307,8 @@
 				ABC5E1B12C31FBD4002B4068 /* ExampleRequest.swift */,
 				C47A10022C31F001002B4068 /* CollectionsRequest.swift */,
 				ABC5E1AD2C31FB7F002B4068 /* NftByIdRequest.swift */,
+				C47A103A2C31F001002B4068 /* ProfileLikesRequest.swift */,
+				C47A10402C31F001002B4068 /* OrderRequest.swift */,
 				ABC5E1AF2C31FB90002B4068 /* RequestConstants.swift */,
 			);
 			path = Requests;
@@ -357,6 +375,8 @@
 			children = (
 				C47A10342C31F001002B4068 /* PreviewData.swift */,
 				C47A100F2C31F001002B4068 /* PreviewNftService.swift */,
+				C47A103C2C31F001002B4068 /* PreviewFavoritesService.swift */,
+				C47A10422C31F001002B4068 /* PreviewCartService.swift */,
 			);
 			path = Preview;
 			sourceTree = "<group>";
@@ -427,6 +447,7 @@
 			isa = PBXGroup;
 			children = (
 				C47A100B2C31F001002B4068 /* CollectionDetailsView.swift */,
+				C47A10362C31F001002B4068 /* CollectionAuthorWebView.swift */,
 				C47A100D2C31F001002B4068 /* CollectionNftCellView.swift */,
 			);
 			path = View;
@@ -616,6 +637,12 @@
 				C47A10112C31F001002B4068 /* NftCollection.swift in Sources */,
 				C47A10122C31F001002B4068 /* CollectionsRequest.swift in Sources */,
 				C47A10132C31F001002B4068 /* CollectionService.swift in Sources */,
+				C47A10392C31F001002B4068 /* FavoritesService.swift in Sources */,
+				C47A103B2C31F001002B4068 /* ProfileLikesRequest.swift in Sources */,
+				C47A103D2C31F001002B4068 /* PreviewFavoritesService.swift in Sources */,
+				C47A103F2C31F001002B4068 /* CartService.swift in Sources */,
+				C47A10412C31F001002B4068 /* OrderRequest.swift in Sources */,
+				C47A10432C31F001002B4068 /* PreviewCartService.swift in Sources */,
 				C47A10142C31F001002B4068 /* CatalogViewModel.swift in Sources */,
 				C47A10162C31F001002B4068 /* CatalogSort.swift in Sources */,
 				C47A10172C31F001002B4068 /* CatalogState.swift in Sources */,
@@ -627,6 +654,7 @@
 				C47A10352C31F001002B4068 /* PreviewData.swift in Sources */,
 				C47A10332C31F001002B4068 /* CatalogAssembly.swift in Sources */,
 				C47A101D2C31F001002B4068 /* CollectionNftCellView.swift in Sources */,
+				C47A10372C31F001002B4068 /* CollectionAuthorWebView.swift in Sources */,
 				ABC5E1DF2C3204FB002B4068 /* LoadingView.swift in Sources */,
 				ABC5E1972C31F656002B4068 /* Colors.swift in Sources */,
 				ABC5E1A42C31F800002B4068 /* NetworkClient.swift in Sources */,
