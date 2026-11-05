@@ -4,7 +4,10 @@ struct CollectionNftCellView: View {
     let nft: Nft
     let isLiked: Bool
     let isLikeEnabled: Bool
+    let isInCart: Bool
+    let isCartEnabled: Bool
     let onLike: () -> Void
+    let onCart: () -> Void
     let onOpen: () -> Void
 
     private var filledStars: Int {
@@ -18,6 +21,7 @@ struct CollectionNftCellView: View {
                 details
             }
             .buttonStyle(.plain)
+            priceRow
         }
     }
 
@@ -29,12 +33,20 @@ struct CollectionNftCellView: View {
                 .foregroundStyle(Color.black)
                 .lineLimit(1)
                 .truncationMode(.tail)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    private var priceRow: some View {
+        HStack(spacing: 4) {
             Text(priceText)
                 .font(Font(UIFont.caption2))
                 .foregroundStyle(Color.black)
                 .lineLimit(1)
+                .minimumScaleFactor(0.7)
+            Spacer(minLength: 0)
+            cartButton
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     private var cover: some View {
@@ -77,6 +89,19 @@ struct CollectionNftCellView: View {
         .accessibilityLabel(isLiked ? Constants.likedTitle : Constants.likeTitle)
     }
 
+    private var cartButton: some View {
+        Button(action: onCart) {
+            Image(systemName: isInCart ? "xmark" : "cart")
+                .font(.system(size: Constants.cartSize, weight: .medium))
+                .foregroundStyle(Color.black)
+                .frame(width: Constants.cartTapSize, height: Constants.cartTapSize)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .disabled(!isCartEnabled)
+        .accessibilityLabel(isInCart ? Constants.removeFromCartTitle : Constants.addToCartTitle)
+    }
+
     private var rating: some View {
         HStack(spacing: 2) {
             ForEach(0..<Constants.starCount, id: \.self) { index in
@@ -101,6 +126,10 @@ private enum Constants {
     static let starSize: CGFloat = 12
     static let heartSize: CGFloat = 16
     static let heartTapSize: CGFloat = 32
+    static let cartSize: CGFloat = 14
+    static let cartTapSize: CGFloat = 24
     static let likeTitle = NSLocalizedString("Catalog.like", comment: "")
     static let likedTitle = NSLocalizedString("Catalog.liked", comment: "")
+    static let addToCartTitle = NSLocalizedString("Catalog.addToCart", comment: "")
+    static let removeFromCartTitle = NSLocalizedString("Catalog.removeFromCart", comment: "")
 }

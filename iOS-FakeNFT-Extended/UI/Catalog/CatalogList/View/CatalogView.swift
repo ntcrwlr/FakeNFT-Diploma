@@ -5,15 +5,18 @@ struct CatalogView: View {
     @State private var viewModel: CatalogViewModel
     private let nftService: NftService
     private let favoritesService: FavoritesServiceProtocol
+    private let cartService: CartServiceProtocol
 
     init(
         viewModel: CatalogViewModel,
         nftService: NftService,
-        favoritesService: FavoritesServiceProtocol
+        favoritesService: FavoritesServiceProtocol,
+        cartService: CartServiceProtocol
     ) {
         _viewModel = State(initialValue: viewModel)
         self.nftService = nftService
         self.favoritesService = favoritesService
+        self.cartService = cartService
     }
 
     var body: some View {
@@ -94,7 +97,8 @@ struct CatalogView: View {
             CollectionDetailsView(
                 collection: collection,
                 nftService: nftService,
-                favoritesService: favoritesService
+                favoritesService: favoritesService,
+                cartService: cartService
             )
         }
     }
@@ -165,7 +169,8 @@ private enum Constants {
             sort: .nftCount
         ),
         nftService: PreviewNftService(),
-        favoritesService: PreviewFavoritesService()
+        favoritesService: PreviewFavoritesService(),
+        cartService: PreviewCartService()
     )
     .environment(ServicesAssembly(networkClient: DefaultNetworkClient(), nftStorage: NftStorageImpl()))
 }

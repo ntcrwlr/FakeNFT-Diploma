@@ -24,13 +24,15 @@ struct CollectionDetailsView: View {
     init(
         collection: NftCollection,
         nftService: NftService,
-        favoritesService: FavoritesServiceProtocol
+        favoritesService: FavoritesServiceProtocol,
+        cartService: CartServiceProtocol
     ) {
         _viewModel = State(
             initialValue: CollectionDetailsViewModel(
                 collection: collection,
                 nftService: nftService,
-                favoritesService: favoritesService
+                favoritesService: favoritesService,
+                cartService: cartService
             )
         )
     }
@@ -156,9 +158,16 @@ struct CollectionDetailsView: View {
                     nft: nft,
                     isLiked: viewModel.isLiked(nft.id),
                     isLikeEnabled: !viewModel.isLikeInProgress(nft.id),
+                    isInCart: viewModel.isInCart(nft.id),
+                    isCartEnabled: !viewModel.isCartInProgress(nft.id),
                     onLike: {
                         Task {
                             await viewModel.toggleLike(id: nft.id)
+                        }
+                    },
+                    onCart: {
+                        Task {
+                            await viewModel.toggleCart(id: nft.id)
                         }
                     },
                     onOpen: {
@@ -191,7 +200,8 @@ private struct OpenedNft: Identifiable {
                 nfts: ["1", "2", "3", "4", "5", "6"]
             ),
             nftService: PreviewNftService(),
-            favoritesService: PreviewFavoritesService()
+            favoritesService: PreviewFavoritesService(),
+            cartService: PreviewCartService()
         )
         .environment(ServicesAssembly(networkClient: DefaultNetworkClient(), nftStorage: NftStorageImpl()))
     }

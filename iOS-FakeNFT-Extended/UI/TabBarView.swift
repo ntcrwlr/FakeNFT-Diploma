@@ -8,7 +8,8 @@ struct TabBarView: View {
             CatalogAssembly.makeView(
                 collectionService: servicesAssembly.collectionService,
                 nftService: servicesAssembly.nftService,
-                favoritesService: servicesAssembly.favoritesService
+                favoritesService: servicesAssembly.favoritesService,
+                cartService: servicesAssembly.cartService
             )
                 .tabItem {
                     Label(

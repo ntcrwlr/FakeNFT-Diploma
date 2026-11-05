@@ -29,4 +29,8 @@ final class ServicesAssembly {
     var favoritesService: FavoritesServiceProtocol {
         FavoritesService(networkClient: networkClient)
     }
+
+    var cartService: CartServiceProtocol {
+        CartService(networkClient: networkClient)
+    }
 }

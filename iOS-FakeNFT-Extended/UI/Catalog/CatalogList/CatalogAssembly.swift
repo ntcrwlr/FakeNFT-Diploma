@@ -5,7 +5,8 @@ enum CatalogAssembly {
     static func makeView(
         collectionService: CollectionServiceProtocol,
         nftService: NftService,
-        favoritesService: FavoritesServiceProtocol
+        favoritesService: FavoritesServiceProtocol,
+        cartService: CartServiceProtocol
     ) -> CatalogView {
         let rawValue = UserDefaults.standard.string(forKey: CatalogSort.storageKey)
         let sort = CatalogSort(rawValue: rawValue ?? "") ?? .nftCount
@@ -14,7 +15,8 @@ enum CatalogAssembly {
         return CatalogView(
             viewModel: viewModel,
             nftService: nftService,
-            favoritesService: favoritesService
+            favoritesService: favoritesService,
+            cartService: cartService
         )
     }
 }

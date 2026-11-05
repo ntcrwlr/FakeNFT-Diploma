@@ -9,6 +9,8 @@
 "Catalog.sort.close" = "Закрыть";
 "Catalog.like" = "Добавить в избранное";
 "Catalog.liked" = "В избранном";
+"Catalog.addToCart" = "Добавить в корзину";
+"Catalog.removeFromCart" = "Убрать из корзины";
 
 // MARK: - Collection
 "Collection.author" = "Автор коллекции: ";
