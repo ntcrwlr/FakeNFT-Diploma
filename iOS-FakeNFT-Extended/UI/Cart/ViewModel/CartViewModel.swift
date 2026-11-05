@@ -19,11 +19,11 @@ enum CartSortOption {
 final class CartViewModel {
     private let cartService: CartService
     private let nftService: NftService
-    
+
     private(set) var items: [CartItem] = []
     private(set) var isLoading = false
     private(set) var errorMessage: String?
-    
+
     init(
         cartService: CartService,
         nftService: NftService
@@ -31,7 +31,7 @@ final class CartViewModel {
         self.cartService = cartService
         self.nftService = nftService
     }
-    
+
     func sortItems(by option: CartSortOption) {
         switch option {
         case .price:
@@ -44,25 +44,24 @@ final class CartViewModel {
             }
         }
     }
-    
+
     func loadCart() async {
         guard !isLoading else { return }
-        
+
         isLoading = true
         errorMessage = nil
-        
+
         defer {
             isLoading = false
         }
-        
+
         do {
             let order = try await cartService.loadOrder(id: "1")
-            
             var loadedItems: [CartItem] = []
-            
+
             for nftID in order.nfts {
                 let nft = try await nftService.loadNft(id: nftID)
-                
+
                 let item = CartItem(
                     id: nft.id,
                     imageName: nft.imagesURLs.first?.absoluteString ?? "",
@@ -70,20 +69,18 @@ final class CartViewModel {
                     rating: nft.rating,
                     price: nft.price
                 )
-                
+
                 loadedItems.append(item)
             }
-            
+
             items = loadedItems
-            
         } catch {
             print("Ошибка загрузки корзины: \(error)")
-            // Временно использовать CartMockData.items для проверки UI,пока сервер недоступен.
-             items = CartMockData.items
+            items = CartMockData.items
             errorMessage = "Не удалось загрузить корзину. Попробуйте ещё раз."
         }
     }
-    
+
     func removeItem(_ item: CartItem) async {
         guard !isLoading else { return }
 
@@ -103,10 +100,40 @@ final class CartViewModel {
                 id: "1",
                 nftIDs: updatedNFTIDs
             )
-
             items.removeAll { $0.id == item.id }
         } catch {
             errorMessage = "Не удалось удалить NFT. Попробуйте ещё раз."
+        }
+    }
+
+    func clearCart(isMockPayment: Bool) async -> Bool {
+        guard !isLoading else { return false }
+
+        isLoading = true
+        errorMessage = nil
+
+        defer {
+            isLoading = false
+        }
+
+        if isMockPayment {
+            items = []
+            return true
+        }
+
+        do {
+            try await cartService.updateOrder(
+                id: "1",
+                nftIDs: []
+            )
+            items = []
+            return true
+        } catch {
+            print("Ошибка очистки корзины через API: \(error)")
+            print("Используем локальную очистку корзины.")
+
+            items = []
+            return true
         }
     }
 }

@@ -9,19 +9,20 @@ import SwiftUI
 
 struct PaymentMethodView: View {
     @Environment(\.dismiss) private var dismiss
+    
     @State private var viewModel: PaymentMethodViewModel
-    @State private var selectedCurrency: String?
     @State private var showUserAgreement = false
-
+    @State private var showPaymentError = false
+    
     private let columns = [
         GridItem(.flexible(), spacing: 7),
         GridItem(.flexible(), spacing: 7)
     ]
-
+    
     init(viewModel: PaymentMethodViewModel) {
         _viewModel = State(initialValue: viewModel)
     }
-
+    
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottom) {
@@ -37,10 +38,10 @@ struct PaymentMethodView: View {
                                     imageURL: currency.image,
                                     name: currency.title,
                                     shortName: currency.name,
-                                    isSelected: selectedCurrency == currency.id
+                                    isSelected: viewModel.selectedCurrencyID == currency.id
                                 )
                                 .onTapGesture {
-                                    selectedCurrency = currency.id
+                                    viewModel.selectCurrency(id: currency.id)
                                 }
                             }
                         } else {
@@ -53,10 +54,10 @@ struct PaymentMethodView: View {
                                     imageURL: nil,
                                     name: currency.name,
                                     shortName: currency.shortName,
-                                    isSelected: selectedCurrency == currency.shortName
+                                    isSelected: viewModel.selectedCurrencyID == currency.shortName
                                 )
                                 .onTapGesture {
-                                    selectedCurrency = currency.shortName
+                                    viewModel.selectCurrency(id: currency.shortName)
                                 }
                             }
                         }
@@ -65,13 +66,13 @@ struct PaymentMethodView: View {
                     .padding(.top, 16)
                     .padding(.bottom, 160)
                 }
-
+                
                 VStack(alignment: .leading, spacing: 16) {
                     VStack(alignment: .leading, spacing: 4) {
                         Text("Совершая покупку, вы соглашаетесь с условиями")
                             .font(.system(size: 13))
                             .foregroundStyle(.primary)
-
+                        
                         Button {
                             showUserAgreement = true
                         } label: {
@@ -80,23 +81,34 @@ struct PaymentMethodView: View {
                         .font(.system(size: 13))
                         .foregroundStyle(.blue)
                     }
-
+                    
                     Button {
-                       
+                        Task {
+                            await viewModel.pay()
+                        }
                     } label: {
-                        Text("Оплатить")
-                            .font(.system(size: 16, weight: .bold))
-                            .foregroundStyle(.white)
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 60)
-                            .background(
-                                selectedCurrency == nil
-                                    ? Color.gray
-                                    : Color.black
-                            )
-                            .clipShape(RoundedRectangle(cornerRadius: 16))
+                        Group {
+                            if viewModel.isPaying {
+                                ProgressView()
+                                    .tint(.white)
+                            } else {
+                                Text("Оплатить")
+                                    .font(.system(size: 16, weight: .bold))
+                                    .foregroundStyle(.white)
+                            }
+                        }
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 60)
+                        .background(
+                            viewModel.selectedCurrencyID == nil || viewModel.isPaying
+                            ? Color.gray
+                            : Color.black
+                        )
+                        .clipShape(RoundedRectangle(cornerRadius: 16))
                     }
-                    .disabled(selectedCurrency == nil)
+                    .disabled(
+                        viewModel.selectedCurrencyID == nil || viewModel.isPaying
+                    )
                 }
                 .padding(.horizontal, 16)
                 .padding(.top, 24)
@@ -126,6 +138,18 @@ struct PaymentMethodView: View {
             .sheet(isPresented: $showUserAgreement) {
                 UserAgreementView()
             }
+            .alert("Не удалось произвести оплату", isPresented: $showPaymentError) {
+                Button("Отмена", role: .cancel) {}
+                
+                Button("Повторить") {
+                    Task {
+                        await viewModel.pay()
+                    }
+                }
+            }
+            .onChange(of: viewModel.paymentError) { _, error in
+                showPaymentError = error != nil
+            }
             .task {
                 await viewModel.loadCurrencies()
             }
@@ -136,7 +160,8 @@ struct PaymentMethodView: View {
 #Preview {
     PaymentMethodView(
         viewModel: PaymentMethodViewModel(
-            currenciesService: PreviewCurrenciesService()
+            currenciesService: PreviewCurrenciesService(),
+            paymentService: PreviewPaymentService()
         )
     )
 }
@@ -144,5 +169,15 @@ struct PaymentMethodView: View {
 private struct PreviewCurrenciesService: CurrenciesService {
     func loadCurrencies() async throws -> [Currency] {
         []
+    }
+}
+
+private struct PreviewPaymentService: PaymentService {
+    func pay(currencyID: String) async throws -> PaymentResponse {
+        PaymentResponse(
+            success: true,
+            orderId: "1",
+            id: "1"
+        )
     }
 }

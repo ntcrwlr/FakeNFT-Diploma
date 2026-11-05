@@ -9,25 +9,17 @@ import SwiftUI
 import ProgressHUD
 
 struct CartView: View {
+    @Environment(ServicesAssembly.self) private var servicesAssembly
+
     @State private var viewModel: CartViewModel
     @State private var showErrorAlert = false
     @State private var selectedItem: CartItem?
     @State private var showDeleteConfirmation = false
     @State private var showSortDialog = false
     @State private var showPaymentMethod = false
-    @State private var paymentViewModel: PaymentMethodViewModel
     
-    
-    init(
-        viewModel: CartViewModel,
-        currenciesService: CurrenciesService
-    ) {
+    init(viewModel: CartViewModel) {
         _viewModel = State(initialValue: viewModel)
-        _paymentViewModel = State(
-            initialValue: PaymentMethodViewModel(
-                currenciesService: currenciesService
-            )
-        )
     }
     
     private var items: [CartItem] {
@@ -169,7 +161,15 @@ struct CartView: View {
             )
         }
         .sheet(isPresented: $showPaymentMethod) {
-            PaymentMethodView(viewModel: paymentViewModel)
+            PaymentFlowView(
+                currenciesService: servicesAssembly.currenciesService,
+                paymentService: servicesAssembly.paymentService,
+                onPaymentSuccess: { isMockPayment in
+                    await viewModel.clearCart(
+                        isMockPayment: isMockPayment
+                    )
+                }
+            )
         }
     }
 }

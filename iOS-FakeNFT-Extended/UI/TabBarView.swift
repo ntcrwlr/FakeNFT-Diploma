@@ -16,8 +16,7 @@ struct TabBarView: View {
                 viewModel: CartViewModel(
                     cartService: servicesAssembly.cartService,
                     nftService: servicesAssembly.nftService
-                ),
-                currenciesService: servicesAssembly.currenciesService
+                )
             )
             .tabItem {
                 Label(

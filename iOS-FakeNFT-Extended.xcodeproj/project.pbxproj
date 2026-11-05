@@ -11,6 +11,8 @@
 		820170E9309BDB7500881FD3 /* UserAgreementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820170E8309BDB7500881FD3 /* UserAgreementView.swift */; };
 		820170EB309CC33000881FD3 /* CurrenciesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820170EA309CC33000881FD3 /* CurrenciesRequest.swift */; };
 		820170ED309CC37100881FD3 /* CurrenciesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820170EC309CC37100881FD3 /* CurrenciesService.swift */; };
+		820170F1309CE69A00881FD3 /* PaymentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820170F0309CE69A00881FD3 /* PaymentRequest.swift */; };
+		820170F5309CE70000881FD3 /* PaymentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820170F4309CE70000881FD3 /* PaymentService.swift */; };
 		82BF87E53088218500FE5D1C /* OrderRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BF87E43088218500FE5D1C /* OrderRequest.swift */; };
 		82BF87E7308821A300FE5D1C /* CartService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BF87E6308821A300FE5D1C /* CartService.swift */; };
 		82BF888C309141D300FE5D1C /* UpdateOrderRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BF888B309141D300FE5D1C /* UpdateOrderRequest.swift */; };
@@ -73,6 +75,8 @@
 		820170E8309BDB7500881FD3 /* UserAgreementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAgreementView.swift; sourceTree = "<group>"; };
 		820170EA309CC33000881FD3 /* CurrenciesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesRequest.swift; sourceTree = "<group>"; };
 		820170EC309CC37100881FD3 /* CurrenciesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesService.swift; sourceTree = "<group>"; };
+		820170F0309CE69A00881FD3 /* PaymentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentRequest.swift; sourceTree = "<group>"; };
+		820170F4309CE70000881FD3 /* PaymentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentService.swift; sourceTree = "<group>"; };
 		82BF87E43088218500FE5D1C /* OrderRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderRequest.swift; sourceTree = "<group>"; };
 		82BF87E6308821A300FE5D1C /* CartService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartService.swift; sourceTree = "<group>"; };
 		82BF888B309141D300FE5D1C /* UpdateOrderRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateOrderRequest.swift; sourceTree = "<group>"; };
@@ -222,6 +226,7 @@
 				ABC5E1A72C31FA90002B4068 /* DateFormatters+Presets.swift */,
 				820170EA309CC33000881FD3 /* CurrenciesRequest.swift */,
 				82BF87E43088218500FE5D1C /* OrderRequest.swift */,
+				820170F0309CE69A00881FD3 /* PaymentRequest.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -269,6 +274,7 @@
 				820170E6309BDB6100881FD3 /* WebView.swift */,
 				820170E8309BDB7500881FD3 /* UserAgreementView.swift */,
 				820170EC309CC37100881FD3 /* CurrenciesService.swift */,
+				820170F4309CE70000881FD3 /* PaymentService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -487,12 +493,14 @@
 				ABC5E1A62C31F815002B4068 /* NetworkRequest.swift in Sources */,
 				ABC5E1D52C320446002B4068 /* NftDetailInput.swift in Sources */,
 				ABC5E16E2C31F5AF002B4068 /* ContentView.swift in Sources */,
+				820170F5309CE70000881FD3 /* PaymentService.swift in Sources */,
 				ABC5E1B92C31FD51002B4068 /* TestCatalogView.swift in Sources */,
 				82BF888C309141D300FE5D1C /* UpdateOrderRequest.swift in Sources */,
 				ABC5E1DF2C3204FB002B4068 /* LoadingView.swift in Sources */,
 				820170E7309BDB6100881FD3 /* WebView.swift in Sources */,
 				ABC5E1972C31F656002B4068 /* Colors.swift in Sources */,
 				ABC5E1A42C31F800002B4068 /* NetworkClient.swift in Sources */,
+				820170F1309CE69A00881FD3 /* PaymentRequest.swift in Sources */,
 				ABC5E1D32C320438002B4068 /* NftDetailAssembly.swift in Sources */,
 				82BF87E53088218500FE5D1C /* OrderRequest.swift in Sources */,
 				ABC5E1A12C31F6D7002B4068 /* Nft.swift in Sources */,
