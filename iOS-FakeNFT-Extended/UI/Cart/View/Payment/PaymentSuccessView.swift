@@ -14,14 +14,15 @@ struct PaymentSuccessView: View {
         VStack(spacing: 24) {
             Spacer()
 
-            Image(systemName: "")
-                .font(.system(size: 80))
+            Image(.catStub)
+                .font(.system(size: 278))
                 .foregroundStyle(.green)
 
-            Text("Оплата прошла успешно!")
+            Text("Успех! Оплата прошла,поздравляем с покупкой!")
                 .font(.system(size: 22, weight: .bold))
                 .foregroundStyle(.primary)
                 .multilineTextAlignment(.center)
+                .padding(.horizontal, 36)
 
             Spacer()
 
