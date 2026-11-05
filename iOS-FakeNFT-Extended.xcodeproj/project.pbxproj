@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		820170E7309BDB6100881FD3 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820170E6309BDB6100881FD3 /* WebView.swift */; };
+		820170E9309BDB7500881FD3 /* UserAgreementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820170E8309BDB7500881FD3 /* UserAgreementView.swift */; };
 		82BF87E53088218500FE5D1C /* OrderRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BF87E43088218500FE5D1C /* OrderRequest.swift */; };
 		82BF87E7308821A300FE5D1C /* CartService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BF87E6308821A300FE5D1C /* CartService.swift */; };
 		82BF888C309141D300FE5D1C /* UpdateOrderRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BF888B309141D300FE5D1C /* UpdateOrderRequest.swift */; };
@@ -65,6 +67,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		820170E6309BDB6100881FD3 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		820170E8309BDB7500881FD3 /* UserAgreementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAgreementView.swift; sourceTree = "<group>"; };
 		82BF87E43088218500FE5D1C /* OrderRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderRequest.swift; sourceTree = "<group>"; };
 		82BF87E6308821A300FE5D1C /* CartService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartService.swift; sourceTree = "<group>"; };
 		82BF888B309141D300FE5D1C /* UpdateOrderRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateOrderRequest.swift; sourceTree = "<group>"; };
@@ -257,6 +261,8 @@
 				ABC5E1AA2C31FACD002B4068 /* NftService.swift */,
 				ABC5E1B62C31FC70002B4068 /* ServicesAssembly.swift */,
 				82BF87E6308821A300FE5D1C /* CartService.swift */,
+				820170E6309BDB6100881FD3 /* WebView.swift */,
+				820170E8309BDB7500881FD3 /* UserAgreementView.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -465,6 +471,7 @@
 				ABC5E1CF2C32041D002B4068 /* NftDetailViewController.swift in Sources */,
 				ABC5E1B72C31FC70002B4068 /* ServicesAssembly.swift in Sources */,
 				ABC5E19D2C31F6A6002B4068 /* NftStorage.swift in Sources */,
+				820170E9309BDB7500881FD3 /* UserAgreementView.swift in Sources */,
 				ABC5E1E82C320610002B4068 /* NftDetailBridgeView.swift in Sources */,
 				ABC5E1E62C320585002B4068 /* LinePageControl.swift in Sources */,
 				ABC5E1DD2C3204DC002B4068 /* CellsReusingUtils.swift in Sources */,
@@ -476,6 +483,7 @@
 				ABC5E1B92C31FD51002B4068 /* TestCatalogView.swift in Sources */,
 				82BF888C309141D300FE5D1C /* UpdateOrderRequest.swift in Sources */,
 				ABC5E1DF2C3204FB002B4068 /* LoadingView.swift in Sources */,
+				820170E7309BDB6100881FD3 /* WebView.swift in Sources */,
 				ABC5E1972C31F656002B4068 /* Colors.swift in Sources */,
 				ABC5E1A42C31F800002B4068 /* NetworkClient.swift in Sources */,
 				ABC5E1D32C320438002B4068 /* NftDetailAssembly.swift in Sources */,
