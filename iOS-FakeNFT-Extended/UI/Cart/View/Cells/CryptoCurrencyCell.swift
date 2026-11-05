@@ -8,17 +8,30 @@
 import SwiftUI
 
 struct CryptoCurrencyCell: View {
-    let imageName: String
+    let imageName: String?
+    let imageURL: URL?
     let name: String
     let shortName: String
     let isSelected: Bool
 
     var body: some View {
         HStack(spacing: 4) {
-            Image(imageName)
-                .resizable()
-                .scaledToFit()
-                .frame(width: 36, height: 36)
+            Group {
+                if let imageName {
+                    Image(imageName)
+                        .resizable()
+                        .scaledToFit()
+                } else if let imageURL {
+                    AsyncImage(url: imageURL) { image in
+                        image
+                            .resizable()
+                            .scaledToFit()
+                    } placeholder: {
+                        ProgressView()
+                    }
+                }
+            }
+            .frame(width: 36, height: 36)
 
             VStack(alignment: .leading, spacing: 2) {
                 Text(name)
@@ -51,6 +64,7 @@ struct CryptoCurrencyCell: View {
 #Preview {
     CryptoCurrencyCell(
         imageName: "bitcoin",
+        imageURL: nil,
         name: "Bitcoin",
         shortName: "BTC",
         isSelected: true

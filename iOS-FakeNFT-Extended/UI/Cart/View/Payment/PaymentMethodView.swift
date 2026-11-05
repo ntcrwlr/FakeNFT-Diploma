@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PaymentMethodView: View {
     @Environment(\.dismiss) private var dismiss
+    @State private var viewModel: PaymentMethodViewModel
     @State private var selectedCurrency: String?
     @State private var showUserAgreement = false
 
@@ -17,22 +18,46 @@ struct PaymentMethodView: View {
         GridItem(.flexible(), spacing: 7)
     ]
 
-    private let currencies = CurrencyMockData.currencies
+    init(viewModel: PaymentMethodViewModel) {
+        _viewModel = State(initialValue: viewModel)
+    }
 
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottom) {
                 ScrollView {
                     LazyVGrid(columns: columns, spacing: 7) {
-                        ForEach(currencies, id: \.shortName) { currency in
-                            CryptoCurrencyCell(
-                                imageName: currency.imageName,
-                                name: currency.name,
-                                shortName: currency.shortName,
-                                isSelected: selectedCurrency == currency.shortName
-                            )
-                            .onTapGesture {
-                                selectedCurrency = currency.shortName
+                        if viewModel.isLoading {
+                            ProgressView()
+                                .gridCellColumns(2)
+                        } else if !viewModel.currencies.isEmpty {
+                            ForEach(viewModel.currencies) { currency in
+                                CryptoCurrencyCell(
+                                    imageName: nil,
+                                    imageURL: currency.image,
+                                    name: currency.title,
+                                    shortName: currency.name,
+                                    isSelected: selectedCurrency == currency.id
+                                )
+                                .onTapGesture {
+                                    selectedCurrency = currency.id
+                                }
+                            }
+                        } else {
+                            ForEach(
+                                viewModel.mockCurrencies,
+                                id: \.shortName
+                            ) { currency in
+                                CryptoCurrencyCell(
+                                    imageName: currency.imageName,
+                                    imageURL: nil,
+                                    name: currency.name,
+                                    shortName: currency.shortName,
+                                    isSelected: selectedCurrency == currency.shortName
+                                )
+                                .onTapGesture {
+                                    selectedCurrency = currency.shortName
+                                }
                             }
                         }
                     }
@@ -57,7 +82,7 @@ struct PaymentMethodView: View {
                     }
 
                     Button {
-                     
+                       
                     } label: {
                         Text("Оплатить")
                             .font(.system(size: 16, weight: .bold))
@@ -101,10 +126,23 @@ struct PaymentMethodView: View {
             .sheet(isPresented: $showUserAgreement) {
                 UserAgreementView()
             }
+            .task {
+                await viewModel.loadCurrencies()
+            }
         }
     }
 }
 
 #Preview {
-    PaymentMethodView()
+    PaymentMethodView(
+        viewModel: PaymentMethodViewModel(
+            currenciesService: PreviewCurrenciesService()
+        )
+    )
+}
+
+private struct PreviewCurrenciesService: CurrenciesService {
+    func loadCurrencies() async throws -> [Currency] {
+        []
+    }
 }

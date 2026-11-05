@@ -14,9 +14,20 @@ struct CartView: View {
     @State private var selectedItem: CartItem?
     @State private var showDeleteConfirmation = false
     @State private var showSortDialog = false
+    @State private var showPaymentMethod = false
+    @State private var paymentViewModel: PaymentMethodViewModel
     
-    init(viewModel: CartViewModel) {
+    
+    init(
+        viewModel: CartViewModel,
+        currenciesService: CurrenciesService
+    ) {
         _viewModel = State(initialValue: viewModel)
+        _paymentViewModel = State(
+            initialValue: PaymentMethodViewModel(
+                currenciesService: currenciesService
+            )
+        )
     }
     
     private var items: [CartItem] {
@@ -111,7 +122,9 @@ struct CartView: View {
                     CartBottomPaymentView(
                         itemCount: items.count,
                         totalPrice: totalPrice,
-                        onPay: {}
+                        onPay: {
+                            showPaymentMethod = true
+                        }
                     )
                 }
                 .task {
@@ -155,14 +168,8 @@ struct CartView: View {
                 }
             )
         }
+        .sheet(isPresented: $showPaymentMethod) {
+            PaymentMethodView(viewModel: paymentViewModel)
+        }
     }
-}
-
-#Preview {
-    CartView(
-        viewModel: CartViewModel(
-            cartService: PreviewCartService(),
-            nftService: PreviewNftService()
-        )
-    )
 }

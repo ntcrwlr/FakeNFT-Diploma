@@ -106,7 +106,6 @@ final class CartViewModel {
 
             items.removeAll { $0.id == item.id }
         } catch {
-            print("Ошибка удаления NFT: \(error)")
             errorMessage = "Не удалось удалить NFT. Попробуйте ещё раз."
         }
     }
