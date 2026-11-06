@@ -14,6 +14,7 @@ struct OwnedNFT: Identifiable {
     let rating: Int
     let imageName: String?
     let isFavorite: Bool
+    var imageURL: URL? = nil
 
     var formattedPrice: String {
         price.formatted(.number.locale(Locale(identifier: "ru_RU"))) + " ETH"

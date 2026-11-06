@@ -5,7 +5,7 @@ struct ProfileView: View {
     @ScaledMetric(relativeTo: .body) private var biographySize = 13
     @ScaledMetric(relativeTo: .body) private var websiteSize = 15
 
-    // Navigation belongs to the composition layer and will be connected separately.
+    // Navigation is handled by the composition layer.
     private let onEdit: () -> Void
     private let onOwnedNFTs: () -> Void
     private let onFavoriteNFTs: () -> Void
@@ -26,6 +26,28 @@ struct ProfileView: View {
     }
 
     var body: some View {
+        ZStack {
+            if viewModel.hasLoaded {
+                profileContent
+                    .safeAreaInset(edge: .top, spacing: 0) {
+                        loadingStatus
+                            .frame(maxWidth: .infinity)
+                            .background(Color(uiColor: .profileBackground))
+                    }
+            } else {
+                loadingStatus
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
+        }
+        .foregroundStyle(Color(uiColor: .profileForeground))
+        .background(Color(uiColor: .profileBackground).ignoresSafeArea())
+        .toolbarBackground(Color(uiColor: .profileBackground), for: .tabBar)
+        .toolbarBackground(.visible, for: .tabBar)
+        .accessibilityIdentifier("profile.screen")
+        .task { await viewModel.loadProfile() }
+    }
+
+    private var profileContent: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
                 editButton
@@ -58,6 +80,7 @@ struct ProfileView: View {
                 VStack(spacing: 0) {
                     ProfileMenuRow(title: "Мои NFT", count: viewModel.profile.ownedNFTCount, action: onOwnedNFTs)
                     ProfileMenuRow(title: "Избранные NFT", count: viewModel.profile.favoriteNFTCount, action: onFavoriteNFTs)
+                        .accessibilityIdentifier("profile.favorites")
                 }
             }
             .padding(.horizontal, 16)
@@ -65,11 +88,29 @@ struct ProfileView: View {
             .frame(maxWidth: 600)
             .frame(maxWidth: .infinity)
         }
-        .foregroundStyle(Color(uiColor: .profileForeground))
-        .background(Color(uiColor: .profileBackground).ignoresSafeArea())
-        .toolbarBackground(Color(uiColor: .profileBackground), for: .tabBar)
-        .toolbarBackground(.visible, for: .tabBar)
-        .accessibilityIdentifier("profile.screen")
+    }
+
+    @ViewBuilder
+    private var loadingStatus: some View {
+        if viewModel.isLoading || (!viewModel.hasLoaded && viewModel.loadingError == nil) {
+            ProgressView("Profile.loading")
+                .tint(Color(uiColor: .profileForeground))
+                .padding()
+                .accessibilityIdentifier("profile.loading")
+        } else if viewModel.loadingError != nil {
+            VStack(spacing: 12) {
+                Text("Profile.loadingError.message")
+                    .multilineTextAlignment(.center)
+                Button("Error.repeat") {
+                    Task { await viewModel.loadProfile() }
+                }
+                .buttonStyle(.bordered)
+                .disabled(viewModel.isLoading)
+                .accessibilityIdentifier("profile.retry")
+            }
+            .padding()
+            .accessibilityIdentifier("profile.loadingError")
+        }
     }
 
     private var editButton: some View {
@@ -82,6 +123,7 @@ struct ProfileView: View {
                     .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
+            .disabled(viewModel.isLoading)
             .accessibilityLabel("Редактировать профиль")
             .accessibilityIdentifier("profile.edit")
         }
@@ -113,8 +155,10 @@ struct ProfileView: View {
                     default: avatarPlaceholder
                     }
                 }
+            } else if let assetName = viewModel.profile.avatarAssetName {
+                Image(assetName).resizable()
             } else {
-                Image(viewModel.profile.avatarAssetName).resizable()
+                avatarPlaceholder
             }
         }
             .scaledToFill()

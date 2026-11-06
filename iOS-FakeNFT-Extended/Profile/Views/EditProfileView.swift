@@ -4,7 +4,6 @@ struct EditProfileView: View {
     @State private var viewModel: EditProfileViewModel
     @State private var showsPhotoMenu = false
     @State private var showsPhotoLink = false
-    @State private var showsExitConfirmation = false
     @State private var photoLink = ""
     @State private var saveRequested = false
     @FocusState private var focusedField: Field?
@@ -81,7 +80,7 @@ struct EditProfileView: View {
                 saveButton
             }
         }
-        .disabled(viewModel.isSaving)
+        .disabled(saveRequested || viewModel.isSaving)
         .overlay {
             if viewModel.isSaving {
                 ProgressView()
@@ -110,16 +109,17 @@ struct EditProfileView: View {
             Button("Отмена", role: .cancel) {}
             Button("Сохранить") { viewModel.updateAvatar(link: photoLink) }
         }
-        .alert("Уверены,\nчто хотите выйти?", isPresented: $showsExitConfirmation) {
-            Button("Остаться", role: .cancel) {}
-            Button("Выйти") { cancel() }
-        }
         .alert("Ошибка", isPresented: Binding(
             get: { viewModel.errorMessage != nil },
-            set: { if !$0 { viewModel.errorMessage = nil } }
-        )) {
-            Button("ОК", role: .cancel) { viewModel.errorMessage = nil }
-        } message: {
+            set: { if !$0 { viewModel.dismissError() } }
+        ), presenting: viewModel.canRetrySave) { canRetry in
+            if canRetry {
+                Button("Error.repeat") { requestSave() }
+            }
+            Button(canRetry ? "Продолжить редактирование" : "ОК", role: .cancel) {
+                viewModel.dismissError()
+            }
+        } message: { _ in
             Text(viewModel.errorMessage ?? "")
         }
         .task(id: saveRequested) {
@@ -134,11 +134,7 @@ struct EditProfileView: View {
         HStack {
             Button {
                 focusedField = nil
-                if viewModel.hasChanges {
-                    showsExitConfirmation = true
-                } else {
-                    cancel()
-                }
+                cancel()
             } label: {
                 Image(systemName: "chevron.left")
                     .font(.system(size: 20, weight: .medium))
@@ -172,8 +168,10 @@ struct EditProfileView: View {
                         default: avatarPlaceholder
                         }
                     }
+                } else if let assetName = viewModel.avatarAssetName {
+                    Image(assetName).resizable()
                 } else {
-                    Image(viewModel.avatarAssetName).resizable()
+                    avatarPlaceholder
                 }
             }
             .scaledToFill()
@@ -199,10 +197,7 @@ struct EditProfileView: View {
     }
 
     private var saveButton: some View {
-        Button {
-            focusedField = nil
-            saveRequested = true
-        } label: {
+        Button(action: requestSave) {
             Text("Сохранить")
                 .font(.system(.title2, weight: .bold))
                 .frame(maxWidth: .infinity, minHeight: 60)
@@ -210,7 +205,7 @@ struct EditProfileView: View {
                 .background(Color(uiColor: .profileForeground), in: RoundedRectangle(cornerRadius: 16))
         }
         .buttonStyle(.plain)
-        .disabled(saveRequested)
+        .disabled(saveRequested || viewModel.isSaving)
         .accessibilityIdentifier("profile.edit.save")
         .padding(.horizontal, 16)
         .padding(.top, 16)
@@ -218,6 +213,12 @@ struct EditProfileView: View {
         .frame(maxWidth: 600)
         .frame(maxWidth: .infinity)
         .background(Color(uiColor: .profileBackground))
+    }
+
+    private func requestSave() {
+        guard !saveRequested, !viewModel.isSaving else { return }
+        focusedField = nil
+        saveRequested = true
     }
 
     private func cancel() {

@@ -1,10 +1,16 @@
 import SwiftUI
 
 struct TabBarView: View {
-    @State private var profileViewModel = ProfileViewModel(profile: ProfileFixtures.preview)
+    @Environment(ServicesAssembly.self) private var servicesAssembly
+    @State private var profileViewModel: ProfileViewModel
     @State private var showsEditProfile = false
     @State private var showsOwnedNFTs = false
+    @State private var showsFavoriteNFTs = false
     @State private var websitePath: [URL] = []
+
+    init(profileViewModel: ProfileViewModel) {
+        _profileViewModel = State(initialValue: profileViewModel)
+    }
 
     var body: some View {
         TabView {
@@ -13,10 +19,14 @@ struct TabBarView: View {
                     viewModel: profileViewModel,
                     onEdit: { showsEditProfile = true },
                     onOwnedNFTs: { showsOwnedNFTs = true },
+                    onFavoriteNFTs: { showsFavoriteNFTs = true },
                     onWebsite: { websitePath.append($0) }
                 )
                 .navigationDestination(isPresented: $showsOwnedNFTs) {
-                    OwnedNFTsView(viewModel: OwnedNFTsViewModel(items: OwnedNFTFixtures.preview))
+                    OwnedNFTsView(viewModel: OwnedNFTsViewModel(service: servicesAssembly.ownedNFTService))
+                }
+                .navigationDestination(isPresented: $showsFavoriteNFTs) {
+                    FavoriteNFTsView(viewModel: FavoriteNFTsViewModel(service: servicesAssembly.favoriteNFTService))
                 }
                 .navigationDestination(for: URL.self) { url in
                     ProfileWebsiteView(url: url)
@@ -29,9 +39,7 @@ struct TabBarView: View {
                 EditProfileView(
                     viewModel: EditProfileViewModel(profile: profileViewModel.profile),
                     onSave: { draft in
-                        try await Task.sleep(for: .milliseconds(500))
-                        try Task.checkCancellation()
-                        profileViewModel.updateProfile(draft.updatedProfile)
+                        try await profileViewModel.saveProfile(draft.profileUpdate)
                     }
                 )
             }

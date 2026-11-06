@@ -36,6 +36,57 @@ final class EditProfileViewModelTests: XCTestCase {
         XCTAssertFalse(model.isAvatarRemoved)
     }
 
+    func testSaveRejectsEmptyOrWhitespaceOnlyName() async {
+        let model = EditProfileViewModel(profile: ProfileFixtures.preview)
+        for name in ["", " \n\t"] {
+            model.name = name
+            let saved = await model.save { _ in XCTFail("Invalid name must not be saved") }
+            XCTAssertFalse(saved)
+            XCTAssertEqual(model.errorMessage, "Введите имя.")
+            XCTAssertFalse(model.isSaving)
+        }
+    }
+
+    func testSaveRejectsMalformedAndUnsupportedWebsite() async {
+        let model = EditProfileViewModel(profile: ProfileFixtures.preview)
+        for website in ["example.com", "https://", "https://exa mple.com", "file:///tmp/site", "javascript:alert(1)"] {
+            model.website = website
+            let saved = await model.save { _ in XCTFail("Invalid website must not be saved: \(website)") }
+            XCTAssertFalse(saved)
+            XCTAssertNotNil(model.errorMessage)
+            XCTAssertEqual(model.website, website)
+            XCTAssertFalse(model.isSaving)
+        }
+    }
+
+    func testSaveAcceptsHTTPAndHTTPSOrEmptyWebsiteAndTrimsOuterWhitespace() async {
+        let model = EditProfileViewModel(profile: ProfileFixtures.preview)
+        model.name = " \nНовое имя\t "
+        model.biography = "Описание\nсо второй строкой "
+        for website in ["https://example.com/path?q=1#section", "http://example.com", "", " \n"] {
+            model.website = " \(website) \n"
+            let saved = await model.save { draft in
+                let update = draft.profileUpdate
+                XCTAssertEqual(update.name, "Новое имя")
+                XCTAssertEqual(update.description, "Описание\nсо второй строкой ")
+                XCTAssertEqual(update.website, website.trimmingCharacters(in: .whitespacesAndNewlines))
+            }
+            XCTAssertTrue(saved)
+            XCTAssertNil(model.errorMessage)
+        }
+    }
+
+    func testCorrectedInputCanBeSavedAfterValidationError() async {
+        let model = EditProfileViewModel(profile: ProfileFixtures.preview)
+        model.name = ""
+        let rejected = await model.save { _ in XCTFail("Invalid input must not be saved") }
+        XCTAssertFalse(rejected)
+        model.name = "Новое имя"
+        let saved = await model.save { _ in }
+        XCTAssertTrue(saved)
+        XCTAssertNil(model.errorMessage)
+    }
+
     func testSaveShowsLoadingAndPreventsDuplicateRequests() async {
         let model = EditProfileViewModel(profile: ProfileFixtures.preview)
         let saved = await model.save { draft in
@@ -45,6 +96,50 @@ final class EditProfileViewModelTests: XCTestCase {
         }
         XCTAssertTrue(saved)
         XCTAssertFalse(model.isSaving)
+    }
+
+    func testRetryBlocksDuplicateSavesUntilRequestCompletes() async {
+        let model = EditProfileViewModel(profile: ProfileFixtures.preview)
+        _ = await model.save { _ in throw URLError(.notConnectedToInternet) }
+        XCTAssertTrue(model.canRetrySave)
+        let started = expectation(description: "Save retry started")
+        var continuation: CheckedContinuation<Void, Never>?
+        let retry = Task {
+            await model.save { _ in
+                await withCheckedContinuation {
+                    continuation = $0
+                    started.fulfill()
+                }
+            }
+        }
+        await fulfillment(of: [started], timeout: 2)
+        XCTAssertTrue(model.isSaving)
+        XCTAssertNil(model.errorMessage)
+        XCTAssertFalse(model.canRetrySave)
+
+        let duplicate = await model.save { _ in XCTFail("Duplicate retry") }
+        XCTAssertFalse(duplicate)
+        XCTAssertTrue(model.isSaving)
+        continuation?.resume()
+        let saved = await retry.value
+        XCTAssertTrue(saved)
+        XCTAssertFalse(model.isSaving)
+    }
+
+    func testValidationErrorsDoNotOfferSaveRetry() async {
+        let model = EditProfileViewModel(profile: ProfileFixtures.preview)
+        _ = await model.save { _ in throw URLError(.notConnectedToInternet) }
+        XCTAssertTrue(model.canRetrySave)
+
+        model.updateAvatar(link: "file:///tmp/avatar.png")
+        XCTAssertNotNil(model.errorMessage)
+        XCTAssertFalse(model.canRetrySave)
+
+        model.name = ""
+        let saved = await model.save { _ in XCTFail("Invalid input must not be saved") }
+        XCTAssertFalse(saved)
+        XCTAssertNotNil(model.errorMessage)
+        XCTAssertFalse(model.canRetrySave)
     }
 
     func testSaveFailurePreservesDraftAndClearsLoading() async {
@@ -78,44 +173,6 @@ final class ProfileWebsiteTests: XCTestCase {
             name: "User", biography: "Bio", websiteTitle: website,
             avatarAssetName: "ProfileAvatar", ownedNFTCount: 0, favoriteNFTCount: 0
         ))
-    }
-}
-
-@MainActor
-final class ProfileEditingTests: XCTestCase {
-    func testSaveUpdatesProfileAndNextDraft() async {
-        let profile = ProfileViewModel(profile: ProfileFixtures.preview)
-        let draft = EditProfileViewModel(profile: profile.profile)
-        draft.name = "Новое имя"
-        draft.biography = "Новое описание"
-        draft.website = "https://new.example.com"
-        draft.updateAvatar(link: "https://example.com/photo.png")
-
-        let saved = await draft.save { profile.updateProfile($0.updatedProfile) }
-
-        XCTAssertTrue(saved)
-        XCTAssertEqual(profile.profile.name, "Новое имя")
-        XCTAssertEqual(profile.profile.biography, "Новое описание")
-        XCTAssertEqual(profile.websiteURL?.host, "new.example.com")
-        XCTAssertEqual(profile.profile.ownedNFTCount, ProfileFixtures.preview.ownedNFTCount)
-        XCTAssertEqual(profile.profile.favoriteNFTCount, ProfileFixtures.preview.favoriteNFTCount)
-        let reopened = EditProfileViewModel(profile: profile.profile)
-        XCTAssertEqual(reopened.updatedProfile, draft.updatedProfile)
-        XCTAssertFalse(reopened.hasChanges)
-    }
-
-    func testDiscardedDraftDoesNotChangeProfileAndNewSessionStartsWithMocks() {
-        let profile = ProfileViewModel(profile: ProfileFixtures.preview)
-        let draft = EditProfileViewModel(profile: profile.profile)
-        draft.name = "Несохранённое имя"
-        draft.removeAvatar()
-        XCTAssertEqual(profile.profile, ProfileFixtures.preview)
-
-        profile.updateProfile(draft.updatedProfile)
-        let reopened = EditProfileViewModel(profile: profile.profile)
-        XCTAssertTrue(reopened.isAvatarRemoved)
-        XCTAssertFalse(reopened.hasChanges)
-        XCTAssertEqual(ProfileViewModel(profile: ProfileFixtures.preview).profile, ProfileFixtures.preview)
     }
 }
 

@@ -21,4 +21,16 @@ final class ServicesAssembly {
             storage: nftStorage
         )
     }
+
+    var profileService: ProfileService {
+        ProfileServiceImpl(networkClient: networkClient)
+    }
+
+    var favoriteNFTService: FavoriteNFTService {
+        FavoriteNFTServiceImpl(profileService: profileService, nftService: nftService)
+    }
+
+    var ownedNFTService: OwnedNFTService {
+        OwnedNFTServiceImpl(profileService: profileService, nftService: nftService)
+    }
 }
