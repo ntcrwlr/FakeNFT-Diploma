@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+enum AppImages {
+    static let photo = "photo"
+    static let star = "star.fill"
+    static let chevronLeft = "chevron.left"
+}

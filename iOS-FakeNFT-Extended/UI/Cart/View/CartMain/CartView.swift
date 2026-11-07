@@ -10,7 +10,6 @@ import ProgressHUD
 
 struct CartView: View {
     @Environment(ServicesAssembly.self) private var servicesAssembly
-
     @State private var viewModel: CartViewModel
     @State private var showErrorAlert = false
     @State private var selectedItem: CartItem?
@@ -38,6 +37,9 @@ struct CartView: View {
     private var content: some View {
         if items.isEmpty && !viewModel.isLoading {
             EmptyCartView()
+                .refreshable {
+                    await viewModel.loadCart()
+                }
         } else {
             List {
                 ForEach(items) { item in
@@ -64,6 +66,9 @@ struct CartView: View {
             }
             .listStyle(.plain)
             .padding(.top, 20)
+            .refreshable {
+                await viewModel.loadCart()
+            }
         }
     }
     
@@ -95,7 +100,6 @@ struct CartView: View {
         }
     }
     
-    
     var body: some View {
         NavigationStack {
             content
@@ -108,6 +112,7 @@ struct CartView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(width: 42, height: 42)
+                            .colorMultiply(Color(uiColor: .label))
                     }
                 }
                 .safeAreaInset(edge: .bottom, spacing: 0) {
@@ -129,17 +134,17 @@ struct CartView: View {
                         ProgressHUD.dismiss()
                     }
                 }
-                .alert("Ошибка", isPresented: $showErrorAlert) {
-                    Button("Повторить") {
+                .alert("Error.title", isPresented: $showErrorAlert) {
+                    Button("Error.repeat") {
                         Task {
                             await viewModel.loadCart()
                         }
                     }
-                    Button("Отмена", role: .cancel) {}
+                    Button("Cart.cancel", role: .cancel) {}
                 } message: {
                     Text(
                         viewModel.errorMessage
-                        ?? "Не удалось загрузить корзину"
+                        ?? String(localized: "Error.unknown")
                     )
                 }
                 .onChange(of: viewModel.errorMessage) { _, errorMessage in

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct PaymentSuccessView: View {
+
     let onReturnToCart: () -> Void
 
     var body: some View {
@@ -15,10 +16,11 @@ struct PaymentSuccessView: View {
             Spacer()
 
             Image(.catStub)
-                .font(.system(size: 278))
-                .foregroundStyle(.green)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 278, height: 278)
 
-            Text("Успех! Оплата прошла,поздравляем с покупкой!")
+            Text("Payment.success")
                 .font(.system(size: 22, weight: .bold))
                 .foregroundStyle(.primary)
                 .multilineTextAlignment(.center)
@@ -29,12 +31,12 @@ struct PaymentSuccessView: View {
             Button {
                 onReturnToCart()
             } label: {
-                Text("Вернуться в корзину")
+                Text("Payment.success.back")
                     .font(.system(size: 16, weight: .bold))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Color(uiColor: .systemBackground))
                     .frame(maxWidth: .infinity)
                     .frame(height: 60)
-                    .background(Color.black)
+                    .background(Color.primary)
                     .clipShape(RoundedRectangle(cornerRadius: 16))
             }
             .padding(.horizontal, 16)

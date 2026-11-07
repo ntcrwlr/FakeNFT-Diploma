@@ -8,21 +8,22 @@
 import SwiftUI
 
 struct PaymentMethodView: View {
+
     @Environment(\.dismiss) private var dismiss
-    
+
     @State private var viewModel: PaymentMethodViewModel
     @State private var showUserAgreement = false
     @State private var showPaymentError = false
-    
+
     private let columns = [
         GridItem(.flexible(), spacing: 7),
         GridItem(.flexible(), spacing: 7)
     ]
-    
+
     init(viewModel: PaymentMethodViewModel) {
         _viewModel = State(initialValue: viewModel)
     }
-    
+
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottom) {
@@ -66,22 +67,22 @@ struct PaymentMethodView: View {
                     .padding(.top, 16)
                     .padding(.bottom, 160)
                 }
-                
+
                 VStack(alignment: .leading, spacing: 16) {
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("Совершая покупку, вы соглашаетесь с условиями")
+                        Text("Payment.terms.prefix")
                             .font(.system(size: 13))
                             .foregroundStyle(.primary)
-                        
+
                         Button {
                             showUserAgreement = true
                         } label: {
-                            Text("Пользовательского соглашения")
+                            Text("Payment.terms.link")
                         }
                         .font(.system(size: 13))
                         .foregroundStyle(.blue)
                     }
-                    
+
                     Button {
                         Task {
                             await viewModel.pay()
@@ -92,9 +93,9 @@ struct PaymentMethodView: View {
                                 ProgressView()
                                     .tint(.white)
                             } else {
-                                Text("Оплатить")
+                                Text("Payment.pay")
                                     .font(.system(size: 16, weight: .bold))
-                                    .foregroundStyle(.white)
+                                    .foregroundStyle(Color(uiColor: .systemBackground))
                             }
                         }
                         .frame(maxWidth: .infinity)
@@ -102,7 +103,7 @@ struct PaymentMethodView: View {
                         .background(
                             viewModel.selectedCurrencyID == nil || viewModel.isPaying
                             ? Color.gray
-                            : Color.black
+                            : Color.primary
                         )
                         .clipShape(RoundedRectangle(cornerRadius: 16))
                     }
@@ -122,14 +123,14 @@ struct PaymentMethodView: View {
                         )
                 )
             }
-            .navigationTitle("Выберите способ оплаты")
+            .navigationTitle("Payment.title")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button {
                         dismiss()
                     } label: {
-                        Image(systemName: "chevron.left")
+                        Image(systemName: AppImages.chevronLeft)
                             .font(.system(size: 16, weight: .semibold))
                             .foregroundStyle(.primary)
                     }
@@ -138,10 +139,9 @@ struct PaymentMethodView: View {
             .sheet(isPresented: $showUserAgreement) {
                 UserAgreementView()
             }
-            .alert("Не удалось произвести оплату", isPresented: $showPaymentError) {
-                Button("Отмена", role: .cancel) {}
-                
-                Button("Повторить") {
+            .alert("Payment.error", isPresented: $showPaymentError) {
+                Button("Cart.cancel", role: .cancel) {}
+                Button("Payment.retry") {
                     Task {
                         await viewModel.pay()
                     }

@@ -54,7 +54,7 @@ struct CryptoCurrencyCell: View {
         .overlay {
             RoundedRectangle(cornerRadius: 12)
                 .stroke(
-                    isSelected ? Color.black : Color.clear,
+                    isSelected ? Color.primary : Color.clear,
                     lineWidth: 1.5
                 )
         }

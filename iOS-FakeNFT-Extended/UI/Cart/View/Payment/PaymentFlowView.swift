@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct PaymentFlowView: View {
+
     @Environment(\.dismiss) private var dismiss
 
     @State private var viewModel: PaymentMethodViewModel
@@ -29,6 +30,7 @@ struct PaymentFlowView: View {
                 paymentService: paymentService
             )
         )
+
         self.onPaymentSuccess = onPaymentSuccess
     }
 
@@ -39,7 +41,7 @@ struct PaymentFlowView: View {
                     dismiss()
                 }
             } else if viewModel.isPaymentSuccessful {
-                ProgressView("Очищаем корзину...")
+                ProgressView("Payment.clearingCart")
             } else {
                 PaymentMethodView(viewModel: viewModel)
             }
@@ -49,20 +51,20 @@ struct PaymentFlowView: View {
             await clearCart()
         }
         .alert(
-            "Не удалось очистить корзину",
+            "Payment.clearCart.error.title",
             isPresented: $cartClearError
         ) {
-            Button("Повторить") {
+            Button("Error.repeat") {
                 Task {
                     await clearCart()
                 }
             }
 
-            Button("Вернуться в корзину", role: .cancel) {
+            Button("Payment.success.back", role: .cancel) {
                 dismiss()
             }
         } message: {
-            Text("Оплата прошла успешно, но корзину не удалось очистить. Попробуйте ещё раз.")
+            Text("Payment.clearCart.error.message")
         }
     }
 
