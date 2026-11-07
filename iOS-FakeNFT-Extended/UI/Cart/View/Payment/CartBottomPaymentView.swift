@@ -25,7 +25,7 @@ struct CartBottomPaymentView: View {
             }
             
             Button(action: onPay) {
-                Text("К оплате")
+                Text("Cart.pay")
                     .font(Font(UIFont.bodyBold))
                     .foregroundStyle(Color(uiColor: .systemBackground))
                     .frame(maxWidth: .infinity)

@@ -8,38 +8,39 @@
 import SwiftUI
 
 struct SortView: View {
+
     let onSelect: (CartSortOption) -> Void
     let onClose: () -> Void
-    
+
     var body: some View {
         VStack(spacing: 8) {
             VStack(spacing: 0) {
-                Text("Сортировка")
+                Text("Cart.sort.title")
                     .font(.system(size: 13))
                     .foregroundStyle(.secondary)
                     .frame(maxWidth: .infinity)
                     .frame(height: 42)
-                
-                sortButton("По цене", option: .price)
-                sortButton("По рейтингу", option: .rating)
-                sortButton("По названию", option: .name)
+
+                sortButton("Cart.sort.price", option: .price)
+                sortButton("Cart.sort.rating", option: .rating)
+                sortButton("Cart.sort.name", option: .name)
             }
             .background(.ultraThinMaterial)
             .clipShape(RoundedRectangle(cornerRadius: 16))
-            
+
             CloseSortButton(action: onClose)
         }
         .padding([.horizontal, .top], 8)
         .padding(.bottom, 32)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
-        .background(Color.clear)
+        .background(Color(uiColor: .systemBackground))
         .presentationDetents([.height(330)])
         .presentationDragIndicator(.hidden)
         .presentationBackground(.clear)
     }
-    
+
     private func sortButton(
-        _ title: String,
+        _ title: LocalizedStringKey,
         option: CartSortOption
     ) -> some View {
         Button {
@@ -63,11 +64,12 @@ struct SortView: View {
 }
 
 private struct CloseSortButton: View {
+
     let action: () -> Void
-    
+
     var body: some View {
         Button(action: action) {
-            Text("Закрыть")
+            Text("Cart.sort.close")
                 .font(.system(size: 20, weight: .semibold))
                 .foregroundStyle(.blue)
                 .frame(maxWidth: .infinity)
