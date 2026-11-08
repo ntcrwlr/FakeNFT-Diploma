@@ -5,10 +5,6 @@ import AppMetricaCore
 struct iOS_FakeNFT_ExtendedApp: App {
     
     init() {
-        print(
-            "AppMetrica key:",
-            Bundle.main.object(forInfoDictionaryKey: "APPMETRICA_API_KEY") ?? "КЛЮЧ НЕ НАЙДЕН"
-        )
         guard let apiKey = Bundle.main.object(
             forInfoDictionaryKey: "APPMETRICA_API_KEY"
         ) as? String,
