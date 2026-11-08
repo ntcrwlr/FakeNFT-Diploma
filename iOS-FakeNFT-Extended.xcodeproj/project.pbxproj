@@ -122,6 +122,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		8201719030A0930700881FD3 /* CartTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CartTests; sourceTree = "<group>"; };
 		82BF87D53087EF8B00FE5D1C /* Cart */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Cart; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
@@ -199,6 +200,7 @@
 		ABC5E17B2C31F5B0002B4068 /* iOS-FakeNFT-ExtendedTests */ = {
 			isa = PBXGroup;
 			children = (
+				8201719030A0930700881FD3 /* CartTests */,
 				ABC5E17C2C31F5B0002B4068 /* iOS_FakeNFT_ExtendedTests.swift */,
 			);
 			path = "iOS-FakeNFT-ExtendedTests";
@@ -380,6 +382,9 @@
 			);
 			dependencies = (
 				ABC5E17A2C31F5B0002B4068 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				8201719030A0930700881FD3 /* CartTests */,
 			);
 			name = "iOS-FakeNFT-ExtendedTests";
 			productName = "iOS-FakeNFT-ExtendedTests";
