@@ -152,6 +152,7 @@ struct CartView: View {
                 }
         }
         .statusBarHidden(showDeleteConfirmation)
+        .toolbar(showDeleteConfirmation ? .hidden : .visible, for: .tabBar)
         .overlay {
             deleteOverlay
         }
@@ -165,7 +166,7 @@ struct CartView: View {
                 }
             )
         }
-        .sheet(isPresented: $showPaymentMethod) {
+        .fullScreenCover(isPresented: $showPaymentMethod) {
             PaymentFlowView(
                 currenciesService: servicesAssembly.currenciesService,
                 paymentService: servicesAssembly.paymentService,

@@ -11,5 +11,10 @@ struct Currency: Decodable, Identifiable {
     let id: String
     let title: String
     let name: String
-    let image: URL
+    let imageURL: URL
+    
+    enum CodingKeys: String, CodingKey {
+        case id, title, name
+        case imageURL = "image"
+    }
 }

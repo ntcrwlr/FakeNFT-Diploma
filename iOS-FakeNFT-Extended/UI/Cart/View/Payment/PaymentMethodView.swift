@@ -36,7 +36,7 @@ struct PaymentMethodView: View {
                             ForEach(viewModel.currencies) { currency in
                                 CryptoCurrencyCell(
                                     imageName: nil,
-                                    imageURL: currency.image,
+                                    imageURL: currency.imageURL,
                                     name: currency.title,
                                     shortName: currency.name,
                                     isSelected: viewModel.selectedCurrencyID == currency.id
@@ -63,8 +63,7 @@ struct PaymentMethodView: View {
                             }
                         }
                     }
-                    .padding(.horizontal, 16)
-                    .padding(.top, 16)
+                    .padding([.horizontal, .top], 16)
                     .padding(.bottom, 160)
                 }
 
