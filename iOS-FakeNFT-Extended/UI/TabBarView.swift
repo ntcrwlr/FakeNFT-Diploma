@@ -11,7 +11,7 @@ struct TabBarView: View {
                         systemImage: "square.stack.3d.up.fill"
                     )
                 }
-
+            
             CartView(
                 viewModel: CartViewModel(
                     cartService: servicesAssembly.cartService,
@@ -20,7 +20,7 @@ struct TabBarView: View {
             )
             .tabItem {
                 Label(
-                    "Корзина",
+                    NSLocalizedString("Tab.cart", comment: ""),
                     systemImage: "cart.fill"
                 )
             }

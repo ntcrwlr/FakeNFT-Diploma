@@ -77,7 +77,7 @@ final class CartViewModel {
         } catch {
             print("Ошибка загрузки корзины: \(error)")
             items = CartMockData.items
-            errorMessage = "Не удалось загрузить корзину. Попробуйте ещё раз."
+            errorMessage = NSLocalizedString("Cart.error.load", comment: "")
         }
     }
 
@@ -102,7 +102,7 @@ final class CartViewModel {
             )
             items.removeAll { $0.id == item.id }
         } catch {
-            errorMessage = "Не удалось удалить NFT. Попробуйте ещё раз."
+            errorMessage = NSLocalizedString("Cart.error.delete", comment: "")
         }
     }
 
