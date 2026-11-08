@@ -17,7 +17,7 @@ final class CurrenciesServiceTests: XCTestCase {
                 id: "1",
                 title: "Bitcoin",
                 name: "BTC",
-                image: URL(string: "https://example.com/btc.png")!
+                imageURL: URL(string: "https://example.com/btc.png")!
             )
         ]
 

@@ -19,7 +19,7 @@ final class PaymentMethodViewModelTests: XCTestCase {
                 id: "1",
                 title: "Bitcoin",
                 name: "BTC",
-                image: URL(string: "https://example.com/bitcoin.png")!
+                imageURL: URL(string: "https://example.com/bitcoin.png")!
             )
         ]
 
@@ -33,7 +33,8 @@ final class PaymentMethodViewModelTests: XCTestCase {
 
         let viewModel = PaymentMethodViewModel(
             currenciesService: currenciesService,
-            paymentService: paymentService
+            paymentService: paymentService,
+            analyticsService: MockAnalyticsService()
         )
 
         await viewModel.loadCurrencies()
@@ -56,7 +57,8 @@ final class PaymentMethodViewModelTests: XCTestCase {
 
         let viewModel = PaymentMethodViewModel(
             currenciesService: currenciesService,
-            paymentService: paymentService
+            paymentService: paymentService,
+            analyticsService: MockAnalyticsService()
         )
 
         await viewModel.loadCurrencies()
@@ -88,7 +90,8 @@ final class PaymentMethodViewModelTests: XCTestCase {
 
         let viewModel = PaymentMethodViewModel(
             currenciesService: currenciesService,
-            paymentService: paymentService
+            paymentService: paymentService,
+            analyticsService: MockAnalyticsService()
         )
 
         viewModel.selectCurrency(id: "1")
@@ -112,7 +115,8 @@ final class PaymentMethodViewModelTests: XCTestCase {
 
         let viewModel = PaymentMethodViewModel(
             currenciesService: currenciesService,
-            paymentService: paymentService
+            paymentService: paymentService,
+            analyticsService: MockAnalyticsService()
         )
 
         viewModel.selectCurrency(id: "1")

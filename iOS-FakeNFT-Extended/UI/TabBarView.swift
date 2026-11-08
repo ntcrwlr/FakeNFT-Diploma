@@ -15,7 +15,8 @@ struct TabBarView: View {
             CartView(
                 viewModel: CartViewModel(
                     cartService: servicesAssembly.cartService,
-                    nftService: servicesAssembly.nftService
+                    nftService: servicesAssembly.nftService,
+                    analyticsService: servicesAssembly.analyticsService
                 )
             )
             .tabItem {

@@ -33,4 +33,8 @@ final class ServicesAssembly {
     var paymentService: PaymentService {
         PaymentServiceImpl(networkClient: networkClient)
     }
+    
+    var analyticsService: AnalyticsService {
+        AppMetricaAnalyticsService()
+    }
 }

@@ -120,6 +120,10 @@ struct CartView: View {
                         itemCount: items.count,
                         totalPrice: totalPrice,
                         onPay: {
+                            servicesAssembly.analyticsService.reportEvent(
+                                name: "payment_screen_opened",
+                                parameters: [:]
+                            )
                             showPaymentMethod = true
                         }
                     )
@@ -170,6 +174,7 @@ struct CartView: View {
             PaymentFlowView(
                 currenciesService: servicesAssembly.currenciesService,
                 paymentService: servicesAssembly.paymentService,
+                analyticsService: servicesAssembly.analyticsService,
                 onPaymentSuccess: { isMockPayment in
                     await viewModel.clearCart(
                         isMockPayment: isMockPayment

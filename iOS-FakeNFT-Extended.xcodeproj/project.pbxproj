@@ -15,6 +15,12 @@
 		820170F5309CE70000881FD3 /* PaymentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820170F4309CE70000881FD3 /* PaymentService.swift */; };
 		82017189309DFF4C00881FD3 /* AppImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82017188309DFF4C00881FD3 /* AppImages.swift */; };
 		820171FB30A0AFF200881FD3 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 820171FA30A0AFF200881FD3 /* Localizable.xcstrings */; };
+		8201720130A101ED00881FD3 /* AppMetricaAdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 8201720030A101ED00881FD3 /* AppMetricaAdSupport */; };
+		8201720330A101ED00881FD3 /* AppMetricaAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 8201720230A101ED00881FD3 /* AppMetricaAnalytics */; };
+		8201720530A101ED00881FD3 /* AppMetricaCore in Frameworks */ = {isa = PBXBuildFile; productRef = 8201720430A101ED00881FD3 /* AppMetricaCore */; };
+		8201720730A101ED00881FD3 /* AppMetricaCrashes in Frameworks */ = {isa = PBXBuildFile; productRef = 8201720630A101ED00881FD3 /* AppMetricaCrashes */; };
+		8201720930A101ED00881FD3 /* AppMetricaLibraryAdapter in Frameworks */ = {isa = PBXBuildFile; productRef = 8201720830A101ED00881FD3 /* AppMetricaLibraryAdapter */; };
+		8201720B30A105C400881FD3 /* AnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8201720A30A105C400881FD3 /* AnalyticsService.swift */; };
 		82BF87E53088218500FE5D1C /* OrderRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BF87E43088218500FE5D1C /* OrderRequest.swift */; };
 		82BF87E7308821A300FE5D1C /* CartService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BF87E6308821A300FE5D1C /* CartService.swift */; };
 		82BF888C309141D300FE5D1C /* UpdateOrderRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BF888B309141D300FE5D1C /* UpdateOrderRequest.swift */; };
@@ -80,6 +86,9 @@
 		820170F4309CE70000881FD3 /* PaymentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentService.swift; sourceTree = "<group>"; };
 		82017188309DFF4C00881FD3 /* AppImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppImages.swift; sourceTree = "<group>"; };
 		820171FA30A0AFF200881FD3 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		8201720A30A105C400881FD3 /* AnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
+		8201720E30A1122300881FD3 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
+		8201720F30A1145300881FD3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		82BF87E43088218500FE5D1C /* OrderRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderRequest.swift; sourceTree = "<group>"; };
 		82BF87E6308821A300FE5D1C /* CartService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartService.swift; sourceTree = "<group>"; };
 		82BF888B309141D300FE5D1C /* UpdateOrderRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateOrderRequest.swift; sourceTree = "<group>"; };
@@ -131,7 +140,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8201720730A101ED00881FD3 /* AppMetricaCrashes in Frameworks */,
+				8201720930A101ED00881FD3 /* AppMetricaLibraryAdapter in Frameworks */,
 				ABC5E1D82C3204A9002B4068 /* Kingfisher in Frameworks */,
+				8201720330A101ED00881FD3 /* AppMetricaAnalytics in Frameworks */,
+				8201720530A101ED00881FD3 /* AppMetricaCore in Frameworks */,
+				8201720130A101ED00881FD3 /* AppMetricaAdSupport in Frameworks */,
 				ABC5E1E22C320535002B4068 /* ProgressHUD in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -160,6 +174,7 @@
 				ABC5E17B2C31F5B0002B4068 /* iOS-FakeNFT-ExtendedTests */,
 				ABC5E1852C31F5B0002B4068 /* iOS-FakeNFT-ExtendedUITests */,
 				ABC5E1692C31F5AF002B4068 /* Products */,
+				8201720E30A1122300881FD3 /* Secrets.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -176,6 +191,7 @@
 		ABC5E16A2C31F5AF002B4068 /* iOS-FakeNFT-Extended */ = {
 			isa = PBXGroup;
 			children = (
+				8201720F30A1145300881FD3 /* Info.plist */,
 				ABC5E16B2C31F5AF002B4068 /* iOS_FakeNFT_ExtendedApp.swift */,
 				820171FA30A0AFF200881FD3 /* Localizable.xcstrings */,
 				ABC5E1952C31F64A002B4068 /* DesignSystem */,
@@ -282,6 +298,7 @@
 				820170E8309BDB7500881FD3 /* UserAgreementView.swift */,
 				820170EC309CC37100881FD3 /* CurrenciesService.swift */,
 				820170F4309CE70000881FD3 /* PaymentService.swift */,
+				8201720A30A105C400881FD3 /* AnalyticsService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -367,6 +384,11 @@
 			packageProductDependencies = (
 				ABC5E1D72C3204A9002B4068 /* Kingfisher */,
 				ABC5E1E12C320535002B4068 /* ProgressHUD */,
+				8201720030A101ED00881FD3 /* AppMetricaAdSupport */,
+				8201720230A101ED00881FD3 /* AppMetricaAnalytics */,
+				8201720430A101ED00881FD3 /* AppMetricaCore */,
+				8201720630A101ED00881FD3 /* AppMetricaCrashes */,
+				8201720830A101ED00881FD3 /* AppMetricaLibraryAdapter */,
 			);
 			productName = "iOS-FakeNFT-Extended";
 			productReference = ABC5E1682C31F5AF002B4068 /* iOS-FakeNFT-Extended.app */;
@@ -447,6 +469,7 @@
 			packageReferences = (
 				ABC5E1D62C3204A9002B4068 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				ABC5E1E02C320535002B4068 /* XCRemoteSwiftPackageReference "ProgressHUD" */,
+				820171FF30A101ED00881FD3 /* XCRemoteSwiftPackageReference "appmetrica-sdk-ios" */,
 			);
 			productRefGroup = ABC5E1692C31F5AF002B4068 /* Products */;
 			projectDirPath = "";
@@ -521,6 +544,7 @@
 				ABC5E1DB2C3204CE002B4068 /* UIView+Constraints.swift in Sources */,
 				ABC5E16C2C31F5AF002B4068 /* iOS_FakeNFT_ExtendedApp.swift in Sources */,
 				ABC5E1CB2C3203FC002B4068 /* NftDetailCellModel.swift in Sources */,
+				8201720B30A105C400881FD3 /* AnalyticsService.swift in Sources */,
 				82BF87E7308821A300FE5D1C /* CartService.swift in Sources */,
 				ABC5E1AB2C31FACD002B4068 /* NftService.swift in Sources */,
 				ABC5E1B22C31FBD4002B4068 /* ExampleRequest.swift in Sources */,
@@ -566,6 +590,7 @@
 /* Begin XCBuildConfiguration section */
 		ABC5E18A2C31F5B0002B4068 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8201720E30A1122300881FD3 /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -697,6 +722,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"iOS-FakeNFT-Extended/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS-FakeNFT-Extended/Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -725,6 +751,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"iOS-FakeNFT-Extended/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS-FakeNFT-Extended/Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -857,6 +884,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		820171FF30A101ED00881FD3 /* XCRemoteSwiftPackageReference "appmetrica-sdk-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/appmetrica/appmetrica-sdk-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
 		ABC5E1D62C3204A9002B4068 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
@@ -876,6 +911,31 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		8201720030A101ED00881FD3 /* AppMetricaAdSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 820171FF30A101ED00881FD3 /* XCRemoteSwiftPackageReference "appmetrica-sdk-ios" */;
+			productName = AppMetricaAdSupport;
+		};
+		8201720230A101ED00881FD3 /* AppMetricaAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 820171FF30A101ED00881FD3 /* XCRemoteSwiftPackageReference "appmetrica-sdk-ios" */;
+			productName = AppMetricaAnalytics;
+		};
+		8201720430A101ED00881FD3 /* AppMetricaCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 820171FF30A101ED00881FD3 /* XCRemoteSwiftPackageReference "appmetrica-sdk-ios" */;
+			productName = AppMetricaCore;
+		};
+		8201720630A101ED00881FD3 /* AppMetricaCrashes */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 820171FF30A101ED00881FD3 /* XCRemoteSwiftPackageReference "appmetrica-sdk-ios" */;
+			productName = AppMetricaCrashes;
+		};
+		8201720830A101ED00881FD3 /* AppMetricaLibraryAdapter */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 820171FF30A101ED00881FD3 /* XCRemoteSwiftPackageReference "appmetrica-sdk-ios" */;
+			productName = AppMetricaLibraryAdapter;
+		};
 		ABC5E1D72C3204A9002B4068 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = ABC5E1D62C3204A9002B4068 /* XCRemoteSwiftPackageReference "Kingfisher" */;

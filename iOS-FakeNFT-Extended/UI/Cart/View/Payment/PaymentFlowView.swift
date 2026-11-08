@@ -22,15 +22,16 @@ struct PaymentFlowView: View {
     init(
         currenciesService: CurrenciesService,
         paymentService: PaymentService,
+        analyticsService: AnalyticsService,
         onPaymentSuccess: @escaping (Bool) async -> Bool
     ) {
         _viewModel = State(
             initialValue: PaymentMethodViewModel(
                 currenciesService: currenciesService,
-                paymentService: paymentService
+                paymentService: paymentService,
+                analyticsService: analyticsService
             )
         )
-
         self.onPaymentSuccess = onPaymentSuccess
     }
 

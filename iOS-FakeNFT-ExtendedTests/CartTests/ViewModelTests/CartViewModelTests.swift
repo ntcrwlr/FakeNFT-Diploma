@@ -37,7 +37,8 @@ final class CartViewModelTests: XCTestCase {
                 loadOrderResult: .success(order),
                 updateOrderResult: updateResult
             ),
-            nftService: MockNftService(results: nfts)
+            nftService: MockNftService(results: nfts),
+            analyticsService: MockAnalyticsService()
         )
     }
 
@@ -76,7 +77,8 @@ final class CartViewModelTests: XCTestCase {
 
         let viewModel = CartViewModel(
             cartService: cartService,
-            nftService: nftService
+            nftService: nftService,
+            analyticsService: MockAnalyticsService()
         )
 
         await viewModel.loadCart()

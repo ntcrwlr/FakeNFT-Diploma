@@ -160,7 +160,8 @@ struct PaymentMethodView: View {
     PaymentMethodView(
         viewModel: PaymentMethodViewModel(
             currenciesService: PreviewCurrenciesService(),
-            paymentService: PreviewPaymentService()
+            paymentService: PreviewPaymentService(),
+            analyticsService: AppMetricaAnalyticsService()
         )
     )
 }
