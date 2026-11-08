@@ -7,6 +7,7 @@
 
 
 import Foundation
+import OSLog
 
 enum CartSortOption {
     case price
@@ -75,7 +76,7 @@ final class CartViewModel {
 
             items = loadedItems
         } catch {
-            print("Ошибка загрузки корзины: \(error)")
+            Logger.shared.error("Ошибка загрузки корзины: \(error.localizedDescription, privacy: .public)")
             items = CartMockData.items
             errorMessage = NSLocalizedString("Cart.error.load", comment: "")
         }
@@ -129,8 +130,8 @@ final class CartViewModel {
             items = []
             return true
         } catch {
-            print("Ошибка очистки корзины через API: \(error)")
-            print("Используем локальную очистку корзины.")
+            Logger.shared.error("Ошибка очистки корзины через API: \(error.localizedDescription, privacy: .public)")
+            Logger.shared.info("Используем локальную очистку корзины.")
 
             items = []
             return true

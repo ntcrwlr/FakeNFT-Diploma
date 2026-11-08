@@ -7,6 +7,7 @@
 
 import Foundation
 import Observation
+import OSLog
 
 @Observable
 @MainActor
@@ -43,7 +44,7 @@ final class PaymentMethodViewModel {
         do {
             currencies = try await currenciesService.loadCurrencies()
         } catch {
-            print("Ошибка загрузки валют: \(error)")
+            Logger.shared.error("Ошибка загрузки валют: \(error.localizedDescription, privacy: .public)")
             mockCurrencies = CurrencyMockData.currencies
         }
     }
@@ -75,12 +76,12 @@ final class PaymentMethodViewModel {
             if response.success {
                 isPaymentSuccessful = true
             } else {
-                print("Сервер отклонил оплату. Используем мок.")
+                Logger.shared.warning("Сервер отклонил оплату. Используем мок.")
                 isMockPayment = true
                 isPaymentSuccessful = true
             }
         } catch {
-            print("Ошибка оплаты: \(error). Используем мок.")
+            Logger.shared.error("Ошибка оплаты: \(error.localizedDescription, privacy: .public). Используем мок.")
             isMockPayment = true
             isPaymentSuccessful = true
         }
