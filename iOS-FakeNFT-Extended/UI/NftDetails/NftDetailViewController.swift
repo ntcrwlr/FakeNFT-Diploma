@@ -85,7 +85,19 @@ final class NftDetailViewController: UIViewController {
 
     @objc
     private func close() {
-        dismiss(animated: true)
+        if presentingViewController != nil {
+            dismiss(animated: true)
+            return
+        }
+
+        var ancestor = parent
+        while let controller = ancestor {
+            if controller.presentingViewController != nil {
+                controller.dismiss(animated: true)
+                return
+            }
+            ancestor = controller.parent
+        }
     }
 }
 
