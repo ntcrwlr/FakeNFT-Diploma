@@ -156,10 +156,12 @@ struct CollectionDetailsView: View {
             ForEach(nfts, id: \.id) { nft in
                 CollectionNftCellView(
                     nft: nft,
-                    isLiked: viewModel.isLiked(nft.id),
-                    isLikeEnabled: !viewModel.isLikeInProgress(nft.id),
-                    isInCart: viewModel.isInCart(nft.id),
-                    isCartEnabled: !viewModel.isCartInProgress(nft.id),
+                    state: NftCellState(
+                        isLiked: viewModel.isLiked(nft.id),
+                        isLikeEnabled: !viewModel.isLikeInProgress(nft.id),
+                        isInCart: viewModel.isInCart(nft.id),
+                        isCartEnabled: !viewModel.isCartInProgress(nft.id)
+                    ),
                     onLike: {
                         Task {
                             await viewModel.toggleLike(id: nft.id)

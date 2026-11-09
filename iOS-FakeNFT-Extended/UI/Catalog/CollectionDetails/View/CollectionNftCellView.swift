@@ -2,10 +2,7 @@ import SwiftUI
 
 struct CollectionNftCellView: View {
     let nft: Nft
-    let isLiked: Bool
-    let isLikeEnabled: Bool
-    let isInCart: Bool
-    let isCartEnabled: Bool
+    let state: NftCellState
     let onLike: () -> Void
     let onCart: () -> Void
     let onOpen: () -> Void
@@ -15,37 +12,34 @@ struct CollectionNftCellView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: 0) {
             cover
-            Button(action: onOpen) {
-                details
+            VStack(alignment: .leading, spacing: 4) {
+                Button(action: onOpen) {
+                    rating
+                }
+                .buttonStyle(.plain)
+                HStack(alignment: .center, spacing: 0) {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Button(action: onOpen) {
+                            Text(nft.name)
+                                .font(Font(UIFont.bodyBold))
+                                .foregroundStyle(Color.black)
+                                .lineLimit(1)
+                                .truncationMode(.tail)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                        .buttonStyle(.plain)
+                        Text(priceText)
+                            .font(Font(UIFont.caption2))
+                            .foregroundStyle(Color.black)
+                            .lineLimit(1)
+                    }
+                    cartButton
+                        .padding(.trailing, Constants.cartTrailingInset)
+                }
             }
-            .buttonStyle(.plain)
-            priceRow
-        }
-    }
-
-    private var details: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            rating
-            Text(nft.name)
-                .font(Font(UIFont.bodyBold))
-                .foregroundStyle(Color.black)
-                .lineLimit(1)
-                .truncationMode(.tail)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-    }
-
-    private var priceRow: some View {
-        HStack(spacing: 4) {
-            Text(priceText)
-                .font(Font(UIFont.caption2))
-                .foregroundStyle(Color.black)
-                .lineLimit(1)
-                .minimumScaleFactor(0.7)
-            Spacer(minLength: 0)
-            cartButton
+            .padding(.top, 8)
         }
     }
 
@@ -71,39 +65,42 @@ struct CollectionNftCellView: View {
             }
             .overlay(alignment: .topTrailing) {
                 likeButton
+                    .padding(.top, 6)
+                    .padding(.trailing, 6)
                     .zIndex(1)
             }
     }
 
     private var likeButton: some View {
         Button(action: onLike) {
-            Image(systemName: "heart.fill")
-                .font(.system(size: Constants.heartSize))
-                .foregroundStyle(isLiked ? Color.red : Color.white)
-                .shadow(color: .black.opacity(0.35), radius: 2, y: 1)
+            Image(systemName: state.isLiked ? "heart.fill" : "heart")
+                .font(.system(size: Constants.heartSize, weight: .regular))
+                .foregroundStyle(state.isLiked ? Color.red : Color.white)
+                .shadow(color: .black.opacity(0.25), radius: 1, y: 0)
                 .frame(width: Constants.heartTapSize, height: Constants.heartTapSize)
                 .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        .disabled(!isLikeEnabled)
-        .accessibilityLabel(isLiked ? Constants.likedTitle : Constants.likeTitle)
+        .disabled(!state.isLikeEnabled)
+        .accessibilityLabel(state.isLiked ? Constants.likedTitle : Constants.likeTitle)
     }
 
     private var cartButton: some View {
         Button(action: onCart) {
-            Image(systemName: isInCart ? "xmark" : "cart")
-                .font(.system(size: Constants.cartSize, weight: .medium))
-                .foregroundStyle(Color.black)
+            Image(state.isInCart ? Constants.removeFromCartImage : Constants.addToCartImage)
+                .resizable()
+                .scaledToFit()
+                .frame(width: Constants.cartSize, height: Constants.cartSize)
                 .frame(width: Constants.cartTapSize, height: Constants.cartTapSize)
                 .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        .disabled(!isCartEnabled)
-        .accessibilityLabel(isInCart ? Constants.removeFromCartTitle : Constants.addToCartTitle)
+        .disabled(!state.isCartEnabled)
+        .accessibilityLabel(state.isInCart ? Constants.removeFromCartTitle : Constants.addToCartTitle)
     }
 
     private var rating: some View {
-        HStack(spacing: 2) {
+        HStack(spacing: Constants.starSpacing) {
             ForEach(0..<Constants.starCount, id: \.self) { index in
                 Image(systemName: "star.fill")
                     .resizable()
@@ -124,10 +121,14 @@ private enum Constants {
     static let coverCornerRadius: CGFloat = 12
     static let starCount = 5
     static let starSize: CGFloat = 12
-    static let heartSize: CGFloat = 16
-    static let heartTapSize: CGFloat = 32
-    static let cartSize: CGFloat = 14
-    static let cartTapSize: CGFloat = 24
+    static let starSpacing: CGFloat = 2
+    static let heartSize: CGFloat = 18
+    static let heartTapSize: CGFloat = 28
+    static let cartSize: CGFloat = 40
+    static let cartTapSize: CGFloat = 40
+    static let cartTrailingInset: CGFloat = 8
+    static let addToCartImage = "Property 1=Add"
+    static let removeFromCartImage = "Property 1=Delete"
     static let likeTitle = NSLocalizedString("Catalog.like", comment: "")
     static let likedTitle = NSLocalizedString("Catalog.liked", comment: "")
     static let addToCartTitle = NSLocalizedString("Catalog.addToCart", comment: "")
