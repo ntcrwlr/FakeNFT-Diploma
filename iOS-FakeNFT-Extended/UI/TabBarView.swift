@@ -11,16 +11,17 @@ struct TabBarView: View {
                         systemImage: "square.stack.3d.up.fill"
                     )
                 }
-
+            
             CartView(
                 viewModel: CartViewModel(
                     cartService: servicesAssembly.cartService,
-                    nftService: servicesAssembly.nftService
+                    nftService: servicesAssembly.nftService,
+                    analyticsService: servicesAssembly.analyticsService
                 )
             )
             .tabItem {
                 Label(
-                    "Корзина",
+                    NSLocalizedString("Tab.cart", comment: ""),
                     systemImage: "cart.fill"
                 )
             }

@@ -1,6 +1,15 @@
 {
-  "originHash" : "1af1f31b8d66de777bb11bed8e4c037caa9976c336b3b8c1b80bfd1e38379aad",
+  "originHash" : "43d4e888e93096d2371681f98cbd68d5181fcbe5ab2b044a09501fe36f350508",
   "pins" : [
+    {
+      "identity" : "appmetrica-sdk-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/appmetrica/appmetrica-sdk-ios",
+      "state" : {
+        "revision" : "58fc7181cf637ed7017e6485e5c34bf11fcc607e",
+        "version" : "7.0.0"
+      }
+    },
     {
       "identity" : "kingfisher",
       "kind" : "remoteSourceControl",
@@ -11,12 +20,30 @@
       }
     },
     {
+      "identity" : "kscrash",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kstenerud/KSCrash",
+      "state" : {
+        "revision" : "95a8895d75f3c22aa9ad9f2a15d2fbd97b0a55e2",
+        "version" : "2.5.1"
+      }
+    },
+    {
       "identity" : "progresshud",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/relatedcode/ProgressHUD.git",
       "state" : {
         "revision" : "9364904a42cb25f58d026451140c4080a868e72e",
         "version" : "14.1.3"
+      }
+    },
+    {
+      "identity" : "swift-protobuf",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-protobuf",
+      "state" : {
+        "revision" : "3d537cb81aef272a03cb3be815439e9bf0eb3bd3",
+        "version" : "1.39.0"
       }
     }
   ],

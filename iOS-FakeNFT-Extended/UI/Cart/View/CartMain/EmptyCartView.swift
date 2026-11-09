@@ -10,7 +10,7 @@ import SwiftUI
 struct EmptyCartView: View {
     var body: some View {
         VStack {
-            Text("Корзина пуста")
+            Text("Cart.empty")
                 .font(.system(size: 17, weight: .bold))
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

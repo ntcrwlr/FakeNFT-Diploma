@@ -17,7 +17,7 @@ struct CartItemCell: View {
     private var ratingView: some View {
         HStack(spacing: 2) {
             ForEach(1...5, id: \.self) { star in
-                Image(systemName: "star.fill")
+                Image(systemName: AppImages.star)
                     .font(.system(size: 12))
                     .foregroundStyle(star <= rating ? .yellow : .lightGrey)
             }
@@ -58,7 +58,7 @@ struct CartItemCell: View {
                 
                 ratingView
                 
-                Text("Цена")
+                Text("Cart.price")
                     .font(.system(size: 13, weight: .regular))
                     .foregroundColor(.primary)
                     .padding(.top, 12)

@@ -9,11 +9,13 @@ import SwiftUI
 import ProgressHUD
 
 struct CartView: View {
+    @Environment(ServicesAssembly.self) private var servicesAssembly
     @State private var viewModel: CartViewModel
     @State private var showErrorAlert = false
     @State private var selectedItem: CartItem?
     @State private var showDeleteConfirmation = false
     @State private var showSortDialog = false
+    @State private var showPaymentMethod = false
     
     init(viewModel: CartViewModel) {
         _viewModel = State(initialValue: viewModel)
@@ -35,6 +37,9 @@ struct CartView: View {
     private var content: some View {
         if items.isEmpty && !viewModel.isLoading {
             EmptyCartView()
+                .refreshable {
+                    await viewModel.loadCart()
+                }
         } else {
             List {
                 ForEach(items) { item in
@@ -61,6 +66,9 @@ struct CartView: View {
             }
             .listStyle(.plain)
             .padding(.top, 20)
+            .refreshable {
+                await viewModel.loadCart()
+            }
         }
     }
     
@@ -92,7 +100,6 @@ struct CartView: View {
         }
     }
     
-    
     var body: some View {
         NavigationStack {
             content
@@ -105,13 +112,20 @@ struct CartView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(width: 42, height: 42)
+                            .colorMultiply(Color(uiColor: .label))
                     }
                 }
                 .safeAreaInset(edge: .bottom, spacing: 0) {
                     CartBottomPaymentView(
                         itemCount: items.count,
                         totalPrice: totalPrice,
-                        onPay: {}
+                        onPay: {
+                            servicesAssembly.analyticsService.reportEvent(
+                                name: "payment_screen_opened",
+                                parameters: [:]
+                            )
+                            showPaymentMethod = true
+                        }
                     )
                 }
                 .task {
@@ -124,17 +138,17 @@ struct CartView: View {
                         ProgressHUD.dismiss()
                     }
                 }
-                .alert("Ошибка", isPresented: $showErrorAlert) {
-                    Button("Повторить") {
+                .alert("Error.title", isPresented: $showErrorAlert) {
+                    Button("Error.repeat") {
                         Task {
                             await viewModel.loadCart()
                         }
                     }
-                    Button("Отмена", role: .cancel) {}
+                    Button("Cart.cancel", role: .cancel) {}
                 } message: {
                     Text(
                         viewModel.errorMessage
-                        ?? "Не удалось загрузить корзину"
+                        ?? String(localized: "Error.unknown")
                     )
                 }
                 .onChange(of: viewModel.errorMessage) { _, errorMessage in
@@ -142,6 +156,7 @@ struct CartView: View {
                 }
         }
         .statusBarHidden(showDeleteConfirmation)
+        .toolbar(showDeleteConfirmation ? .hidden : .visible, for: .tabBar)
         .overlay {
             deleteOverlay
         }
@@ -155,14 +170,17 @@ struct CartView: View {
                 }
             )
         }
+        .fullScreenCover(isPresented: $showPaymentMethod) {
+            PaymentFlowView(
+                currenciesService: servicesAssembly.currenciesService,
+                paymentService: servicesAssembly.paymentService,
+                analyticsService: servicesAssembly.analyticsService,
+                onPaymentSuccess: { isMockPayment in
+                    await viewModel.clearCart(
+                        isMockPayment: isMockPayment
+                    )
+                }
+            )
+        }
     }
-}
-
-#Preview {
-    CartView(
-        viewModel: CartViewModel(
-            cartService: PreviewCartService(),
-            nftService: PreviewNftService()
-        )
-    )
 }

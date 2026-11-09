@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct DeleteConfirmationView: View {
+
     let item: CartItem
     let onDelete: () -> Void
     let onCancel: () -> Void
@@ -37,26 +38,30 @@ struct DeleteConfirmationView: View {
             .frame(width: 108, height: 108)
             .clipShape(RoundedRectangle(cornerRadius: 16))
 
-            Text("Вы уверены, что хотите\nудалить объект из корзины?")
+            Text("Cart.delete.confirmation")
                 .font(.system(size: 13, weight: .regular))
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.primary)
                 .padding(.top, 12)
 
             HStack(spacing: 8) {
-                Button("Удалить", action: onDelete)
+                Button("Cart.delete", action: onDelete)
                     .font(.system(size: 17, weight: .regular))
                     .frame(width: 127, height: 44)
-                    .background(Color.black)
+                    .background(
+                        Color(uiColor: .label),
+                        in: RoundedRectangle(cornerRadius: 12)
+                    )
                     .foregroundStyle(.red)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
 
-                Button("Вернуться", action: onCancel)
+                Button("Cart.cancel", action: onCancel)
                     .font(.system(size: 17, weight: .regular))
                     .frame(width: 127, height: 44)
-                    .background(Color.black)
-                    .foregroundStyle(.white)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .background(
+                        Color(uiColor: .label),
+                        in: RoundedRectangle(cornerRadius: 12)
+                    )
+                    .foregroundStyle(Color(uiColor: .systemBackground))
             }
             .padding(.top, 20)
         }
@@ -69,7 +74,7 @@ struct DeleteConfirmationView: View {
         RoundedRectangle(cornerRadius: 12)
             .fill(Color.gray.opacity(0.15))
             .overlay {
-                Image(systemName: "photo")
+                Image(systemName: AppImages.photo)
                     .foregroundStyle(.secondary)
             }
     }
