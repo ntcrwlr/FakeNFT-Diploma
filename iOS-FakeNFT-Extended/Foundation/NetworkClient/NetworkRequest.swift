@@ -11,6 +11,7 @@ protocol NetworkRequest {
     var endpoint: URL? { get }
     var httpMethod: HttpMethod { get }
     var dto: Encodable? { get }
+    var formFields: [URLQueryItem]? { get }
     var httpBody: Data? { get }
     var contentType: String? { get }
 }
@@ -19,6 +20,7 @@ protocol NetworkRequest {
 extension NetworkRequest {
     var httpMethod: HttpMethod { .get }
     var dto: Encodable? { nil }
+    var formFields: [URLQueryItem]? { nil }
     var httpBody: Data? { nil }
     var contentType: String? { nil }
 }

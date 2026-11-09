@@ -1,5 +1,6 @@
 // MARK: - Tab Bar
 "Tab.catalog" = "Каталог";
+"Tab.profile" = "Профиль";
 
 // MARK: - Catalog
 "Catalog.openNft" = "Открыть Nft";
@@ -20,3 +21,37 @@
 "Error.network" = "Произошла ошибка сети";
 "Error.unknown" = "Произошла неизвестная ошибка";
 "Error.repeat" = "Повторить";
+
+// MARK: - Profile
+"Profile.loading" = "Загрузка профиля…";
+"Profile.loadingError.message" = "Не удалось загрузить профиль. Попробуйте ещё раз.";
+
+"OwnedNFTs.empty" = "У Вас ещё нет NFT";
+"OwnedNFTs.loading" = "Загрузка NFT…";
+"OwnedNFTs.loadingError.message" = "Не удалось загрузить NFT. Попробуйте ещё раз.";
+"OwnedNFTs.loadingError.retry" = "Повторить";
+"OwnedNFTs.title" = "Мои NFT";
+"OwnedNFTs.sort" = "Сортировка";
+"OwnedNFTs.sort.price" = "По цене";
+"OwnedNFTs.sort.rating" = "По рейтингу";
+"OwnedNFTs.sort.name" = "По названию";
+"OwnedNFTs.close" = "Закрыть";
+"OwnedNFTs.back" = "Назад";
+"OwnedNFTs.favorite" = "В избранном";
+"OwnedNFTs.image" = "Изображение NFT";
+"OwnedNFTs.rating" = "Рейтинг: %ld из 5";
+"OwnedNFTs.author" = "от %@";
+"OwnedNFTs.price" = "Цена";
+
+"FavoriteNFTs.title" = "Избранные NFT";
+"FavoriteNFTs.empty" = "У Вас ещё нет избранных NFT";
+"FavoriteNFTs.loading" = "Загрузка избранных NFT…";
+"FavoriteNFTs.loadingError.message" = "Не удалось загрузить избранные NFT. Попробуйте ещё раз.";
+"FavoriteNFTs.loadingError.retry" = "Повторить";
+"FavoriteNFTs.back" = "Назад";
+"FavoriteNFTs.favorite" = "%@, в избранном";
+"FavoriteNFTs.rating" = "Рейтинг: %ld из 5";
+"FavoriteNFTs.removalError.title" = "Ошибка";
+"FavoriteNFTs.removalError.message" = "Не удалось удалить NFT из избранного. Попробуйте ещё раз.";
+"FavoriteNFTs.removalError.retry" = "Повторить";
+"FavoriteNFTs.removalError.cancel" = "Отмена";

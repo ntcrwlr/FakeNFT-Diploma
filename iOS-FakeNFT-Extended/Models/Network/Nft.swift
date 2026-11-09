@@ -7,6 +7,9 @@ struct Nft: Decodable, Sendable {
     /// Название NFT.
     let name: String
 
+    /// Идентификатор или имя автора NFT.
+    let author: String
+
     /// Ссылки на изображения NFT.
     let images: [URL]
 
@@ -14,5 +17,5 @@ struct Nft: Decodable, Sendable {
     let rating: Int
 
     /// Цена NFT в ETH.
-    let price: Double
+    let price: Decimal
 }

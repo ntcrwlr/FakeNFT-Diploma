@@ -18,9 +18,9 @@ final class FavoritesService: FavoritesServiceProtocol {
     }
 
     func updateLikes(_ likes: Set<String>) async throws -> Set<String> {
-        let profile: ProfileLikesResponse = try await networkClient.send(
-            request: UpdateProfileLikesRequest(likes: likes)
+        let profile: Profile = try await networkClient.send(
+            request: UpdateProfileLikesRequest(ids: likes.sorted())
         )
-        return Set(profile.likes ?? [])
+        return Set(profile.likes)
     }
 }

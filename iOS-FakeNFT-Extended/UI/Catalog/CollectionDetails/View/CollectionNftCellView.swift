@@ -115,7 +115,7 @@ struct CollectionNftCellView: View {
     }
 
     private var priceText: String {
-        let value = NumberFormatter.nftPrice.string(from: NSNumber(value: nft.price)) ?? "\(nft.price)"
+        let value = NumberFormatter.nftPrice.string(from: nft.price as NSDecimalNumber) ?? "\(nft.price)"
         return "\(value) ETH"
     }
 }
