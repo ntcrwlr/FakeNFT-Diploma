@@ -53,6 +53,21 @@ struct CollectionDetailsView: View {
             NftDetailBridgeView(nftId: nft.id)
                 .ignoresSafeArea()
         }
+        .alert(
+            Constants.errorTitle,
+            isPresented: Binding(
+                get: { viewModel.actionErrorMessage != nil },
+                set: { if !$0 { viewModel.clearActionError() } }
+            )
+        ) {
+            Button("OK", role: .cancel) {
+                viewModel.clearActionError()
+            }
+        } message: {
+            if let message = viewModel.actionErrorMessage {
+                Text(message)
+            }
+        }
     }
 
     // MARK: - Subviews

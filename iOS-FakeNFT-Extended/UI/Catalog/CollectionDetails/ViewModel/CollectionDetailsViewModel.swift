@@ -15,6 +15,7 @@ final class CollectionDetailsViewModel {
     private(set) var likeRequests: Set<String> = []
     private(set) var cartNftIds: Set<String> = []
     private(set) var cartRequests: Set<String> = []
+    private(set) var actionErrorMessage: String?
 
     init(
         collection: NftCollection,
@@ -33,11 +34,11 @@ final class CollectionDetailsViewModel {
     }
 
     func isLikeInProgress(_ id: String) -> Bool {
-        likeRequests.contains(id)
+        !likeRequests.isEmpty
     }
 
     func toggleLike(id: String) async {
-        guard !likeRequests.contains(id) else { return }
+        guard likeRequests.isEmpty else { return }
         likeRequests.insert(id)
         defer { likeRequests.remove(id) }
 
@@ -51,8 +52,12 @@ final class CollectionDetailsViewModel {
         do {
             likedNftIds = try await favoritesService.updateLikes(likes)
         } catch {
-            return
+            actionErrorMessage = Self.message(for: error)
         }
+    }
+
+    func clearActionError() {
+        actionErrorMessage = nil
     }
 
     func isInCart(_ id: String) -> Bool {
@@ -60,11 +65,11 @@ final class CollectionDetailsViewModel {
     }
 
     func isCartInProgress(_ id: String) -> Bool {
-        cartRequests.contains(id)
+        !cartRequests.isEmpty
     }
 
     func toggleCart(id: String) async {
-        guard !cartRequests.contains(id) else { return }
+        guard cartRequests.isEmpty else { return }
         cartRequests.insert(id)
         defer { cartRequests.remove(id) }
 
@@ -78,17 +83,25 @@ final class CollectionDetailsViewModel {
         do {
             cartNftIds = try await cartService.updateOrder(nftIds)
         } catch {
-            return
+            actionErrorMessage = Self.message(for: error)
         }
     }
 
     var authorURL: URL? {
         let raw = collection.author.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !raw.isEmpty else { return nil }
-        if let url = URL(string: raw), url.scheme != nil {
-            return url
+
+        let address = raw.contains("://") ? raw : "https://\(raw)"
+
+        guard let url = URL(string: address),
+              let scheme = url.scheme?.lowercased(),
+              ["http", "https"].contains(scheme),
+              let host = url.host,
+              !host.isEmpty else {
+            return nil
         }
-        return URL(string: "https://\(raw)")
+
+        return url
     }
 
     func loadIfNeeded() async {
@@ -144,5 +157,12 @@ final class CollectionDetailsViewModel {
             }
             return loaded.sorted { $0.0 < $1.0 }.map(\.1)
         }
+    }
+
+    private static func message(for error: Error) -> String {
+        if error is NetworkClientError {
+            return NSLocalizedString("Error.network", comment: "")
+        }
+        return NSLocalizedString("Error.unknown", comment: "")
     }
 }
