@@ -19,7 +19,7 @@ enum CartSortOption {
 @MainActor
 final class CartViewModel {
     
-    private let cartService: CartService
+    private let cartService: CartServiceLocalProtocol
     private let nftService: NftService
     private let analyticsService: AnalyticsService
     
@@ -28,7 +28,7 @@ final class CartViewModel {
     private(set) var errorMessage: String?
     
     init(
-        cartService: CartService,
+        cartService: CartServiceLocalProtocol,
         nftService: NftService,
         analyticsService: AnalyticsService
     ) {
@@ -79,7 +79,7 @@ final class CartViewModel {
                     imageName: nft.imagesURLs.first?.absoluteString ?? "",
                     name: nft.name,
                     rating: nft.rating,
-                    price: nft.price
+                    price: NSDecimalNumber(decimal: nft.price).doubleValue
                 )
                 
                 loadedItems.append(item)

@@ -1,0 +1,117 @@
+import Foundation
+import Observation
+
+@MainActor
+@Observable
+final class EditProfileViewModel {
+    var name: String
+    var biography: String
+    var website: String
+    private(set) var avatarURL: URL?
+    private(set) var isAvatarRemoved = false
+    private(set) var isSaving = false
+    private(set) var errorMessage: String?
+    private(set) var canRetrySave = false
+    let avatarAssetName: String?
+    private let initialProfile: UserProfile
+
+    var hasChanges: Bool {
+        updatedProfile != initialProfile
+    }
+
+    var updatedProfile: UserProfile {
+        UserProfile(
+            name: name,
+            biography: biography,
+            websiteTitle: website,
+            avatarAssetName: avatarAssetName,
+            avatarURL: avatarURL,
+            isAvatarRemoved: isAvatarRemoved,
+            ownedNFTCount: initialProfile.ownedNFTCount,
+            favoriteNFTCount: initialProfile.favoriteNFTCount
+        )
+    }
+
+    var profileUpdate: ProfileUpdate {
+        ProfileUpdate(
+            name: name.trimmingCharacters(in: .whitespacesAndNewlines),
+            description: biography,
+            avatar: isAvatarRemoved ? "" : avatarURL?.absoluteString ?? "",
+            website: website.trimmingCharacters(in: .whitespacesAndNewlines)
+        )
+    }
+
+    init(profile: UserProfile) {
+        name = profile.name
+        biography = profile.biography
+        website = profile.websiteTitle
+        avatarAssetName = profile.avatarAssetName
+        avatarURL = profile.avatarURL
+        isAvatarRemoved = profile.isAvatarRemoved
+        initialProfile = profile
+    }
+
+    func updateAvatar(link: String) {
+        dismissError()
+        let value = link.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard let url = URL(string: value),
+              let scheme = url.scheme?.lowercased(),
+              ["http", "https"].contains(scheme),
+              let host = url.host, !host.isEmpty else {
+            errorMessage = "Введите корректную ссылку на фото (http или https)."
+            return
+        }
+        avatarURL = url
+        isAvatarRemoved = false
+    }
+
+    func removeAvatar() {
+        avatarURL = nil
+        isAvatarRemoved = true
+    }
+
+    func save(using action: (EditProfileViewModel) async throws -> Void) async -> Bool {
+        guard !isSaving else { return false }
+        dismissError()
+        guard validateInput() else { return false }
+        isSaving = true
+        defer { isSaving = false }
+        do {
+            try Task.checkCancellation()
+            try await action(self)
+            try Task.checkCancellation()
+            return true
+        } catch is CancellationError {
+            return false
+        } catch {
+            guard !Task.isCancelled else { return false }
+            errorMessage = "Не удалось сохранить изменения. Попробуйте ещё раз."
+            canRetrySave = true
+            return false
+        }
+    }
+
+    func dismissError() {
+        errorMessage = nil
+        canRetrySave = false
+    }
+
+    private func validateInput() -> Bool {
+        let update = profileUpdate
+        guard !update.name.isEmpty else {
+            errorMessage = "Введите имя."
+            return false
+        }
+        if !update.website.isEmpty {
+            guard !update.website.contains(where: { $0.isWhitespace }),
+                  let url = URL(string: update.website),
+                  let scheme = url.scheme?.lowercased(),
+                  ["http", "https"].contains(scheme),
+                  let host = url.host, !host.isEmpty else {
+                errorMessage = "Введите корректную ссылку на сайт (http или https)."
+                return false
+            }
+        }
+        return true
+    }
+}

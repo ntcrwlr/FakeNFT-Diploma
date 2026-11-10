@@ -1,0 +1,191 @@
+import SwiftUI
+
+struct ProfileView: View {
+    @State private var viewModel: ProfileViewModel
+    @ScaledMetric(relativeTo: .body) private var biographySize = 13
+    @ScaledMetric(relativeTo: .body) private var websiteSize = 15
+
+    // Navigation is handled by the composition layer.
+    private let onEdit: () -> Void
+    private let onOwnedNFTs: () -> Void
+    private let onFavoriteNFTs: () -> Void
+    private let onWebsite: (URL) -> Void
+
+    init(
+        viewModel: ProfileViewModel,
+        onEdit: @escaping () -> Void = {},
+        onOwnedNFTs: @escaping () -> Void = {},
+        onFavoriteNFTs: @escaping () -> Void = {},
+        onWebsite: @escaping (URL) -> Void = { _ in }
+    ) {
+        _viewModel = State(initialValue: viewModel)
+        self.onEdit = onEdit
+        self.onOwnedNFTs = onOwnedNFTs
+        self.onFavoriteNFTs = onFavoriteNFTs
+        self.onWebsite = onWebsite
+    }
+
+    var body: some View {
+        ZStack {
+            if viewModel.hasLoaded {
+                profileContent
+                    .safeAreaInset(edge: .top, spacing: 0) {
+                        loadingStatus
+                            .frame(maxWidth: .infinity)
+                            .background(Color(uiColor: .profileBackground))
+                    }
+            } else {
+                loadingStatus
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
+        }
+        .foregroundStyle(Color(uiColor: .profileForeground))
+        .background(Color(uiColor: .profileBackground).ignoresSafeArea())
+        .toolbarBackground(Color(uiColor: .profileBackground), for: .tabBar)
+        .toolbarBackground(.visible, for: .tabBar)
+        .accessibilityIdentifier("profile.screen")
+        .task { await viewModel.loadProfile() }
+    }
+
+    private var profileContent: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 0) {
+                editButton
+                    .padding(.bottom, 20)
+                identity
+                    .padding(.bottom, 24)
+                Text(viewModel.profile.biography)
+                    .font(.system(size: biographySize))
+                    .lineSpacing(2)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(.bottom, 12)
+                Button {
+                    if let url = viewModel.websiteURL {
+                        onWebsite(url)
+                    }
+                } label: {
+                    Text(viewModel.profile.websiteTitle)
+                        .font(.system(size: websiteSize))
+                        .foregroundStyle(Color(uiColor: .profileLink))
+                        .multilineTextAlignment(.leading)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .frame(maxWidth: .infinity, minHeight: 44, alignment: .topLeading)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .disabled(viewModel.websiteURL == nil)
+                .accessibilityIdentifier("profile.website")
+                .accessibilityHint("Сайт пользователя")
+                .padding(.bottom, 18)
+                VStack(spacing: 0) {
+                    ProfileMenuRow(title: "Мои NFT", count: viewModel.profile.ownedNFTCount, action: onOwnedNFTs)
+                    ProfileMenuRow(title: "Избранные NFT", count: viewModel.profile.favoriteNFTCount, action: onFavoriteNFTs)
+                        .accessibilityIdentifier("profile.favorites")
+                }
+            }
+            .padding(.horizontal, 16)
+            .padding(.bottom, 24)
+            .frame(maxWidth: 600)
+            .frame(maxWidth: .infinity)
+        }
+    }
+
+    @ViewBuilder
+    private var loadingStatus: some View {
+        if viewModel.isLoading || (!viewModel.hasLoaded && viewModel.loadingError == nil) {
+            ProgressView("Profile.loading")
+                .tint(Color(uiColor: .profileForeground))
+                .padding()
+                .accessibilityIdentifier("profile.loading")
+        } else if viewModel.loadingError != nil {
+            VStack(spacing: 12) {
+                Text("Profile.loadingError.message")
+                    .multilineTextAlignment(.center)
+                Button("Error.repeat") {
+                    Task { await viewModel.loadProfile() }
+                }
+                .buttonStyle(.bordered)
+                .disabled(viewModel.isLoading)
+                .accessibilityIdentifier("profile.retry")
+            }
+            .padding()
+            .accessibilityIdentifier("profile.loadingError")
+        }
+    }
+
+    private var editButton: some View {
+        HStack {
+            Spacer()
+            Button(action: onEdit) {
+                Image(systemName: "square.and.pencil")
+                    .font(.system(size: 26, weight: .regular))
+                    .frame(width: 44, height: 44)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .disabled(viewModel.isLoading)
+            .accessibilityLabel("Редактировать профиль")
+            .accessibilityIdentifier("profile.edit")
+        }
+    }
+
+    private var identity: some View {
+        ViewThatFits(in: .horizontal) {
+            HStack(spacing: 16) {
+                avatar
+                name.fixedSize()
+            }
+            VStack(alignment: .leading, spacing: 16) {
+                avatar
+                name
+            }
+        }
+        .accessibilityElement(children: .combine)
+    }
+
+    private var avatar: some View {
+        Group {
+            if viewModel.profile.isAvatarRemoved {
+                avatarPlaceholder
+            } else if let url = viewModel.profile.avatarURL {
+                AsyncImage(url: url) { phase in
+                    switch phase {
+                    case .success(let image): image.resizable()
+                    case .empty: ProgressView()
+                    default: avatarPlaceholder
+                    }
+                }
+            } else if let assetName = viewModel.profile.avatarAssetName {
+                Image(assetName).resizable()
+            } else {
+                avatarPlaceholder
+            }
+        }
+            .scaledToFill()
+            .frame(width: 70, height: 70)
+            .clipShape(Circle())
+            .accessibilityLabel("Фото пользователя")
+    }
+
+    private var avatarPlaceholder: some View {
+        Image(systemName: "person.crop.circle.fill")
+            .resizable()
+            .foregroundStyle(.secondary)
+    }
+
+    private var name: some View {
+        Text(viewModel.profile.name)
+            .font(.system(.title2, weight: .bold))
+            .fixedSize(horizontal: false, vertical: true)
+            .accessibilityAddTraits(.isHeader)
+    }
+}
+
+#Preview("Profile (Light)") {
+    ProfileView(viewModel: ProfileViewModel(profile: ProfileFixtures.preview))
+}
+
+#Preview("Profile (Dark)") {
+    ProfileView(viewModel: ProfileViewModel(profile: ProfileFixtures.preview))
+        .preferredColorScheme(.dark)
+}

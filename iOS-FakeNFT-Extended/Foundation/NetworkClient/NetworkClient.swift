@@ -55,13 +55,21 @@ actor DefaultNetworkClient: NetworkClient {
         var urlRequest = URLRequest(url: endpoint)
         urlRequest.httpMethod = request.httpMethod.rawValue
 
-        if let body = request.httpBody {
-            urlRequest.setValue(request.contentType, forHTTPHeaderField: "Content-Type")
-            urlRequest.httpBody = body
-        } else if let dto = request.dto,
-                  let dtoEncoded = try? encoder.encode(dto) {
-            urlRequest.setValue(request.contentType, forHTTPHeaderField: "Content-Type")
-            urlRequest.httpBody = dtoEncoded
+        if let fields = request.formFields {
+            var components = URLComponents()
+            components.queryItems = fields
+            // A literal plus must not be interpreted as a space by a form decoder.
+            let body = components.percentEncodedQuery?.replacingOccurrences(of: "+", with: "%2B")
+            urlRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+            urlRequest.httpBody = body?.data(using: .utf8)
+        } else if let httpBody = request.httpBody {
+            urlRequest.httpBody = httpBody
+            if let contentType = request.contentType {
+                urlRequest.setValue(contentType, forHTTPHeaderField: "Content-Type")
+            }
+        } else if let dto = request.dto {
+            urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            urlRequest.httpBody = try encoder.encode(dto)
         }
         urlRequest.addValue(RequestConstants.token, forHTTPHeaderField: "X-Practicum-Mobile-Token")
 

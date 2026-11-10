@@ -8,19 +8,6 @@
 
 import Foundation
 
-struct PreviewCartService: CartService {
-    func updateOrder(id: String, nftIDs: [String]) async throws {
-        //
-    }
-    
-    func loadOrder(id: String) async throws -> Order {
-        Order(
-            id: id,
-            nfts: ["1", "2", "3"]
-        )
-    }
-}
-
 struct PreviewNftService: NftService {
     func loadNft(id: String) async throws -> Nft {
         switch id {
