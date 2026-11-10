@@ -62,6 +62,11 @@ actor DefaultNetworkClient: NetworkClient {
             let body = components.percentEncodedQuery?.replacingOccurrences(of: "+", with: "%2B")
             urlRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
             urlRequest.httpBody = body?.data(using: .utf8)
+        } else if let httpBody = request.httpBody {
+            urlRequest.httpBody = httpBody
+            if let contentType = request.contentType {
+                urlRequest.setValue(contentType, forHTTPHeaderField: "Content-Type")
+            }
         } else if let dto = request.dto {
             urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
             urlRequest.httpBody = try encoder.encode(dto)

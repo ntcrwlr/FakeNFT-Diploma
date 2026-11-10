@@ -130,3 +130,6 @@ iOSInjectionProject/
 !*.xcworkspace/contents.xcworkspacedata
 /*.gcno
 **/xcshareddata/WorkspaceSettings.xcsettings
+
+# Local API token — copy from Secrets.example.plist
+iOS-FakeNFT-Extended/Configuration/Secrets.plist

@@ -44,14 +44,19 @@ struct TabBarView: View {
                 )
             }
 
-            TestCatalogView()
-                .tabItem {
-                    Label(
-                        NSLocalizedString("Tab.catalog", comment: ""),
-                        systemImage: "square.stack.3d.up.fill"
-                    )
-                }
-                .backgroundStyle(.background)
+            CatalogAssembly.makeView(
+                collectionService: servicesAssembly.collectionService,
+                nftService: servicesAssembly.nftService,
+                favoritesService: servicesAssembly.favoritesService,
+                cartService: servicesAssembly.cartService
+            )
+            .tabItem {
+                Label(
+                    NSLocalizedString("Tab.catalog", comment: ""),
+                    systemImage: "square.stack.3d.up.fill"
+                )
+            }
+            .backgroundStyle(.background)
         }
         .tint(Color(uiColor: .profileLink))
         .toolbarBackground(Color(uiColor: .profileBackground), for: .tabBar)
