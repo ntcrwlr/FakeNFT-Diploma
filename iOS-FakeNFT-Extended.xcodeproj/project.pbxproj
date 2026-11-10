@@ -734,7 +734,6 @@
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/iOS-FakeNFT-Extended/Configuration/Secrets.example.plist",
 				"$(SRCROOT)/iOS-FakeNFT-Extended/Configuration/Secrets.plist",
 			);
 			name = "Copy Secrets";
@@ -743,7 +742,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "SECRETS=\"${SRCROOT}/iOS-FakeNFT-Extended/Configuration/Secrets.plist\"\nEXAMPLE=\"${SRCROOT}/iOS-FakeNFT-Extended/Configuration/Secrets.example.plist\"\nif [ ! -f \"$SECRETS\" ]; then\n  cp \"$EXAMPLE\" \"$SECRETS\"\nfi\nmkdir -p \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\ncp \"$SECRETS\" \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Secrets.plist\"\n";
+			shellScript = "SECRETS=\"${SRCROOT}/iOS-FakeNFT-Extended/Configuration/Secrets.plist\"\nif [ ! -f \"$SECRETS\" ]; then\n  echo \"error: Secrets.plist not found. Copy Secrets.example.plist to Secrets.plist and fill in the token.\" >&2\n  exit 1\nfi\nmkdir -p \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\ncp \"$SECRETS\" \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Secrets.plist\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
