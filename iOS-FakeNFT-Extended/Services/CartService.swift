@@ -5,6 +5,7 @@ import Foundation
 protocol CartServiceLocalProtocol {
     func loadOrder(id: String) async throws -> Order
     func updateOrder(id: String, nftIDs: [String]) async throws
+    func completeOrder(id: String, nftIDs: [String]) async throws
 }
 
 @MainActor
@@ -23,6 +24,27 @@ final class CartServiceLocal: CartServiceLocalProtocol {
     func updateOrder(id: String, nftIDs: [String]) async throws {
         let request = UpdateOrderRequest(id: id, nftIDs: nftIDs)
         let _: Data = try await networkClient.send(request: request)
+    }
+    
+    func completeOrder(id: String, nftIDs: [String]) async throws {
+
+        let request = UpdateOrderRequest(id: id, nftIDs: [])
+        let _: Data = try await networkClient.send(request: request)
+
+        let order: Order = try await networkClient.send(
+            request: OrderRequest(id: id)
+        )
+
+        guard order.nfts.isEmpty else {
+            throw NetworkClientError.incorrectRequest(
+                "Не удалось очистить корзину"
+            )
+        }
+    }
+    
+    func checkProfile() async throws {
+        let request = ProfileRequest()
+        let profile: Profile = try await networkClient.send(request: request)
     }
 }
 

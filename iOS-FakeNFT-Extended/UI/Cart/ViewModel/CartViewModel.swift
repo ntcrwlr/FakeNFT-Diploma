@@ -41,8 +41,10 @@ final class CartViewModel {
         switch option {
         case .price:
             items.sort { $0.price < $1.price }
+            
         case .rating:
             items.sort { $0.rating > $1.rating }
+            
         case .name:
             items.sort {
                 $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending
@@ -69,9 +71,17 @@ final class CartViewModel {
         
         do {
             let order = try await cartService.loadOrder(id: "1")
+            
+            let nftIDs = order.nfts
+                .flatMap { $0.split(separator: ",") }
+                .map {
+                    String($0).trimmingCharacters(in: .whitespaces)
+                }
+                .filter { !$0.isEmpty }
+            
             var loadedItems: [CartItem] = []
             
-            for nftID in order.nfts {
+            for nftID in nftIDs {
                 let nft = try await nftService.loadNft(id: nftID)
                 
                 let item = CartItem(
@@ -95,9 +105,14 @@ final class CartViewModel {
             )
             
         } catch {
-            Logger.shared.error("Ошибка загрузки корзины: \(error.localizedDescription, privacy: .public)")
-            items = CartMockData.items
-            errorMessage = NSLocalizedString("Cart.error.load", comment: "")
+            Logger.shared.error(
+                "Ошибка загрузки корзины: \(error.localizedDescription, privacy: .public)"
+            )
+            
+            errorMessage = NSLocalizedString(
+                "Cart.error.load",
+                comment: ""
+            )
             
             analyticsService.reportEvent(
                 name: "cart_load_failed",
@@ -116,11 +131,11 @@ final class CartViewModel {
             isLoading = false
         }
         
+        let previousItems = items
+        
         let updatedNFTIDs = items
             .filter { $0.id != item.id }
             .map { $0.id }
-        
-        let previousItems = items
         
         items.removeAll { $0.id == item.id }
         
@@ -138,9 +153,12 @@ final class CartViewModel {
             )
             
         } catch {
-    
             items = previousItems
-            errorMessage = NSLocalizedString("Cart.error.delete", comment: "")
+            
+            errorMessage = NSLocalizedString(
+                "Cart.error.delete",
+                comment: ""
+            )
             
             analyticsService.reportEvent(
                 name: "item_delete_failed",
@@ -151,8 +169,15 @@ final class CartViewModel {
         }
     }
     
+    
     func clearCart(isMockPayment: Bool) async -> Bool {
-        guard !isLoading else { return false }
+        guard !isLoading else {
+            return false
+        }
+        guard !items.isEmpty else {
+            errorMessage = "Корзина пуста"
+            return false
+        }
         
         isLoading = true
         errorMessage = nil
@@ -161,50 +186,54 @@ final class CartViewModel {
             isLoading = false
         }
         
-        if isMockPayment {
-            items = []
-            
-            analyticsService.reportEvent(
-                name: "cart_cleared",
-                parameters: [
-                    "mock_payment": true
-                ]
-            )
-            
-            return true
-        }
+        let nftIDs = items.map { $0.id }
         
         do {
-            try await cartService.updateOrder(
+            try await cartService.completeOrder(
                 id: "1",
-                nftIDs: []
+                nftIDs: nftIDs
             )
+            
+            let serverOrder = try await cartService.loadOrder(id: "1")
+            let remainingNFTs = serverOrder.nfts
+                .flatMap { $0.split(separator: ",") }
+                .map {
+                    String($0).trimmingCharacters(in: .whitespaces)
+                }
+                .filter { !$0.isEmpty }
+            
+            guard remainingNFTs.isEmpty else {
+                errorMessage = "Сервер не очистил заказ. NFT остались в корзине."
+                return false
+            }
             
             items = []
             
             analyticsService.reportEvent(
                 name: "cart_cleared",
                 parameters: [
-                    "mock_payment": false
+                    "mock_payment": false,
+                    "items_count": nftIDs.count
                 ]
             )
             
             return true
             
         } catch {
-            Logger.shared.error("Ошибка очистки корзины через API: \(error.localizedDescription, privacy: .public)")
-            Logger.shared.info("Используем локальную очистку корзины.")
+            Logger.shared.error(
+                "Ошибка завершения заказа: \(error.localizedDescription, privacy: .public)"
+            )
             
-            items = []
+            errorMessage = "Не удалось подтвердить завершение заказа. Корзина не очищена."
             
             analyticsService.reportEvent(
-                name: "cart_cleared",
+                name: "cart_clear_failed",
                 parameters: [
-                    "mock_payment": false
+                    "items_count": nftIDs.count
                 ]
             )
             
-            return true
+            return false
         }
     }
 }

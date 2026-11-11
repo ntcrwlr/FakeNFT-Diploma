@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct PaymentFlowView: View {
-
     @Environment(\.dismiss) private var dismiss
 
     @State private var viewModel: PaymentMethodViewModel
@@ -32,6 +31,7 @@ struct PaymentFlowView: View {
                 analyticsService: analyticsService
             )
         )
+
         self.onPaymentSuccess = onPaymentSuccess
     }
 
@@ -49,6 +49,7 @@ struct PaymentFlowView: View {
         }
         .task(id: viewModel.isPaymentSuccessful) {
             guard viewModel.isPaymentSuccessful else { return }
+
             await clearCart()
         }
         .alert(

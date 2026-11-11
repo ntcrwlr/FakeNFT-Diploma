@@ -69,57 +69,58 @@ final class PaymentMethodViewModel {
         )
     }
     
+   
     func pay() async {
         guard let currencyID = selectedCurrencyID,
               !isPaying else {
             return
         }
-        
+
         isPaying = true
         paymentError = nil
+        isPaymentSuccessful = false
         isMockPayment = false
-        
+
         defer {
             isPaying = false
         }
-        
+
         do {
             let response = try await paymentService.pay(
                 currencyID: currencyID
             )
-            
-            if response.success {
-                isPaymentSuccessful = true
-                
+
+            guard response.success else {
+                paymentError = "Сервер отклонил оплату"
                 analyticsService.reportEvent(
-                    name: "payment_completed",
-                    parameters: [
-                        "currency_id": currencyID,
-                        "mock_payment": false
-                    ]
-                )
-            } else {
-                Logger.shared.warning("Сервер отклонил оплату. Используем мок.")
-                
-                isMockPayment = true
-                isPaymentSuccessful = true
-                
-                analyticsService.reportEvent(
-                    name: "payment_fallback",
+                    name: "payment_failed",
                     parameters: [
                         "currency_id": currencyID,
                         "reason": "server_rejected"
                     ]
                 )
+                return
             }
-        } catch {
-            Logger.shared.error("Ошибка оплаты: \(error.localizedDescription, privacy: .public). Используем мок.")
-            
-            isMockPayment = true
+
             isPaymentSuccessful = true
-            
+
             analyticsService.reportEvent(
-                name: "payment_fallback",
+                name: "payment_completed",
+                parameters: [
+                    "currency_id": currencyID,
+                    "mock_payment": false
+                ]
+            )
+
+        } catch {
+            Logger.shared.error(
+                "Ошибка оплаты: \(error.localizedDescription, privacy: .public)"
+            )
+
+            paymentError = error.localizedDescription
+
+            analyticsService.reportEvent(
+                name: "payment_failed",
                 parameters: [
                     "currency_id": currencyID,
                     "reason": "request_error"

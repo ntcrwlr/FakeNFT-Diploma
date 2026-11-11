@@ -21,6 +21,9 @@ final class PaymentServiceImpl: PaymentService {
 
     func pay(currencyID: String) async throws -> PaymentResponse {
         let request = PaymentRequest(currencyID: currencyID)
-        return try await networkClient.send(request: request)
+        let response: PaymentResponse = try await networkClient.send(
+            request: request
+        )
+        return response
     }
 }
