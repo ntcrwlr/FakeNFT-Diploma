@@ -30,15 +30,25 @@ actor DefaultNetworkClient: NetworkClient {
 
     func send(request: NetworkRequest) async throws -> Data {
         let urlRequest = try create(request: request)
-        let (data, response) = try await session.data(for: urlRequest)
-        guard let response = response as? HTTPURLResponse else {
-            throw NetworkClientError.urlSessionError
+        do {
+            let (data, response) = try await session.data(for: urlRequest)
+
+            guard let httpResponse = response as? HTTPURLResponse else {
+                throw NetworkClientError.urlSessionError
+            }
+            guard 200..<300 ~= httpResponse.statusCode else {
+                throw NetworkClientError.httpStatusCode(httpResponse.statusCode)
+            }
+
+            return data
+
+        } catch let error as NetworkClientError {
+            throw error
+        } catch {
+            throw NetworkClientError.urlRequestError(error)
         }
-        guard 200 ..< 300 ~= response.statusCode else {
-            throw NetworkClientError.httpStatusCode(response.statusCode)
-        }
-        return data
     }
+
 
     func send<T: Decodable>(request: NetworkRequest) async throws -> T {
         let data = try await send(request: request)

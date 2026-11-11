@@ -34,7 +34,7 @@ final class CollectionDetailsViewModel {
     }
 
     func isLikeInProgress(_ id: String) -> Bool {
-        !likeRequests.isEmpty
+        likeRequests.contains(id)
     }
 
     func toggleLike(id: String) async {
@@ -65,7 +65,7 @@ final class CollectionDetailsViewModel {
     }
 
     func isCartInProgress(_ id: String) -> Bool {
-        !cartRequests.isEmpty
+        cartRequests.contains(id)
     }
 
     func toggleCart(id: String) async {
@@ -105,7 +105,6 @@ final class CollectionDetailsViewModel {
     }
 
     func loadIfNeeded() async {
-        guard case .idle = state else { return }
         await load()
     }
 

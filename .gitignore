@@ -133,3 +133,8 @@ iOSInjectionProject/
 
 # Local API token — copy from Secrets.example.plist
 iOS-FakeNFT-Extended/Configuration/Secrets.plist
+# AppMetrica API key
+Secrets.xcconfig
+
+iOS-FakeNFT-Extended.xcodeproj/xcuserdata/
+iOS-FakeNFT-Extended.xcodeproj/project.xcworkspace/xcuserdata/
