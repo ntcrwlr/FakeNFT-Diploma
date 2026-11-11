@@ -23,14 +23,9 @@ struct UpdateOrderRequest: NetworkRequest {
         "application/x-www-form-urlencoded"
     }
 
-    var httpBody: Data? {
-        var components = URLComponents()
-        components.queryItems = nftIDs.map {
-            URLQueryItem(name: "nfts", value: $0)
+    var formFields: [URLQueryItem]? {
+            [URLQueryItem(name: "nfts", value: nftIDs.isEmpty ? "null" : nftIDs.joined(separator: ","))]
         }
-
-        return components.percentEncodedQuery?.data(using: .utf8)
-    }
 }
 
 

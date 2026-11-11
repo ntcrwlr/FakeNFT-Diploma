@@ -78,7 +78,7 @@ final class CartViewModel {
                     id: nft.id,
                     imageName: nft.imagesURLs.first?.absoluteString ?? "",
                     name: nft.name,
-                    rating: nft.rating,
+                    rating: min(5, max(0, nft.rating / 2)),
                     price: NSDecimalNumber(decimal: nft.price).doubleValue
                 )
                 
@@ -120,13 +120,15 @@ final class CartViewModel {
             .filter { $0.id != item.id }
             .map { $0.id }
         
+        let previousItems = items
+        
+        items.removeAll { $0.id == item.id }
+        
         do {
             try await cartService.updateOrder(
                 id: "1",
                 nftIDs: updatedNFTIDs
             )
-            
-            items.removeAll { $0.id == item.id }
             
             analyticsService.reportEvent(
                 name: "item_deleted",
@@ -136,6 +138,8 @@ final class CartViewModel {
             )
             
         } catch {
+    
+            items = previousItems
             errorMessage = NSLocalizedString("Cart.error.delete", comment: "")
             
             analyticsService.reportEvent(
